@@ -1,0 +1,5 @@
+module Zeitwerk
+  class GemInflector
+    def inflect: (Hash[String, String]) -> void
+  end
+end

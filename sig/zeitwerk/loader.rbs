@@ -1,0 +1,11 @@
+module Zeitwerk
+  class Loader
+    def self.for_gem: (?warn_on_extra_files: bool) -> instance
+
+    def collapse: (Array[String]) -> void
+
+    def inflector: -> GemInflector
+
+    def setup: -> void
+  end
+end
