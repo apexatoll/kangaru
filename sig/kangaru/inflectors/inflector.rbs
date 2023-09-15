@@ -1,0 +1,19 @@
+module Kangaru
+  module Inflectors
+    class Inflector
+      attr_reader tokeniser: Tokeniser
+
+      def initialize: (String) -> void
+
+      def inflect: -> String
+
+      private
+
+      def class_attribute: (Symbol) -> untyped
+
+      def token_transformer: -> untyped
+
+      def transform_token: (String) -> String
+    end
+  end
+end
