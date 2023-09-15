@@ -10,12 +10,14 @@ RSpec.describe Kangaru::Inflectors::Inflector do
   let(:inflector_params) do
     {
       "@token_transformer": token_transformer,
-      "@token_joiner": token_joiner
+      "@token_joiner": token_joiner,
+      "@group_joiner": group_joiner
     }.compact
   end
 
   let(:token_transformer) { nil }
   let(:token_joiner)      { nil }
+  let(:group_joiner)      { nil }
 
   around do |spec|
     inflector_params.each do |key, value|
@@ -116,6 +118,184 @@ RSpec.describe Kangaru::Inflectors::Inflector do
             let(:token_joiner) { "_" }
 
             include_examples :inflects, to: "FOO_BAR_BAZ"
+          end
+        end
+      end
+    end
+
+    context "when string consists of multiple words" do
+      context "and first word is empty" do
+        let(:token_groups) { [[], %w[foo bar], %w[baz]] }
+
+        context "and token transformer is not set" do
+          let(:token_transformer) { nil }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "/foobar/baz"
+            end
+
+            context "and group joiner is set" do
+              let(:group_joiner) { "::" }
+
+              include_examples :inflects, to: "::foobar::baz"
+            end
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "." }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "/foo.bar/baz"
+            end
+
+            context "and group joiner is set" do
+              let(:group_joiner) { "::" }
+
+              include_examples :inflects, to: "::foo.bar::baz"
+            end
+          end
+        end
+
+        context "and token transformer is a proc" do
+          let(:token_transformer) { ->(token) { token.capitalize } }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "/FooBar/Baz"
+            end
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "-" }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "/Foo-Bar/Baz"
+            end
+          end
+        end
+
+        context "and token transformer is a symbol" do
+          let(:token_transformer) { :capitalize }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "/FooBar/Baz"
+            end
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "-" }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "/Foo-Bar/Baz"
+            end
+          end
+        end
+      end
+
+      context "and first word is not empty" do
+        let(:token_groups) { [%w[foo bar], %w[baz]] }
+
+        context "and token transformer is not set" do
+          let(:token_transformer) { nil }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "foobar/baz"
+            end
+
+            context "and group joiner is set" do
+              let(:group_joiner) { "::" }
+
+              include_examples :inflects, to: "foobar::baz"
+            end
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "." }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "foo.bar/baz"
+            end
+
+            context "and group joiner is set" do
+              let(:group_joiner) { "::" }
+
+              include_examples :inflects, to: "foo.bar::baz"
+            end
+          end
+        end
+
+        context "and token transformer is a proc" do
+          let(:token_transformer) { ->(token) { token.capitalize } }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "FooBar/Baz"
+            end
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "-" }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "Foo-Bar/Baz"
+            end
+          end
+        end
+
+        context "and token transformer is a symbol" do
+          let(:token_transformer) { :capitalize }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "FooBar/Baz"
+            end
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "-" }
+
+            context "and group joiner is not set" do
+              let(:group_joiner) { nil }
+
+              include_examples :inflects, to: "Foo-Bar/Baz"
+            end
           end
         end
       end
