@@ -1,6 +1,8 @@
 module Kangaru
   module Inflectors
     class Inflector
+      extend InflectorMacros
+
       DEFAULT_GROUP_JOINER = "/".freeze
 
       attr_reader :tokeniser
