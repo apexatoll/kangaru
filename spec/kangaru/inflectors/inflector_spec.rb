@@ -34,6 +34,12 @@ RSpec.describe Kangaru::Inflectors::Inflector do
   describe "#inflect" do
     subject(:inflection) { inflector.inflect }
 
+    shared_examples :inflects do |options|
+      it "inflects to #{options[:to]}" do
+        expect(inflection).to eq(options[:to])
+      end
+    end
+
     context "when string consists of one word" do
       let(:token_groups) { [tokens] }
 
@@ -50,17 +56,13 @@ RSpec.describe Kangaru::Inflectors::Inflector do
         context "and token transformer is a proc" do
           let(:token_transformer) { ->(token) { token.reverse } }
 
-          it "returns the expected inflection" do
-            expect(inflection).to eq(token.reverse)
-          end
+          include_examples :inflects, to: "raboof"
         end
 
         context "and token transformer is a symbol" do
           let(:token_transformer) { :upcase }
 
-          it "returns the expected inflection" do
-            expect(inflection).to eq(token.upcase)
-          end
+          include_examples :inflects, to: "FOOBAR"
         end
       end
     end
