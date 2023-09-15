@@ -1,6 +1,8 @@
 module Kangaru
   module Inflectors
     class Inflector
+      DEFAULT_GROUP_JOINER = "/".freeze
+
       attr_reader :tokeniser
 
       def initialize(string)
@@ -8,11 +10,9 @@ module Kangaru
       end
 
       def inflect
-        tokeniser.split.map do |tokens|
-          tokens.map! { |token| transform_token(token) }
-
-          join_tokens(tokens)
-        end.join
+        join_groups(
+          transform_and_join_tokens(tokeniser.split)
+        )
       end
 
       private
@@ -29,6 +29,18 @@ module Kangaru
         class_attribute(:token_joiner)
       end
 
+      def group_joiner
+        class_attribute(:group_joiner) || DEFAULT_GROUP_JOINER
+      end
+
+      def transform_and_join_tokens(token_groups)
+        token_groups.map do |tokens|
+          join_tokens(
+            tokens.map { |token| transform_token(token) }
+          )
+        end
+      end
+
       def transform_token(token)
         case token_transformer
         when Proc   then token_transformer.call(token)
@@ -39,6 +51,10 @@ module Kangaru
 
       def join_tokens(tokens)
         tokens.join(token_joiner)
+      end
+
+      def join_groups(words)
+        words.join(group_joiner)
       end
     end
   end
