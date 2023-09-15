@@ -3,6 +3,8 @@ module Kangaru
     class Inflector
       type token_groups = Array[Array[String]]
 
+      extend InflectorMacros
+
       DEFAULT_GROUP_JOINER: String
 
       attr_reader tokeniser: Tokeniser
