@@ -9,11 +9,13 @@ RSpec.describe Kangaru::Inflectors::Inflector do
 
   let(:inflector_params) do
     {
-      "@token_transformer": token_transformer
+      "@token_transformer": token_transformer,
+      "@token_joiner": token_joiner
     }.compact
   end
 
   let(:token_transformer) { nil }
+  let(:token_joiner)      { nil }
 
   around do |spec|
     inflector_params.each do |key, value|
@@ -63,6 +65,58 @@ RSpec.describe Kangaru::Inflectors::Inflector do
           let(:token_transformer) { :upcase }
 
           include_examples :inflects, to: "FOOBAR"
+        end
+      end
+
+      context "and word consists of multiple tokens" do
+        let(:tokens) { %w[foo bar baz] }
+
+        context "and token transformer is not set" do
+          let(:token_transformer) { nil }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            include_examples :inflects, to: "foobarbaz"
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "_" }
+
+            include_examples :inflects, to: "foo_bar_baz"
+          end
+        end
+
+        context "and token transformer is a proc" do
+          let(:token_transformer) { ->(token) { token.capitalize } }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            include_examples :inflects, to: "FooBarBaz"
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "_" }
+
+            include_examples :inflects, to: "Foo_Bar_Baz"
+          end
+        end
+
+        context "and token transformer is a symbol" do
+          let(:token_transformer) { :upcase }
+
+          context "and token joiner is not set" do
+            let(:token_joiner) { nil }
+
+            include_examples :inflects, to: "FOOBARBAZ"
+          end
+
+          context "and token joiner is set" do
+            let(:token_joiner) { "_" }
+
+            include_examples :inflects, to: "FOO_BAR_BAZ"
+          end
         end
       end
     end

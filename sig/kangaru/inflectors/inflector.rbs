@@ -13,7 +13,11 @@ module Kangaru
 
       def token_transformer: -> untyped
 
+      def token_joiner: -> untyped
+
       def transform_token: (String) -> String
+
+      def join_tokens: (Tokeniser::token_group) -> String
     end
   end
 end
