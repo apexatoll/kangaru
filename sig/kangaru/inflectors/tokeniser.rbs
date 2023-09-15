@@ -1,0 +1,14 @@
+module Kangaru
+  module Inflectors
+    class Tokeniser
+      GROUP_DELIMITER: Regexp
+      TOKEN_DELIMITER: Regexp
+
+      attr_reader string: String
+
+      def initialize: (String) -> void
+
+      def split: -> Array[Array[String]]
+    end
+  end
+end
