@@ -1,6 +1,10 @@
 module Kangaru
   module Inflectors
     module InflectorMacros
+      def filter_input_with(pattern)
+        @input_filter = pattern
+      end
+
       def transform_tokens_with(symbol = nil, &block)
         @token_transformer = symbol || block
       end

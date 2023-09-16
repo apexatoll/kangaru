@@ -8,7 +8,7 @@ module Kangaru
       attr_reader :string
 
       def initialize(string)
-        @string = string
+        @string = filter_input(string)
       end
 
       def inflect
@@ -27,6 +27,10 @@ module Kangaru
         self.class.instance_variable_get(:"@#{key}")
       end
 
+      def input_filter
+        class_attribute(:input_filter)
+      end
+
       def token_transformer
         class_attribute(:token_transformer)
       end
@@ -37,6 +41,13 @@ module Kangaru
 
       def group_joiner
         class_attribute(:group_joiner) || DEFAULT_GROUP_JOINER
+      end
+
+      def filter_input(input)
+        case input_filter
+        when Regexp then input.gsub(input_filter, "")
+        else input
+        end
       end
 
       def transform_and_join_tokens(token_groups)

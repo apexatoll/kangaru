@@ -5,12 +5,14 @@ RSpec.describe Kangaru::Inflectors::Inflector do
 
   let(:inflector_params) do
     {
+      "@input_filter": input_filter,
       "@token_transformer": token_transformer,
       "@token_joiner": token_joiner,
       "@group_joiner": group_joiner
     }.compact
   end
 
+  let(:input_filter)      { nil }
   let(:token_transformer) { nil }
   let(:token_joiner)      { nil }
   let(:group_joiner)      { nil }
@@ -24,6 +26,24 @@ RSpec.describe Kangaru::Inflectors::Inflector do
 
     inflector_params.each_key do |key|
       described_class.remove_instance_variable(key)
+    end
+  end
+
+  describe "#initialize" do
+    context "when input filter is not set" do
+      let(:input_filter) { nil }
+
+      it "sets the string to the given value" do
+        expect(inflector.string).to eq(string)
+      end
+    end
+
+    context "when input filter is set" do
+      let(:input_filter) { /[ba]/ }
+
+      it "filters the input" do
+        expect(inflector.string).to eq("foorz")
+      end
     end
   end
 
