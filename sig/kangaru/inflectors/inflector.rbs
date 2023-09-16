@@ -13,6 +13,8 @@ module Kangaru
 
       def inflect: -> String
 
+      def self.inflect: (String) -> String
+
       private
 
       attr_reader tokeniser: Tokeniser
