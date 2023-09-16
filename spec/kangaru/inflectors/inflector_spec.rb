@@ -1,11 +1,7 @@
 RSpec.describe Kangaru::Inflectors::Inflector do
   subject(:inflector) { described_class.new(string) }
 
-  let(:string) { nil }
-
-  let(:tokeniser) do
-    instance_double(Kangaru::Inflectors::Tokeniser, split: token_groups)
-  end
+  let(:string) { "foobarbaz" }
 
   let(:inflector_params) do
     {
@@ -31,12 +27,18 @@ RSpec.describe Kangaru::Inflectors::Inflector do
     end
   end
 
-  before do
-    allow(Kangaru::Inflectors::Tokeniser).to receive(:new).and_return(tokeniser)
-  end
-
   describe "#inflect" do
     subject(:inflection) { inflector.inflect }
+
+    let(:tokeniser) do
+      instance_double(Kangaru::Inflectors::Tokeniser, split: token_groups)
+    end
+
+    before do
+      allow(Kangaru::Inflectors::Tokeniser)
+        .to receive(:new)
+        .and_return(tokeniser)
+    end
 
     shared_examples :inflects do |options|
       it "inflects to #{options[:to]}" do
