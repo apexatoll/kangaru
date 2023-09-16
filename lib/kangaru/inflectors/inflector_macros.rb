@@ -1,6 +1,14 @@
 module Kangaru
   module Inflectors
     module InflectorMacros
+      def inherited(child_class)
+        instance_variables.each do |rule|
+          value = instance_variable_get(rule)
+
+          child_class.instance_variable_set(rule, value)
+        end
+      end
+
       def filter_input_with(pattern)
         @input_filter = pattern
       end
