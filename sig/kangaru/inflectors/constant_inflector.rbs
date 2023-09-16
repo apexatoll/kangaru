@@ -1,0 +1,7 @@
+module Kangaru
+  module Inflectors
+    class ConstantInflector < ClassInflector
+      LAST_WORD: Regexp
+    end
+  end
+end
