@@ -6,6 +6,8 @@ module Kangaru
       @token_joiner: untyped
       @group_joiner: untyped
 
+      def inherited: (Class) -> void
+
       def filter_input_with: (Regexp) -> void
 
       def transform_tokens_with: (?Symbol?) ?{ (String) -> String } -> void

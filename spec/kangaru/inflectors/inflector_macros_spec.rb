@@ -3,6 +3,51 @@ RSpec.describe Kangaru::Inflectors::InflectorMacros do
     Class.new { extend Kangaru::Inflectors::InflectorMacros }
   end
 
+  describe "inheriting target classes" do
+    subject(:inherited_class) { Class.new(target_class) }
+
+    let(:inflection_params) do
+      { input_filter:, token_transformer:, token_joiner:, group_joiner: }
+    end
+
+    let(:input_filter)      { :foo }
+    let(:token_transformer) { :bar }
+    let(:token_joiner)      { :baz }
+    let(:group_joiner)      { :far }
+
+    around do |spec|
+      inflection_params.each do |attribute, value|
+        target_class.instance_variable_set(:"@#{attribute}", value)
+      end
+
+      spec.run
+
+      inflection_params.each_key do |attribute|
+        target_class.remove_instance_variable(:"@#{attribute}")
+      end
+    end
+
+    def class_attribute(name)
+      inherited_class.instance_variable_get(:"@#{name}")
+    end
+
+    it "forwards the input_filter to the child class" do
+      expect(class_attribute(:input_filter)).to eq(input_filter)
+    end
+
+    it "forwards the token_transformer to the child class" do
+      expect(class_attribute(:token_transformer)).to eq(token_transformer)
+    end
+
+    it "forwards the token_joiner to the child class" do
+      expect(class_attribute(:token_joiner)).to eq(token_joiner)
+    end
+
+    it "forwards the group_joiner to the child class" do
+      expect(class_attribute(:group_joiner)).to eq(group_joiner)
+    end
+  end
+
   describe "#filter_input_with" do
     subject(:filter_input_with) do
       target_class.filter_input_with(pattern)
