@@ -7,13 +7,15 @@ module Kangaru
 
       DEFAULT_GROUP_JOINER: String
 
-      attr_reader tokeniser: Tokeniser
+      attr_reader string: String
 
       def initialize: (String) -> void
 
       def inflect: -> String
 
       private
+
+      attr_reader tokeniser: Tokeniser
 
       def class_attribute: (Symbol) -> untyped
 

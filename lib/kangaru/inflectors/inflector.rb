@@ -5,10 +5,10 @@ module Kangaru
 
       DEFAULT_GROUP_JOINER = "/".freeze
 
-      attr_reader :tokeniser
+      attr_reader :string
 
       def initialize(string)
-        @tokeniser = Tokeniser.new(string)
+        @string = string
       end
 
       def inflect
@@ -18,6 +18,10 @@ module Kangaru
       end
 
       private
+
+      def tokeniser
+        @tokeniser ||= Tokeniser.new(string)
+      end
 
       def class_attribute(key)
         self.class.instance_variable_get(:"@#{key}")
