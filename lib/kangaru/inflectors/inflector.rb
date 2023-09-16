@@ -17,6 +17,10 @@ module Kangaru
         )
       end
 
+      def self.inflect(string)
+        new(string).inflect
+      end
+
       private
 
       def tokeniser
