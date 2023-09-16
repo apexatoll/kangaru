@@ -1,9 +1,12 @@
 module Kangaru
   module Inflectors
     module InflectorMacros
+      @input_filter: untyped
       @token_transformer: untyped
       @token_joiner: untyped
       @group_joiner: untyped
+
+      def filter_input_with: (Regexp) -> void
 
       def transform_tokens_with: (?Symbol?) ?{ (String) -> String } -> void
 

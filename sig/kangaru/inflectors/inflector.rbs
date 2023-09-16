@@ -19,11 +19,15 @@ module Kangaru
 
       def class_attribute: (Symbol) -> untyped
 
+      def input_filter: -> untyped
+
       def token_transformer: -> untyped
 
       def token_joiner: -> untyped
 
       def group_joiner: -> untyped
+
+      def filter_input: (String) -> String
 
       def transform_and_join_tokens: (Array[Array[String]]) -> Array[String]
 

@@ -3,6 +3,21 @@ RSpec.describe Kangaru::Inflectors::InflectorMacros do
     Class.new { extend Kangaru::Inflectors::InflectorMacros }
   end
 
+  describe "#filter_input_with" do
+    subject(:filter_input_with) do
+      target_class.filter_input_with(pattern)
+    end
+
+    let(:pattern) { /./ }
+
+    it "sets the instance variable" do
+      expect { filter_input_with }
+        .to change { target_class.instance_variable_get(:@input_filter) }
+        .from(nil)
+        .to(pattern)
+    end
+  end
+
   describe "#transform_tokens_with" do
     context "when called with a proc" do
       subject(:transform_tokens_with) do
