@@ -1,0 +1,7 @@
+module Kangaru
+  module Inflectors
+    class PathInflector < Inflector
+      def inflect: (?with_ext: String?) -> String
+    end
+  end
+end
