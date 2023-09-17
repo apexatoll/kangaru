@@ -1,0 +1,9 @@
+module Kangaru
+  module InputParsers
+    class ActionParser < InputParser
+      DEFAULT_ACTION: Symbol
+
+      def parse: -> Symbol
+    end
+  end
+end
