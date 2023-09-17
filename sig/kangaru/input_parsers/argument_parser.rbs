@@ -1,0 +1,15 @@
+module Kangaru
+  module InputParsers
+    class ArgumentParser < InputParser
+      def parse: -> Hash[Symbol, untyped]
+
+      private
+
+      def grouped_argument_tokens: -> Array[InputParser::tokens]
+
+      def parse_key: (String) -> Symbol
+
+      def parse_value: (Array[untyped]) -> untyped
+    end
+  end
+end
