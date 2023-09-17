@@ -1,0 +1,9 @@
+module Kangaru
+  module Patches
+    module Constantise : String
+      class ::String
+        def constantise: -> untyped
+      end
+    end
+  end
+end
