@@ -9,6 +9,10 @@ module Kangaru
         def to_constant_name
           Inflectors::ConstantInflector.inflect(self)
         end
+
+        def to_snakecase
+          Inflectors::SnakecaseInflector.inflect(self)
+        end
       end
     end
   end

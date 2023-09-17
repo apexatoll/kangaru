@@ -36,5 +36,12 @@ RSpec.describe Kangaru::Patches::Inflections do
       include_examples :delegates_to_inflector,
                        inflector: Kangaru::Inflectors::ConstantInflector
     end
+
+    describe "#to_snakecase" do
+      subject(:snakecased) { string.to_snakecase }
+
+      include_examples :delegates_to_inflector,
+                       inflector: Kangaru::Inflectors::SnakecaseInflector
+    end
   end
 end
