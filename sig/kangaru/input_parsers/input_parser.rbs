@@ -14,6 +14,8 @@ module Kangaru
       def command_tokens: -> tokens
 
       def argument_tokens: -> tokens
+
+      def self.parse: (tokens) -> untyped
     end
   end
 end

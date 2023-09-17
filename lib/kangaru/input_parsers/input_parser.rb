@@ -20,6 +20,10 @@ module Kangaru
       def argument_tokens
         tokens.drop_while { |token| !token.match?(ARGUMENT_TOKEN) }
       end
+
+      def self.parse(tokens)
+        new(tokens).parse
+      end
     end
   end
 end
