@@ -1,0 +1,20 @@
+module Kangaru
+  module InputParsers
+    class ControllerParser < InputParser
+      DEFAULT_CONTROLLER: String
+      CONTROLLER_SUFFIX: String
+
+      def parse: -> String
+
+      private
+
+      @controller_tokens: InputParser::tokens
+
+      def controller_tokens: -> InputParser::tokens
+      
+      def use_default_controller?: -> bool
+
+      def controller_name: -> String
+    end
+  end
+end
