@@ -3,11 +3,17 @@ module Kangaru
     class InputParser
       type tokens = Array[String]
 
+      ARGUMENT_TOKEN: Regexp
+
       attr_reader tokens: tokens
 
       def initialize: (tokens) -> void
 
       def parse: -> untyped
+
+      def command_tokens: -> tokens
+
+      def argument_tokens: -> tokens
     end
   end
 end
