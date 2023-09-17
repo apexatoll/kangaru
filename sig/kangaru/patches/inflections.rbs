@@ -5,6 +5,8 @@ module Kangaru
         def to_class_name: -> String
 
         def to_constant_name: -> String
+
+        def to_snakecase: -> String
       end
     end
   end
