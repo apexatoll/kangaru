@@ -1,0 +1,13 @@
+module Kangaru
+  module InputParsers
+    class InputParser
+      type tokens = Array[String]
+
+      attr_reader tokens: tokens
+
+      def initialize: (tokens) -> void
+
+      def parse: -> untyped
+    end
+  end
+end
