@@ -1,5 +1,5 @@
 module Kangaru
-  class Input
+  class Command
     attr_reader :controller, :action, :arguments
 
     def initialize(controller:, action:, arguments:)
