@@ -8,7 +8,7 @@ module Kangaru
       @arguments = arguments
     end
 
-    def self.from_argv(tokens)
+    def self.parse(tokens)
       controller = InputParsers::ControllerParser.parse(tokens)
       action     = InputParsers::ActionParser.parse(tokens)
       arguments  = InputParsers::ArgumentParser.parse(tokens)

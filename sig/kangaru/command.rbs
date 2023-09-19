@@ -10,6 +10,6 @@ module Kangaru
       arguments: Hash[Symbol, untyped]
     ) -> void
 
-    def self.from_argv: (Array[String]) -> Command
+    def self.parse: (Array[String]) -> Command
   end
 end
