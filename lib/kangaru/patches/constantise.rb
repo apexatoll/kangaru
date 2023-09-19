@@ -3,7 +3,7 @@ module Kangaru
     module Constantise
       refine String do
         def constantise
-          Inflectors::Constantiser.new(self).constantise
+          Inflectors::Constantiser.constantise(self)
         end
       end
     end
