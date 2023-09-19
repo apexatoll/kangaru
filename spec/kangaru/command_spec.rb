@@ -13,8 +13,8 @@ RSpec.describe Kangaru::Command do
     end
   end
 
-  describe ".from_argv" do
-    subject(:command) { described_class.from_argv(tokens) }
+  describe ".parse" do
+    subject(:command) { described_class.parse(tokens) }
 
     let(:tokens) { %w[foo bar baz] }
 
