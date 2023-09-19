@@ -1,5 +1,5 @@
 module Kangaru
-  class Input
+  class Command
     attr_reader controller: String
     attr_reader action: Symbol
     attr_reader arguments: Hash[Symbol, untyped]
@@ -10,6 +10,6 @@ module Kangaru
       arguments: Hash[Symbol, untyped]
     ) -> void
 
-    def self.from_argv: (Array[String]) -> Input
+    def self.from_argv: (Array[String]) -> Command
   end
 end
