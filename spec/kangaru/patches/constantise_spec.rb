@@ -1,14 +1,12 @@
 RSpec.describe Kangaru::Patches::Constantise do
   using described_class
 
-  let(:constantiser) { instance_double(constantiser_class, constantise: value) }
-
-  let(:constantiser_class) { Kangaru::Inflectors::Constantiser }
+  let(:constantiser) { Kangaru::Inflectors::Constantiser }
 
   let(:value) { "value" }
 
   before do
-    allow(constantiser_class).to receive(:new).and_return(constantiser)
+    allow(constantiser).to receive(:constantise).and_return(value)
   end
 
   describe String do
@@ -17,14 +15,9 @@ RSpec.describe Kangaru::Patches::Constantise do
     describe "#constantise" do
       subject(:constant) { string.constantise }
 
-      it "instantiates a constantiser" do
+      it "delegates to the Constantiser class" do
         constant
-        expect(constantiser_class).to have_received(:new).with(string).once
-      end
-
-      it "delegates to the constantiser" do
-        constant
-        expect(constantiser).to have_received(:constantise).once
+        expect(constantiser).to have_received(:constantise).with(string).once
       end
 
       it "returns the value from the constantiser" do

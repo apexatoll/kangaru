@@ -3,17 +3,7 @@ module Kangaru
     class Constantiser
       attr_reader string: String
 
-      def initialize: (String) -> void
-
-      def constantise: -> untyped
-
       def self.constantise: (String) -> untyped
-
-      private
-
-      def defined_as_class?: -> bool
-
-      def defined_as_constant?: -> bool
     end
   end
 end
