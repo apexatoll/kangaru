@@ -1,3 +1,9 @@
 module Kangaru
   VERSION: String
+
+  extend ClassMethods
+
+  module ClassMethods
+    attr_accessor application: Application
+  end
 end

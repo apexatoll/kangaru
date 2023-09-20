@@ -5,4 +5,8 @@ module Kangaru
 
   using Patches::Inflections
   using Patches::Constantise
+
+  class << self
+    attr_accessor :application
+  end
 end
