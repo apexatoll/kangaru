@@ -3,14 +3,14 @@ module Kangaru
     class Constantiser
       using Patches::Inflections
 
-      def self.constantise(string)
+      def self.constantise(string, root: Object)
         as_class    = string.to_class_name
         as_constant = string.to_constant_name
 
-        if Object.const_defined?(as_class)
-          Object.const_get(as_class)
-        elsif Object.const_defined?(as_constant)
-          Object.const_get(as_constant)
+        if root.const_defined?(as_class)
+          root.const_get(as_class)
+        elsif root.const_defined?(as_constant)
+          root.const_get(as_constant)
         end
       end
     end
