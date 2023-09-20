@@ -1,0 +1,9 @@
+module Kangaru
+  class Application
+    attr_reader root_file: String
+    attr_reader root_dir: String
+    attr_reader namespace: Module
+
+    def initialize: (root_file: String, namespace: Module) -> void
+  end
+end
