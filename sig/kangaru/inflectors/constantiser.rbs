@@ -3,7 +3,7 @@ module Kangaru
     class Constantiser
       attr_reader string: String
 
-      def self.constantise: (String) -> untyped
+      def self.constantise: (String, ?root: Module) -> untyped
     end
   end
 end
