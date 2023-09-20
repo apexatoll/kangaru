@@ -2,7 +2,7 @@ module Kangaru
   module Patches
     module Constantise : String
       class ::String
-        def constantise: -> untyped
+        def constantise: (?root: Module) -> untyped
       end
     end
   end

@@ -13,11 +13,17 @@ RSpec.describe Kangaru::Patches::Constantise do
     let(:string) { "foo/bar" }
 
     describe "#constantise" do
-      subject(:constant) { string.constantise }
+      subject(:constant) { string.constantise(root:) }
+
+      let(:root) { Object }
 
       it "delegates to the Constantiser class" do
         constant
-        expect(constantiser).to have_received(:constantise).with(string).once
+
+        expect(constantiser)
+          .to have_received(:constantise)
+          .with(string, root:)
+          .once
       end
 
       it "returns the value from the constantiser" do
