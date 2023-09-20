@@ -9,5 +9,11 @@ module Kangaru
     def initialize: (root_file: String, namespace: Module) -> void
 
     def app_dir: -> String
+
+    def setup: -> void
+
+    private
+
+    attr_reader autoloader: Zeitwerk::Loader
   end
 end
