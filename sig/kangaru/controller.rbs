@@ -1,0 +1,7 @@
+module Kangaru
+  class Controller
+    attr_reader command: Command
+
+    def initialize: (Command) -> void
+  end
+end
