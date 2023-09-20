@@ -1,0 +1,5 @@
+module Kangaru
+  module Initialiser
+    def self.extended: (Module) -> void
+  end
+end
