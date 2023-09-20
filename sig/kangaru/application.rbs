@@ -4,6 +4,10 @@ module Kangaru
     attr_reader root_dir: String
     attr_reader namespace: Module
 
+    @app_dir: String
+
     def initialize: (root_file: String, namespace: Module) -> void
+
+    def app_dir: -> String
   end
 end
