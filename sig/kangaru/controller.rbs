@@ -3,5 +3,7 @@ module Kangaru
     attr_reader command: Command
 
     def initialize: (Command) -> void
+
+    def execute: -> void
   end
 end
