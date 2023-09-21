@@ -1,0 +1,8 @@
+module Kangaru
+  class Router
+    attr_reader command: Command
+    attr_reader namespace: Module
+
+    def initialize: (Command, ?namespace: Module) -> void
+  end
+end
