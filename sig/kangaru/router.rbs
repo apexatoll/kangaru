@@ -1,8 +1,24 @@
 module Kangaru
   class Router
+    class UndefinedControllerError < StandardError
+    end
+
+    class UndefinedActionError < StandardError
+    end
+
     attr_reader command: Command
     attr_reader namespace: Module
 
     def initialize: (Command, ?namespace: Module) -> void
+
+    private
+
+    @controller_class: untyped
+
+    def controller_class: -> untyped
+
+    def validate_controller_defined!: -> void
+
+    def validate_action_defined!: -> void
   end
 end
