@@ -18,6 +18,12 @@ module Kangaru
       autoloader.setup
     end
 
+    def run!(argv)
+      command = Command.parse(argv)
+
+      Router.new(command, namespace:).resolve
+    end
+
     private
 
     def autoloader

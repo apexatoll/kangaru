@@ -55,4 +55,34 @@ RSpec.describe Kangaru::Application do
       expect(loader).to have_received(:setup).once
     end
   end
+
+  describe "#run!" do
+    subject(:run!) { application.run!(argv) }
+
+    let(:argv) { %w[foo bar baz] }
+
+    let(:command) { instance_spy(Kangaru::Command) }
+
+    let(:router) { instance_spy(Kangaru::Router) }
+
+    before do
+      allow(Kangaru::Command).to receive(:parse).and_return(command)
+      allow(Kangaru::Router).to receive(:new).and_return(router)
+    end
+
+    it "parses the arguments into a command" do
+      run!
+      expect(Kangaru::Command).to have_received(:parse).with(argv)
+    end
+
+    it "instantiates a router" do
+      run!
+      expect(Kangaru::Router).to have_received(:new).with(command, namespace:)
+    end
+
+    it "resolves the request" do
+      run!
+      expect(router).to have_received(:resolve)
+    end
+  end
 end
