@@ -55,4 +55,24 @@ RSpec.describe Kangaru::Router do
       end
     end
   end
+
+  describe "#resolve" do
+    subject(:resolve) { router.resolve }
+
+    let(:controller_spy) { instance_spy(controller_class) }
+
+    before do
+      allow(controller_class).to receive(:new).and_return(controller_spy)
+    end
+
+    it "instantiates a controller instance" do
+      resolve
+      expect(controller_class).to have_received(:new).with(command)
+    end
+
+    it "triggers the controller to execute the command" do
+      resolve
+      expect(controller_spy).to have_received(:execute).once
+    end
+  end
 end

@@ -11,6 +11,8 @@ module Kangaru
 
     def initialize: (Command, ?namespace: Module) -> void
 
+    def resolve: -> void
+
     private
 
     @controller_class: untyped
