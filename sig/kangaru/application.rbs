@@ -12,6 +12,8 @@ module Kangaru
 
     def setup: -> void
 
+    def run!: (Array[String]) -> void
+
     private
 
     attr_reader autoloader: Zeitwerk::Loader
