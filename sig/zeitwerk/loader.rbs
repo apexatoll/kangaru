@@ -6,7 +6,7 @@ module Zeitwerk
 
     def collapse: (Array[String]) -> void
 
-    def push_dir: (String dir) -> void
+    def push_dir: (String dir, ?namespace: Module) -> void
 
     def setup: -> void
   end
