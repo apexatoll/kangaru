@@ -16,6 +16,10 @@ module Kangaru
       validate_action_defined!
     end
 
+    def resolve
+      controller_class.new(command).execute
+    end
+
     private
 
     def controller_class
