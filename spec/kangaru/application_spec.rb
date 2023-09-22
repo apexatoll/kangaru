@@ -47,7 +47,11 @@ RSpec.describe Kangaru::Application do
 
     it "configures the loader to load the app dir" do
       setup
-      expect(loader).to have_received(:push_dir).with(application.app_dir).once
+
+      expect(loader)
+        .to have_received(:push_dir)
+        .with(application.app_dir, namespace:)
+        .once
     end
 
     it "enables the instantiated loader" do

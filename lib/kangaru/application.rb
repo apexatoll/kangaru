@@ -29,7 +29,7 @@ module Kangaru
     def autoloader
       @autoloader ||= Zeitwerk::Loader.new.tap do |loader|
         loader.inflector = Zeitwerk::GemInflector.new(root_file)
-        loader.push_dir(app_dir)
+        loader.push_dir(app_dir, namespace:)
       end
     end
   end
