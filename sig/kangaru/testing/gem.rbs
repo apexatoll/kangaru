@@ -1,0 +1,12 @@
+module Kangaru
+  module Testing
+    class Gem
+      DEFAULT_NAME: String
+
+      attr_reader dir: String
+      attr_reader name: String
+
+      def initialize: (dir: String, ?name: String) -> void
+    end
+  end
+end
