@@ -31,4 +31,32 @@ RSpec.describe Kangaru::Testing::Gem, :with_temp_dir do
       end
     end
   end
+
+  describe "#create!" do
+    subject(:create!) { gem.create! }
+
+    let(:gem_path) { File.join(temp_dir, name) }
+
+    let(:lib_dir)  { File.join(gem_path, "lib") }
+
+    it "creates the gem in the specified directory" do
+      expect { create! }.to create_dir(name).in(temp_dir)
+    end
+
+    it "generates a Gemfile" do
+      expect { create! }.to create_file("Gemfile").in(gem_path)
+    end
+
+    it "generates a gemspec" do
+      expect { create! }.to create_file("#{name}.gemspec").in(gem_path)
+    end
+
+    it "generates a lib directory" do
+      expect { create! }.to create_dir("lib").in(gem_path)
+    end
+
+    it "generates a main file" do
+      expect { create! }.to create_file("#{name}.rb").in(lib_dir)
+    end
+  end
 end

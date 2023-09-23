@@ -9,6 +9,16 @@ module Kangaru
         @dir  = dir
         @name = name
       end
+
+      def create!
+        `bundle gem #{gem_path}`
+      end
+
+      private
+
+      def gem_path
+        @gem_path ||= File.join(dir, name)
+      end
     end
   end
 end

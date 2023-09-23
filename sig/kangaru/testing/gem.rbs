@@ -7,6 +7,12 @@ module Kangaru
       attr_reader name: String
 
       def initialize: (dir: String, ?name: String) -> void
+
+      def create!: -> void
+
+      private
+
+      attr_reader gem_path: String
     end
   end
 end
