@@ -12,8 +12,14 @@ module Kangaru
         @name = name
       end
 
+      def created?
+        @created == true
+      end
+
       def create!
         `bundle gem #{path}`
+
+        @created = true
       end
     end
   end

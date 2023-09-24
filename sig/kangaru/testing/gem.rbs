@@ -5,10 +5,14 @@ module Kangaru
 
       DEFAULT_NAME: String
 
+      @created: bool
+
       attr_reader dir: String
       attr_reader name: String
 
       def initialize: (dir: String, ?name: String) -> void
+
+      def created?: -> bool
 
       def create!: -> void
     end
