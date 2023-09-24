@@ -1,0 +1,11 @@
+class Pathname
+  def initialize: (String path) -> void
+
+  def read: -> String
+
+  def write: (String contents) -> void
+
+  def to_s: -> String
+
+  def dirname: -> Pathname
+end
