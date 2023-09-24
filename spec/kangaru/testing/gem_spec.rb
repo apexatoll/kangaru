@@ -75,4 +75,28 @@ RSpec.describe Kangaru::Testing::Gem, :with_temp_dir do
       expect { create! }.to create_file("#{name}.rb").in(lib_dir)
     end
   end
+
+  describe "#load!" do
+    subject(:load!) { gem.load! }
+
+    context "when gem has not been created" do
+      it "raises an error" do
+        expect { load! }.to raise_error(
+          described_class::GemNotCreatedError,
+          "gem must be created first"
+        )
+      end
+    end
+
+    context "when gem has been created" do
+      before { gem.create! }
+
+      it "loads the gem" do
+        expect { load! }
+          .to change { Object.const_defined?(:SomeGem) }
+          .from(false)
+          .to(true)
+      end
+    end
+  end
 end
