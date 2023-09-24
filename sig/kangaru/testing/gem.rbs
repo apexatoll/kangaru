@@ -3,6 +3,9 @@ module Kangaru
     class Gem
       include GemPaths
 
+      class GemNotCreatedError < StandardError
+      end
+
       DEFAULT_NAME: String
 
       @created: bool
@@ -15,6 +18,8 @@ module Kangaru
       def created?: -> bool
 
       def create!: -> void
+
+      def load!: -> void
     end
   end
 end

@@ -3,6 +3,8 @@ module Kangaru
     class Gem
       include GemPaths
 
+      class GemNotCreatedError < StandardError; end
+
       DEFAULT_NAME = "some_gem".freeze
 
       attr_reader :dir, :name
@@ -20,6 +22,12 @@ module Kangaru
         `bundle gem #{path}`
 
         @created = true
+      end
+
+      def load!
+        raise GemNotCreatedError, "gem must be created first" unless created?
+
+        require main_file.to_s
       end
     end
   end
