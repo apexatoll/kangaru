@@ -5,13 +5,9 @@ module Kangaru
     attr_reader :root_file, :root_dir, :namespace
 
     def initialize(root_file:, namespace:)
-      @root_file = root_file
-      @root_dir  = File.dirname(root_file)
+      @root_file = Pathname.new(root_file)
+      @root_dir  = @root_file.dirname
       @namespace = namespace
-    end
-
-    def app_dir
-      @app_dir ||= File.join(root_dir, namespace.to_s.to_snakecase)
     end
 
     def setup
@@ -28,8 +24,8 @@ module Kangaru
 
     def autoloader
       @autoloader ||= Zeitwerk::Loader.new.tap do |loader|
-        loader.inflector = Zeitwerk::GemInflector.new(root_file)
-        loader.push_dir(app_dir, namespace:)
+        loader.inflector = Zeitwerk::GemInflector.new(root_file.to_s)
+        loader.push_dir(root_dir.to_s)
       end
     end
   end
