@@ -1,37 +1,62 @@
 RSpec.describe Kangaru::Initialiser do
   subject(:namespace) { Namespace }
 
-  before { stub_const "Namespace", Module.new }
+  before do
+    stub_const "Namespace", Module.new
+
+    allow(Kangaru::Application).to receive(:new).and_return(application)
+
+    allow_any_instance_of(Kernel).to receive(:caller).and_return([callsite])
+  end
+
+  after do
+    if Kangaru.instance_variable_defined?(:@application)
+      Kangaru.remove_instance_variable(:@application)
+    end
+  end
+
+  let(:application) { instance_spy(Kangaru::Application) }
 
   describe ".extended" do
     subject(:extended) { namespace.extend(described_class) }
 
-    before do
-      allow(Kangaru::Application).to receive(:new).and_return(application)
+    shared_examples :initialises_application do |**options|
+      let(:expected_dir)  { options[:dir] }
+      let(:expected_name) { options[:name] }
+
+      it "instantiates an application with the expected attributes" do
+        extended
+
+        expect(Kangaru::Application)
+          .to have_received(:new)
+          .with(dir: expected_dir, name: expected_name, namespace:)
+          .once
+      end
+
+      it "sets the Kangaru application to the created application" do
+        expect { extended }
+          .to change { Kangaru.application }
+          .to(application)
+      end
+
+      it "sets up the application" do
+        extended
+        expect(application).to have_received(:setup).once
+      end
     end
 
-    after do
-      Kangaru.remove_instance_variable(:@application)
+    context "when calling file is not in a gem structure" do
+      let(:callsite) { "/foo/bar/some_file.rb:23 initialize" }
+
+      include_examples :initialises_application,
+                       dir: "/foo/bar", name: "some_file"
     end
 
-    let(:application) { instance_spy(Kangaru::Application) }
+    context "when calling file is in a gem structure" do
+      let(:callsite) { "/foo/bar/some_gem/lib/some_gem.rb:23 initialize" }
 
-    it "instantiates an application with the inferred filename and namespace" do
-      extended
-
-      expect(Kangaru::Application)
-        .to have_received(:new)
-        .with(root_file: __FILE__, namespace: Namespace)
-        .once
-    end
-
-    it "sets the Kangaru application attribute to the created application" do
-      expect { extended }.to change { Kangaru.application }.to(application)
-    end
-
-    it "sets up the application" do
-      extended
-      expect(application).to have_received(:setup).once
+      include_examples :initialises_application,
+                       dir: "/foo/bar", name: "some_gem"
     end
   end
 end

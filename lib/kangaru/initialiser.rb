@@ -3,7 +3,11 @@ module Kangaru
     def self.extended(namespace)
       root_file = caller[0].gsub(/:.*$/, "")
 
-      Kangaru.application = Application.new(root_file:, namespace:).tap(&:setup)
+      name = File.basename(root_file).gsub(/\.[^\.]*$/, "")
+      dir  = File.dirname(root_file).gsub(%r{/#{name}/lib}, "")
+
+      Kangaru.application = Application.new(dir:, name:, namespace:)
+                                       .tap(&:setup)
 
       namespace.module_eval do
         def self.run!(argv)

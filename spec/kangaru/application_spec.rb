@@ -1,7 +1,9 @@
 RSpec.describe Kangaru::Application do
-  subject(:application) { described_class.new(root_file:, namespace:) }
+  subject(:application) { described_class.new(name:, dir:, namespace:) }
 
-  let(:root_file) { "/some_app/lib/some_app.rb" }
+  let(:name) { "some_app" }
+
+  let(:dir) { "/foo/bar" }
 
   let(:namespace) { SomeApp }
 
@@ -16,6 +18,7 @@ RSpec.describe Kangaru::Application do
     end
 
     let(:loader) { instance_spy(Zeitwerk::Loader) }
+
     let(:gem_inflector) { instance_spy(Zeitwerk::GemInflector) }
 
     it "instantiates a Zeitwerk loader" do
@@ -25,7 +28,11 @@ RSpec.describe Kangaru::Application do
 
     it "instantiates a Zeitwerk gem inflector for the root file" do
       setup
-      expect(Zeitwerk::GemInflector).to have_received(:new).with(root_file).once
+
+      expect(Zeitwerk::GemInflector)
+        .to have_received(:new)
+        .with("/foo/bar/some_app/lib/some_app.rb")
+        .once
     end
 
     it "configures the loader to use the instantiated gem inflector" do
@@ -33,12 +40,12 @@ RSpec.describe Kangaru::Application do
       expect(loader).to have_received(:inflector=).with(gem_inflector).once
     end
 
-    it "configures the loader to load the root dir" do
+    it "configures the loader to load the lib dir" do
       setup
 
       expect(loader)
         .to have_received(:push_dir)
-        .with("/some_app/lib")
+        .with("/foo/bar/some_app/lib")
         .once
     end
 

@@ -85,12 +85,12 @@ RSpec.describe "Initialising Kangaru in a target gem", :with_gem do
 
       before { require_gem }
 
-      it "sets the application root dir to the gem lib path" do
-        expect(application.root_dir).to eq(gem.lib_path)
+      it "sets the application dir to the gem dir" do
+        expect(application.dir).to eq(gem.dir)
       end
 
-      it "sets the application root file to the main gem file" do
-        expect(application.root_file).to eq(gem.main_file)
+      it "sets the application name to the expected value" do
+        expect(application.name).to eq("some_gem")
       end
     end
   end
