@@ -32,6 +32,22 @@ RSpec.describe Kangaru::Testing::Gem, :with_temp_dir do
     end
   end
 
+  describe "#created?" do
+    context "when gem has not been created" do
+      it "returns false" do
+        expect(gem).not_to be_created
+      end
+    end
+
+    context "when gem has been created" do
+      before { gem.create! }
+
+      it "returns true" do
+        expect(gem).to be_created
+      end
+    end
+  end
+
   describe "#create!" do
     subject(:create!) { gem.create! }
 
