@@ -79,6 +79,10 @@ RSpec.describe Kangaru::Testing::Gem, :with_temp_dir do
   describe "#load!" do
     subject(:load!) { gem.load! }
 
+    after do
+      Object.send(:remove_const, :SomeGem) if Object.const_defined?(:SomeGem)
+    end
+
     context "when gem has not been created" do
       it "raises an error" do
         expect { load! }.to raise_error(
