@@ -7,18 +7,6 @@ RSpec.describe Kangaru::Application do
 
   before { stub_const "SomeApp", Module.new }
 
-  describe "#app_dir" do
-    subject(:app_dir) { application.app_dir }
-
-    it "returns a string" do
-      expect(app_dir).to be_a(String)
-    end
-
-    it "returns the expected app directory" do
-      expect(app_dir).to eq("/some_app/lib/some_app")
-    end
-  end
-
   describe "#setup" do
     subject(:setup) { application.setup }
 
@@ -45,12 +33,12 @@ RSpec.describe Kangaru::Application do
       expect(loader).to have_received(:inflector=).with(gem_inflector).once
     end
 
-    it "configures the loader to load the app dir" do
+    it "configures the loader to load the root dir" do
       setup
 
       expect(loader)
         .to have_received(:push_dir)
-        .with(application.app_dir, namespace:)
+        .with("/some_app/lib")
         .once
     end
 
