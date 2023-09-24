@@ -1,10 +1,12 @@
 module Kangaru
   class Application
-    attr_reader root_file: Pathname
-    attr_reader root_dir: Pathname
+    include ApplicationPaths
+
+    attr_reader name: String
+    attr_reader dir: String
     attr_reader namespace: Module
 
-    def initialize: (root_file: String, namespace: Module) -> void
+    def initialize: (name: String, dir: String, namespace: Module) -> void
 
     def setup: -> void
 

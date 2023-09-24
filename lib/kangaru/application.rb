@@ -2,11 +2,13 @@ module Kangaru
   class Application
     using Patches::Inflections
 
-    attr_reader :root_file, :root_dir, :namespace
+    include ApplicationPaths
 
-    def initialize(root_file:, namespace:)
-      @root_file = Pathname.new(root_file)
-      @root_dir  = @root_file.dirname
+    attr_reader :name, :dir, :namespace
+
+    def initialize(name:, dir:, namespace:)
+      @name = name
+      @dir = dir
       @namespace = namespace
     end
 
@@ -24,8 +26,8 @@ module Kangaru
 
     def autoloader
       @autoloader ||= Zeitwerk::Loader.new.tap do |loader|
-        loader.inflector = Zeitwerk::GemInflector.new(root_file.to_s)
-        loader.push_dir(root_dir.to_s)
+        loader.inflector = Zeitwerk::GemInflector.new(main_file.to_s)
+        loader.push_dir(lib_path.to_s)
       end
     end
   end
