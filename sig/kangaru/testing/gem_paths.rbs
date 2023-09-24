@@ -1,0 +1,18 @@
+module Kangaru
+  module Testing
+    interface _DirName
+      def dir: -> String
+      def name: -> String
+    end
+
+    module GemPaths : _DirName
+      attr_reader path: Pathname
+
+      attr_reader lib_path: Pathname
+
+      attr_reader main_file: Pathname
+
+      def gem_file: (String file) -> Pathname
+    end
+  end
+end

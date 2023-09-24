@@ -1,6 +1,8 @@
 module Kangaru
   module Testing
     class Gem
+      include GemPaths
+
       DEFAULT_NAME = "some_gem".freeze
 
       attr_reader :dir, :name
@@ -11,13 +13,7 @@ module Kangaru
       end
 
       def create!
-        `bundle gem #{gem_path}`
-      end
-
-      private
-
-      def gem_path
-        @gem_path ||= File.join(dir, name)
+        `bundle gem #{path}`
       end
     end
   end

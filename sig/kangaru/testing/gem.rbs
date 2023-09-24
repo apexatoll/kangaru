@@ -1,6 +1,8 @@
 module Kangaru
   module Testing
     class Gem
+      include GemPaths
+
       DEFAULT_NAME: String
 
       attr_reader dir: String
@@ -9,10 +11,6 @@ module Kangaru
       def initialize: (dir: String, ?name: String) -> void
 
       def create!: -> void
-
-      private
-
-      attr_reader gem_path: String
     end
   end
 end
