@@ -1,0 +1,18 @@
+module Kangaru
+  interface _Application
+    def dir: -> String
+    def name: -> String
+  end
+
+  module ApplicationPaths : _Application
+    attr_reader path: Pathname
+
+    attr_reader lib_path: Pathname
+
+    attr_reader main_file: Pathname
+
+    def gem_file: (String file) -> Pathname
+
+    def gem_dir: (String dir) -> Pathname
+  end
+end
