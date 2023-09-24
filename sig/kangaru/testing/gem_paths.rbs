@@ -13,6 +13,8 @@ module Kangaru
       attr_reader main_file: Pathname
 
       def gem_file: (String file) -> Pathname
+
+      def gem_dir: (String dir) -> Pathname
     end
   end
 end

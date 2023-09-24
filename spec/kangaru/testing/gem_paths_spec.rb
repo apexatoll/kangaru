@@ -83,4 +83,13 @@ RSpec.describe Kangaru::Testing::GemPaths do
     include_examples :returns_path,
                      for: "/foo/bar/double/lib/double/some_file.rb"
   end
+
+  describe "#gem_dir" do
+    subject(:gem_dir) { target_gem.gem_dir(dir_arg) }
+
+    let(:dir_arg) { "some_dir" }
+
+    include_examples :returns_path,
+                     for: "/foo/bar/double/lib/double/some_dir"
+  end
 end

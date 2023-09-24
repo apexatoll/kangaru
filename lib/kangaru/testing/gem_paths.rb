@@ -16,6 +16,10 @@ module Kangaru
       def gem_file(file)
         Pathname.new(File.join(lib_path.to_s, name, "#{file}.rb"))
       end
+
+      def gem_dir(dir)
+        Pathname.new(File.join(lib_path.to_s, name, dir))
+      end
     end
   end
 end
