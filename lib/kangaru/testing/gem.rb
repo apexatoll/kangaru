@@ -1,7 +1,7 @@
 module Kangaru
   module Testing
     class Gem
-      include GemPaths
+      include ApplicationPaths
 
       class GemNotCreatedError < StandardError; end
 
