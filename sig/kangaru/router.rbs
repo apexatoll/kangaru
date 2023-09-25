@@ -6,6 +6,8 @@ module Kangaru
     class UndefinedActionError < StandardError
     end
 
+    CONTROLLER_SUFFIX: String
+
     attr_reader command: Command
     attr_reader namespace: Module
 
@@ -15,7 +17,10 @@ module Kangaru
 
     private
 
+    @controller_name: String
     @controller_class: untyped
+
+    def controller_name: -> String
 
     def controller_class: -> untyped
 

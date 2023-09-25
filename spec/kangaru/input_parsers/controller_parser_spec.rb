@@ -21,7 +21,7 @@ RSpec.describe Kangaru::InputParsers::ControllerParser do
         let(:command_tokens) { ["foo"] }
 
         it "returns the expected controller" do
-          expect(controller).to eq("FooController")
+          expect(controller).to eq("foo")
         end
       end
 
@@ -29,7 +29,7 @@ RSpec.describe Kangaru::InputParsers::ControllerParser do
         let(:command_tokens) { %w[foo bar] }
 
         it "returns the expected controller" do
-          expect(controller).to eq("FooController")
+          expect(controller).to eq("foo")
         end
       end
 
@@ -37,7 +37,7 @@ RSpec.describe Kangaru::InputParsers::ControllerParser do
         let(:command_tokens) { %w[foo bar baz] }
 
         it "returns the expected controller" do
-          expect(controller).to eq("Foo::BarController")
+          expect(controller).to eq("foo/bar")
         end
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe Kangaru::InputParsers::ControllerParser do
         let(:command_tokens) { ["foo"] }
 
         it "returns the expected controller" do
-          expect(controller).to eq("FooController")
+          expect(controller).to eq("foo")
         end
       end
 
@@ -65,7 +65,7 @@ RSpec.describe Kangaru::InputParsers::ControllerParser do
         let(:command_tokens) { %w[foo bar] }
 
         it "returns the expected controller" do
-          expect(controller).to eq("FooController")
+          expect(controller).to eq("foo")
         end
       end
 
@@ -73,7 +73,7 @@ RSpec.describe Kangaru::InputParsers::ControllerParser do
         let(:command_tokens) { %w[foo bar baz] }
 
         it "returns the expected controller" do
-          expect(controller).to eq("Foo::BarController")
+          expect(controller).to eq("foo/bar")
         end
       end
     end

@@ -3,8 +3,7 @@ module Kangaru
     class ControllerParser < InputParser
       using Patches::Inflections
 
-      DEFAULT_CONTROLLER = "DefaultController".freeze
-      CONTROLLER_SUFFIX  = "Controller".freeze
+      DEFAULT_CONTROLLER = "default".freeze
 
       def parse
         return DEFAULT_CONTROLLER if use_default_controller?
@@ -27,7 +26,7 @@ module Kangaru
       end
 
       def controller_name
-        controller_tokens.join("/").to_class_name + CONTROLLER_SUFFIX
+        controller_tokens.join("/").to_snakecase
       end
     end
   end
