@@ -19,5 +19,6 @@ Gem::Specification.new do |spec|
   spec.executables = []
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "erb", "~> 4.0"
   spec.add_dependency "zeitwerk", "~> 2.6"
 end
