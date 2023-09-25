@@ -92,4 +92,15 @@ RSpec.describe Kangaru::ApplicationPaths do
     include_examples :returns_path,
                      for: "/foo/bar/double/lib/double/some_dir"
   end
+
+  describe "#view_file" do
+    subject(:view_file) { application.view_file(controller:, action:) }
+
+    let(:controller) { "default" }
+
+    let(:action) { :do_something }
+
+    include_examples :returns_path, for:
+      "/foo/bar/double/lib/double/views/default/do_something.erb"
+  end
 end
