@@ -1,5 +1,7 @@
 module Kangaru
   module ApplicationPaths
+    VIEWS_DIR = "views".freeze
+
     def path
       @path ||= Pathname.new(File.join(dir, name))
     end
@@ -18,6 +20,12 @@ module Kangaru
 
     def gem_dir(dir)
       Pathname.new(File.join(lib_path.to_s, name, dir))
+    end
+
+    def view_file(controller:, action:)
+      Pathname.new(
+        File.join(gem_dir(VIEWS_DIR).to_s, controller, "#{action}.erb")
+      )
     end
   end
 end

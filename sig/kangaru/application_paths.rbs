@@ -5,6 +5,8 @@ module Kangaru
   end
 
   module ApplicationPaths : _Application
+    VIEWS_DIR: String
+
     attr_reader path: Pathname
 
     attr_reader lib_path: Pathname
@@ -14,5 +16,7 @@ module Kangaru
     def gem_file: (String file) -> Pathname
 
     def gem_dir: (String dir) -> Pathname
+
+    def view_file: (controller: String, action: String) -> Pathname
   end
 end
