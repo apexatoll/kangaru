@@ -1,9 +1,11 @@
 RSpec.describe "Running a command", :with_gem do
+  subject(:run_command!) { SomeGem.run!(argv) }
+
+  let(:argv) { [] }
+
   include_context :kangaru_initialised
 
   describe "calling SomeGem.run! directly" do
-    subject(:run_command!) { SomeGem.run!(argv) }
-
     let(:target) do
       Module.new { def self.do_something = nil }
     end
@@ -263,6 +265,51 @@ RSpec.describe "Running a command", :with_gem do
 
           include_examples :successful_command
         end
+      end
+    end
+  end
+
+  describe "rendering view files" do
+    before do
+      gem.gem_file("default_controller").write(<<~RUBY)
+        module SomeGem
+          class DefaultController < Kangaru::Controller
+            def default
+              @name = "Some Name"
+              @age = 30
+            end
+          end
+        end
+      RUBY
+    end
+
+    context "when view file does not exist" do
+      before { gem.load! }
+
+      it "does not output to stdout" do
+        expect { run_command! }.not_to output.to_stdout
+      end
+    end
+
+    context "when view file exists" do
+      before do
+        gem.gem_dir("views").mkdir
+        gem.gem_dir("views/default").mkdir
+        gem.view_file(controller: "default", action: "default").write(view_file)
+
+        gem.load!
+      end
+
+      let(:view_file) do
+        <<~ERB
+          Hello <%= @name %>, you are <%= @age %> years old.
+        ERB
+      end
+
+      it "outputs the interpolated view file" do
+        expect { run_command! }.to output(<<~TEXT).to_stdout
+          Hello Some Name, you are 30 years old.
+        TEXT
       end
     end
   end
