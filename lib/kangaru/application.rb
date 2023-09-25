@@ -22,6 +22,13 @@ module Kangaru
       Router.new(command, namespace:).resolve
     end
 
+    def self.from_callsite(callsite, namespace:)
+      name = File.basename(callsite).delete_suffix(".rb")
+      dir  = File.dirname(callsite).delete_suffix("/#{name}/lib")
+
+      new(name:, dir:, namespace:)
+    end
+
     private
 
     def autoloader

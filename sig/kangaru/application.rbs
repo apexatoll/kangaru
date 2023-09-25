@@ -12,6 +12,8 @@ module Kangaru
 
     def run!: (Array[String]) -> void
 
+    def self.from_callsite: (String callsite, namespace: Module) -> Application
+
     private
 
     attr_reader autoloader: Zeitwerk::Loader
