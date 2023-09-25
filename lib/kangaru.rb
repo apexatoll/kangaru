@@ -1,5 +1,6 @@
 require "zeitwerk"
 
+require "erb"
 require "pathname"
 
 module Kangaru
