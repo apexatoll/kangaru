@@ -3,7 +3,7 @@ RSpec.describe Kangaru::Command do
 
   let(:attributes) { { controller:, action:, arguments: } }
 
-  let(:controller) { "FoobarController" }
+  let(:controller) { "foobar" }
   let(:action)     { :do_something }
   let(:arguments)  { { force: true } }
 
