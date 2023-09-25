@@ -8,4 +8,6 @@ class Pathname
   def to_s: -> String
 
   def dirname: -> Pathname
+
+  def exist?: -> bool
 end
