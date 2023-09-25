@@ -3,7 +3,8 @@ RSpec.describe Kangaru::Router do
 
   let(:command) { instance_double(Kangaru::Command, controller:, action:) }
 
-  let(:controller) { "SomeController" }
+  let(:controller)      { "some" }
+  let(:controller_name) { "SomeController" }
 
   let(:action) { :some_action }
 
@@ -20,18 +21,19 @@ RSpec.describe Kangaru::Router do
 
   describe "#initialize" do
     context "when command controller is not defined" do
-      let(:controller) { "AnotherController" }
+      let(:controller)      { "another" }
+      let(:controller_name) { "AnotherController" }
 
       it "raises an error" do
         expect { router }.to raise_error(
           described_class::UndefinedControllerError,
-          "#{controller} is not defined in #{namespace}"
+          "#{controller_name} is not defined in #{namespace}"
         )
       end
     end
 
     context "when command controller is defined" do
-      let(:controller) { "SomeController" }
+      let(:controller) { "some" }
 
       context "and command action is not defined" do
         let(:controller_class) { Class.new(described_class) }
@@ -39,7 +41,7 @@ RSpec.describe Kangaru::Router do
         it "raises an error" do
           expect { router }.to raise_error(
             described_class::UndefinedActionError,
-            "#{action} is not defined by #{controller}"
+            "#{action} is not defined by #{controller_name}"
           )
         end
       end

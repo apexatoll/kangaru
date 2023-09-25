@@ -1,10 +1,14 @@
 module Kangaru
   class Router
+    using Patches::Inflections
+
     using Patches::Constantise
 
     class UndefinedControllerError < StandardError; end
 
     class UndefinedActionError < StandardError; end
+
+    CONTROLLER_SUFFIX = "Controller".freeze
 
     attr_reader :command, :namespace
 
@@ -22,22 +26,26 @@ module Kangaru
 
     private
 
+    def controller_name
+      @controller_name ||= command.controller.to_class_name + CONTROLLER_SUFFIX
+    end
+
     def controller_class
-      @controller_class ||= command.controller.constantise(root: namespace)
+      @controller_class ||= controller_name.constantise(root: namespace)
     end
 
     def validate_controller_defined!
-      return if namespace.const_defined?(command.controller)
+      return if namespace.const_defined?(controller_name)
 
       raise UndefinedControllerError,
-            "#{command.controller} is not defined in #{namespace}"
+            "#{controller_name} is not defined in #{namespace}"
     end
 
     def validate_action_defined!
       return if controller_class.instance_methods.include?(command.action)
 
       raise UndefinedActionError,
-            "#{command.action} is not defined by #{command.controller}"
+            "#{command.action} is not defined by #{controller_name}"
     end
   end
 end
