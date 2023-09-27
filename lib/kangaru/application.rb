@@ -12,6 +12,10 @@ module Kangaru
       @namespace = namespace
     end
 
+    def config
+      @config ||= Config.new
+    end
+
     def setup
       autoloader.setup
     end
