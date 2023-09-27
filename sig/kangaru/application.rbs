@@ -6,7 +6,11 @@ module Kangaru
     attr_reader dir: String
     attr_reader namespace: Module
 
+    @config: Config
+
     def initialize: (name: String, dir: String, namespace: Module) -> void
+
+    def config: -> Config
 
     def setup: -> void
 

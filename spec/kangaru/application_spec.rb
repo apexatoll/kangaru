@@ -9,6 +9,21 @@ RSpec.describe Kangaru::Application do
 
   before { stub_const "SomeApp", Module.new }
 
+  describe "#config" do
+    subject(:config) { application.config }
+
+    it "returns a config object" do
+      expect(config).to be_a(Kangaru::Config)
+    end
+
+    it "caches the config object" do
+      expect { config }
+        .to change { application.instance_variable_defined?(:@config) }
+        .from(false)
+        .to(true)
+    end
+  end
+
   describe "#setup" do
     subject(:setup) { application.setup }
 
