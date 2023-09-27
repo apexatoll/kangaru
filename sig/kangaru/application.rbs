@@ -12,6 +12,8 @@ module Kangaru
 
     def config: -> Config
 
+    def configure: { (Config) -> void } -> void
+
     def setup: -> void
 
     def run!: (Array[String]) -> void
