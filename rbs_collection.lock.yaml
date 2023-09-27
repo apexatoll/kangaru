@@ -7,6 +7,10 @@ sources:
   repo_dir: gems
 path: ".gem_rbs_collection"
 gems:
+- name: bigdecimal
+  version: '0'
+  source:
+    type: stdlib
 - name: cgi
   version: '0'
   source:

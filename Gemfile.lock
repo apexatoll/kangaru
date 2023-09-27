@@ -3,6 +3,8 @@ PATH
   specs:
     kangaru (0.1.0)
       erb (~> 4.0)
+      sequel (~> 5.72)
+      sqlite3 (~> 1.6)
       zeitwerk (~> 2.6)
 
 GEM
@@ -15,6 +17,7 @@ GEM
       tzinfo (~> 2.0)
     ast (2.4.2)
     base64 (0.1.1)
+    bigdecimal (3.1.4)
     cgi (0.3.6)
     concurrent-ruby (1.2.2)
     csv (3.2.7)
@@ -82,6 +85,10 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     securerandom (0.2.2)
+    sequel (5.72.0)
+      bigdecimal
+    sqlite3 (1.6.0-arm64-darwin)
+    sqlite3 (1.6.0-x86_64-linux)
     steep (1.5.3)
       activesupport (>= 5.1)
       concurrent-ruby (>= 1.1.10)

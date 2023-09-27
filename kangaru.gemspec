@@ -20,5 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "erb", "~> 4.0"
+  spec.add_dependency "sequel", "~> 5.72"
+  spec.add_dependency "sqlite3", "~> 1.6"
   spec.add_dependency "zeitwerk", "~> 2.6"
 end

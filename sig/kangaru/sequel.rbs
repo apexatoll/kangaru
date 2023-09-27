@@ -1,0 +1,3 @@
+module Sequel
+  def self.sqlite: (String path) -> Database
+end
