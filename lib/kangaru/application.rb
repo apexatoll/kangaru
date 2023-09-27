@@ -16,6 +16,10 @@ module Kangaru
       @config ||= Config.new
     end
 
+    def configure(&block)
+      block.call(config)
+    end
+
     def setup
       autoloader.setup
     end
