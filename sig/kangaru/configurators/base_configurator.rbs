@@ -6,6 +6,8 @@ module Kangaru
       def self.name: -> Symbol
 
       def self.settings: -> Array[Symbol]
+
+      def serialise: -> Hash[Symbol, untyped]
     end
   end
 end
