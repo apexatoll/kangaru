@@ -15,6 +15,12 @@ module Kangaru
           setting.to_s.delete_suffix("=").to_sym
         end
       end
+
+      def serialise
+        self.class.settings.to_h do |setting|
+          [setting, send(setting)]
+        end.compact
+      end
     end
   end
 end
