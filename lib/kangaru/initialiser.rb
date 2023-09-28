@@ -5,8 +5,6 @@ module Kangaru
 
       Kangaru.application = Application.from_callsite(root_file, namespace:)
 
-      Kangaru.application.setup
-
       namespace.module_eval do
         def self.run!(argv)
           Kangaru.application.run!(argv)

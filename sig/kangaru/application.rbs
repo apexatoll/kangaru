@@ -14,8 +14,6 @@ module Kangaru
 
     def configure: { (Config) -> void } -> void
 
-    def setup: -> void
-
     def run!: (Array[String]) -> void
 
     def self.from_callsite: (String callsite, namespace: Module) -> Application

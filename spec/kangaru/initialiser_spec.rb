@@ -38,11 +38,6 @@ RSpec.describe Kangaru::Initialiser do
           .to change { Kangaru.application }
           .to(application)
       end
-
-      it "sets up the application" do
-        extended
-        expect(application).to have_received(:setup).once
-      end
     end
 
     context "when calling file is not in a gem structure" do
