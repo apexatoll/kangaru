@@ -6,6 +6,8 @@ module Kangaru
 
     def initialize: -> void
 
+    def serialise: -> Hash[Symbol, Hash[Symbol, untyped]]
+
     private
 
     def set_configurators!: -> Hash[Symbol, configurator]

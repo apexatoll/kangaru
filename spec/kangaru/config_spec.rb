@@ -64,4 +64,24 @@ RSpec.describe Kangaru::Config do
       end
     end
   end
+
+  describe "#serialise" do
+    subject(:hash) { config.serialise }
+
+    context "when no configurators defined" do
+      include_context :no_configurators_defined
+
+      it "returns an empty hash" do
+        expect(hash).to be_empty
+      end
+    end
+
+    context "when configurators set" do
+      include_context :configurator_defined
+
+      it "returns the expected hash" do
+        expect(hash).to eq(foobar: { hello: "world" })
+      end
+    end
+  end
 end

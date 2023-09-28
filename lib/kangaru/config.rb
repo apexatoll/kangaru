@@ -6,6 +6,10 @@ module Kangaru
       @configurators = set_configurators!
     end
 
+    def serialise
+      configurators.transform_values(&:serialise)
+    end
+
     private
 
     def set_configurators!
