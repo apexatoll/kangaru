@@ -1,0 +1,9 @@
+module Kangaru
+  module Configurators
+    class BaseConfigurator
+      self.@settings: Array[Symbol]
+
+      def self.settings: -> Array[Symbol]
+    end
+  end
+end
