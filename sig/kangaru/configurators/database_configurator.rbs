@@ -1,0 +1,8 @@
+module Kangaru
+  module Configurators
+    class DatabaseConfigurator < Configurator
+      attr_accessor adaptor: Symbol
+      attr_accessor path: String
+    end
+  end
+end
