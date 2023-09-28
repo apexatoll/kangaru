@@ -1,0 +1,13 @@
+module Kangaru
+  class Config
+    type configurator = Configurators::BaseConfigurator
+
+    attr_reader configurators: Hash[Symbol, configurator]
+
+    def initialize: -> void
+
+    private
+
+    def set_configurators!: -> Hash[Symbol, configurator]
+  end
+end
