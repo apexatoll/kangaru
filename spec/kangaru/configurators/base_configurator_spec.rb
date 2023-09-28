@@ -1,4 +1,18 @@
 RSpec.describe Kangaru::Configurators::BaseConfigurator do
+  describe ".name" do
+    subject(:name) { configurator_class.name }
+
+    let(:configurator_class) do
+      Class.new(described_class) do
+        def self.to_s = "FoobarConfigurator"
+      end
+    end
+
+    it "returns the expected name" do
+      expect(name).to eq(:foobar)
+    end
+  end
+
   describe ".settings" do
     subject(:settings) { configurator_class.settings }
 
