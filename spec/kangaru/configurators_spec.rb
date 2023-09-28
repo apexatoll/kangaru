@@ -9,6 +9,12 @@ RSpec.describe Kangaru::Configurators do
     end
 
     context "when configurator classes are defined" do
+      before do
+        allow(described_class)
+          .to receive(:constants)
+          .and_return(%i[SomeConfigurator AnotherConfigurator])
+      end
+
       around do |spec|
         described_class.const_set(:SomeConfigurator, some_configurator)
         described_class.const_set(:AnotherConfigurator, another_configurator)
