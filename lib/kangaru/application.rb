@@ -4,18 +4,15 @@ module Kangaru
 
     include ApplicationPaths
 
-    attr_reader :name, :dir, :namespace
+    attr_reader :name, :dir, :namespace, :config
 
     def initialize(name:, dir:, namespace:)
       @name = name
       @dir = dir
       @namespace = namespace
+      @config = Config.new
 
       autoloader.setup
-    end
-
-    def config
-      @config ||= Config.new
     end
 
     def configure(&block)

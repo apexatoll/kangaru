@@ -51,6 +51,10 @@ RSpec.describe Kangaru::Application do
       application
       expect(loader).to have_received(:setup).once
     end
+
+    it "initialises the config" do
+      expect(application.config).to be_a(Kangaru::Config)
+    end
   end
 
   describe "#run!" do
@@ -80,21 +84,6 @@ RSpec.describe Kangaru::Application do
     it "resolves the request" do
       run!
       expect(router).to have_received(:resolve)
-    end
-  end
-
-  describe "#config" do
-    subject(:config) { application.config }
-
-    it "returns a config object" do
-      expect(config).to be_a(Kangaru::Config)
-    end
-
-    it "caches the config object" do
-      expect { config }
-        .to change { application.instance_variable_defined?(:@config) }
-        .from(false)
-        .to(true)
     end
   end
 
