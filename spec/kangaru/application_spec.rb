@@ -7,42 +7,25 @@ RSpec.describe Kangaru::Application do
 
   let(:namespace) { SomeApp }
 
-  before { stub_const "SomeApp", Module.new }
+  let(:loader) { instance_spy(Zeitwerk::Loader) }
 
-  describe "#config" do
-    subject(:config) { application.config }
+  let(:gem_inflector) { instance_spy(Zeitwerk::GemInflector) }
 
-    it "returns a config object" do
-      expect(config).to be_a(Kangaru::Config)
-    end
+  before do
+    stub_const "SomeApp", Module.new
 
-    it "caches the config object" do
-      expect { config }
-        .to change { application.instance_variable_defined?(:@config) }
-        .from(false)
-        .to(true)
-    end
+    allow(Zeitwerk::Loader).to receive(:new).and_return(loader)
+    allow(Zeitwerk::GemInflector).to receive(:new).and_return(gem_inflector)
   end
 
-  describe "#setup" do
-    subject(:setup) { application.setup }
-
-    before do
-      allow(Zeitwerk::Loader).to receive(:new).and_return(loader)
-      allow(Zeitwerk::GemInflector).to receive(:new).and_return(gem_inflector)
-    end
-
-    let(:loader) { instance_spy(Zeitwerk::Loader) }
-
-    let(:gem_inflector) { instance_spy(Zeitwerk::GemInflector) }
-
+  describe "#initialize" do
     it "instantiates a Zeitwerk loader" do
-      setup
+      application
       expect(Zeitwerk::Loader).to have_received(:new).once
     end
 
     it "instantiates a Zeitwerk gem inflector for the root file" do
-      setup
+      application
 
       expect(Zeitwerk::GemInflector)
         .to have_received(:new)
@@ -51,12 +34,12 @@ RSpec.describe Kangaru::Application do
     end
 
     it "configures the loader to use the instantiated gem inflector" do
-      setup
+      application
       expect(loader).to have_received(:inflector=).with(gem_inflector).once
     end
 
     it "configures the loader to load the lib dir" do
-      setup
+      application
 
       expect(loader)
         .to have_received(:push_dir)
@@ -65,7 +48,7 @@ RSpec.describe Kangaru::Application do
     end
 
     it "enables the instantiated loader" do
-      setup
+      application
       expect(loader).to have_received(:setup).once
     end
   end
@@ -97,6 +80,21 @@ RSpec.describe Kangaru::Application do
     it "resolves the request" do
       run!
       expect(router).to have_received(:resolve)
+    end
+  end
+
+  describe "#config" do
+    subject(:config) { application.config }
+
+    it "returns a config object" do
+      expect(config).to be_a(Kangaru::Config)
+    end
+
+    it "caches the config object" do
+      expect { config }
+        .to change { application.instance_variable_defined?(:@config) }
+        .from(false)
+        .to(true)
     end
   end
 

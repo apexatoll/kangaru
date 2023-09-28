@@ -10,6 +10,8 @@ module Kangaru
       @name = name
       @dir = dir
       @namespace = namespace
+
+      autoloader.setup
     end
 
     def config
@@ -18,10 +20,6 @@ module Kangaru
 
     def configure(&block)
       block.call(config)
-    end
-
-    def setup
-      autoloader.setup
     end
 
     def run!(argv)
