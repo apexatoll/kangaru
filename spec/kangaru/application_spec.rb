@@ -57,6 +57,52 @@ RSpec.describe Kangaru::Application do
     end
   end
 
+  describe "#configure" do
+    subject(:configure) { application.configure(&configure_block) }
+
+    let(:database) { instance_spy(Kangaru::Database, setup!: nil) }
+
+    before do
+      allow(Kangaru::Database).to receive(:new).and_return(database)
+    end
+
+    context "when no configuration is set" do
+      let(:configure_block) { proc {} }
+
+      it "does not create a database" do
+        configure
+        expect(Kangaru::Database).not_to have_received(:new)
+      end
+
+      it "does not set the application database instance" do
+        expect { configure }.not_to change { application.database }.from(nil)
+      end
+    end
+
+    context "when configuration sets a database adaptor" do
+      let(:configure_block) do
+        ->(config) { config.database.adaptor = :sqlite }
+      end
+
+      it "creates a database" do
+        configure
+        expect(Kangaru::Database).to have_received(:new).once
+      end
+
+      it "sets up the database" do
+        configure
+        expect(database).to have_received(:setup!).once
+      end
+
+      it "sets the application database instance" do
+        expect { configure }
+          .to change { application.database }
+          .from(nil)
+          .to(database)
+      end
+    end
+  end
+
   describe "#run!" do
     subject(:run!) { application.run!(argv) }
 
