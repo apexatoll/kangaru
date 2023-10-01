@@ -1,6 +1,8 @@
 module Kangaru
   module Configurators
     class Configurator
+      include Concerns::AttributesConcern
+
       using Patches::Inflections
 
       def self.name
@@ -10,14 +12,8 @@ module Kangaru
             .to_sym
       end
 
-      def self.settings
-        @settings ||= instance_methods.grep(/\w=$/).map do |setting|
-          setting.to_s.delete_suffix("=").to_sym
-        end
-      end
-
       def serialise
-        self.class.settings.to_h do |setting|
+        self.class.attributes.to_h do |setting|
           [setting, send(setting)]
         end.compact
       end
