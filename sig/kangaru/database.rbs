@@ -1,0 +1,23 @@
+module Kangaru
+  class Database
+    include Concerns::AttributesConcern
+    extend  Concerns::AttributesConcern::ClassMethods
+
+    class AdaptorError < StandardError
+    end
+
+    class SQLiteError < StandardError
+    end
+
+    attr_accessor adaptor: Symbol
+    attr_accessor path: String
+
+    @handler: Sequel::Database
+
+    def setup!: -> void
+
+    private
+
+    def setup_sqlite!: -> Sequel::Database
+  end
+end
