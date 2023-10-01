@@ -1,4 +1,4 @@
-RSpec.describe Kangaru::Configurators::BaseConfigurator do
+RSpec.describe Kangaru::Configurators::Configurator do
   describe ".name" do
     subject(:name) { configurator_class.name }
 

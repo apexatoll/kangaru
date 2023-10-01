@@ -1,6 +1,6 @@
 module Kangaru
   class Config
-    type configurator = Configurators::BaseConfigurator
+    type configurator = Configurators::Configurator
 
     attr_reader configurators: Hash[Symbol, configurator]
 
