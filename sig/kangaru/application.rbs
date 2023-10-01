@@ -6,6 +6,7 @@ module Kangaru
     attr_reader dir: String
     attr_reader namespace: Module
     attr_reader config: Config
+    attr_reader database: Database
 
     def initialize: (name: String, dir: String, namespace: Module) -> void
 
@@ -18,5 +19,7 @@ module Kangaru
     private
 
     attr_reader autoloader: Zeitwerk::Loader
+
+    def setup: -> void
   end
 end

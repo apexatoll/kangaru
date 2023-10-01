@@ -4,7 +4,7 @@ module Kangaru
 
     include ApplicationPaths
 
-    attr_reader :name, :dir, :namespace, :config
+    attr_reader :name, :dir, :namespace, :config, :database
 
     def initialize(name:, dir:, namespace:)
       @name = name
@@ -17,6 +17,8 @@ module Kangaru
 
     def configure(&block)
       block.call(config)
+
+      setup
     end
 
     def run!(argv)
@@ -39,6 +41,12 @@ module Kangaru
         loader.inflector = Zeitwerk::GemInflector.new(main_file.to_s)
         loader.push_dir(lib_path.to_s)
       end
+    end
+
+    def setup
+      return if config.database.adaptor.nil?
+
+      @database = Database.new(**config.database.serialise).tap(&:setup!)
     end
   end
 end
