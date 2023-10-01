@@ -1,11 +1,10 @@
 module Kangaru
   module Configurators
     class Configurator
-      self.@settings: Array[Symbol]
+      include Concerns::AttributesConcern
+      extend  Concerns::AttributesConcern::ClassMethods
 
       def self.name: -> Symbol
-
-      def self.settings: -> Array[Symbol]
 
       def serialise: -> Hash[Symbol, untyped]
     end
