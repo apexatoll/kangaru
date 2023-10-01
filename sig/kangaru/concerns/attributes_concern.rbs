@@ -1,0 +1,17 @@
+module Kangaru
+  module Concerns
+    module AttributesConcern
+      extend Concern
+
+      module ClassMethods
+        def attributes: -> Array[Symbol]
+      end
+
+      extend ClassMethods
+
+      def instance_methods: -> Array[Symbol]
+
+      def initialize: (**untyped) -> void
+    end
+  end
+end
