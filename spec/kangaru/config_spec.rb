@@ -21,12 +21,12 @@ RSpec.describe Kangaru::Config do
     after { described_class.undef_method(name) }
 
     let(:configurator_class) do
-      class_spy(Kangaru::Configurators::BaseConfigurator, name:)
+      class_spy(Kangaru::Configurators::Configurator, name:)
     end
 
     let(:configurator) do
       instance_spy(
-        Kangaru::Configurators::BaseConfigurator,
+        Kangaru::Configurators::Configurator,
         serialise: configurator_hash
       )
     end

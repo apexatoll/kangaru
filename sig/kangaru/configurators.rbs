@@ -1,5 +1,5 @@
 module Kangaru
   module Configurators
-    def self.classes: -> Array[singleton(BaseConfigurator)]
+    def self.classes: -> Array[singleton(Configurator)]
   end
 end

@@ -1,6 +1,6 @@
 module Kangaru
   module Configurators
-    class BaseConfigurator
+    class Configurator
       using Patches::Inflections
 
       def self.name
