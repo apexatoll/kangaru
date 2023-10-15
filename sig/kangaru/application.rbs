@@ -8,13 +8,11 @@ module Kangaru
     attr_reader config: Config
     attr_reader database: Database
 
-    def initialize: (name: String, dir: String, namespace: Module) -> void
+    def initialize: (source: String, namespace: Module) -> void
 
     def configure: { (Config) -> void } -> void
 
     def run!: (Array[String]) -> void
-
-    def self.from_callsite: (source: String, namespace: Module) -> Application
 
     private
 

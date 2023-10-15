@@ -6,9 +6,9 @@ module Kangaru
 
     attr_reader :name, :dir, :namespace, :config, :database
 
-    def initialize(name:, dir:, namespace:)
-      @name = name
-      @dir = dir
+    def initialize(source:, namespace:)
+      @name = File.basename(source).delete_suffix(".rb")
+      @dir = File.dirname(source).delete_suffix("/#{name}/lib")
       @namespace = namespace
       @config = Config.new
 
@@ -25,13 +25,6 @@ module Kangaru
       command = Command.parse(argv)
 
       Router.new(command, namespace:).resolve
-    end
-
-    def self.from_callsite(source:, namespace:)
-      name = File.basename(source).delete_suffix(".rb")
-      dir  = File.dirname(source).delete_suffix("/#{name}/lib")
-
-      new(name:, dir:, namespace:)
     end
 
     private

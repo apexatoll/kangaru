@@ -17,6 +17,8 @@ RSpec.describe Kangaru::Initialiser do
 
   let(:application) { instance_spy(Kangaru::Application) }
 
+  let(:callsite) { "#{source}:23 initialize" }
+
   describe ".extended" do
     subject(:extended) { namespace.extend(described_class) }
 
@@ -29,7 +31,7 @@ RSpec.describe Kangaru::Initialiser do
 
         expect(Kangaru::Application)
           .to have_received(:new)
-          .with(dir: expected_dir, name: expected_name, namespace:)
+          .with(source:, namespace:)
           .once
       end
 
@@ -41,14 +43,14 @@ RSpec.describe Kangaru::Initialiser do
     end
 
     context "when calling file is not in a gem structure" do
-      let(:callsite) { "/foo/bar/some_file.rb:23 initialize" }
+      let(:source) { "/foo/bar/some_file.rb" }
 
       include_examples :initialises_application,
                        dir: "/foo/bar", name: "some_file"
     end
 
     context "when calling file is in a gem structure" do
-      let(:callsite) { "/foo/bar/some_gem/lib/some_gem.rb:23 initialize" }
+      let(:source) { "/foo/bar/some_gem/lib/some_gem.rb" }
 
       include_examples :initialises_application,
                        dir: "/foo/bar", name: "some_gem"

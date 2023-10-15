@@ -1,9 +1,7 @@
 RSpec.describe Kangaru::Application do
-  subject(:application) { described_class.new(name:, dir:, namespace:) }
+  subject(:application) { described_class.new(source:, namespace:) }
 
-  let(:name) { "some_app" }
-
-  let(:dir) { "/foo/bar" }
+  let(:source) { "/foo/bar/some_app/lib/some_app.rb" }
 
   let(:namespace) { SomeApp }
 
@@ -130,40 +128,6 @@ RSpec.describe Kangaru::Application do
     it "resolves the request" do
       run!
       expect(router).to have_received(:resolve)
-    end
-  end
-
-  describe ".from_callsite" do
-    subject(:application) do
-      described_class.from_callsite(source:, namespace:)
-    end
-
-    context "when root file is not in a gem structure" do
-      let(:source) { "/foobar/some_dir/some_file.rb" }
-
-      it "is an application" do
-        expect(application).to be_a(described_class)
-      end
-
-      it "sets the expected_attributes" do
-        expect(application).to have_attributes(
-          name: "some_file", dir: "/foobar/some_dir", namespace:
-        )
-      end
-    end
-
-    context "when root file is in a gem structure" do
-      let(:source) { "/foobar/some_gem/lib/some_gem.rb" }
-
-      it "is an application" do
-        expect(application).to be_a(described_class)
-      end
-
-      it "sets the expected_attributes" do
-        expect(application).to have_attributes(
-          name: "some_gem", dir: "/foobar", namespace:
-        )
-      end
     end
   end
 end
