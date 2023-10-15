@@ -7,7 +7,11 @@ class Pathname
 
   def to_s: -> String
 
+  def basename: (?String) -> Pathname
+
   def dirname: -> Pathname
 
   def exist?: -> bool
+
+  def join: (*String) -> Pathname
 end
