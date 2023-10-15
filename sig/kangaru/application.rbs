@@ -2,6 +2,7 @@ module Kangaru
   class Application
     include ApplicationPaths
 
+    attr_reader paths: PathBuilder
     attr_reader name: String
     attr_reader dir: Pathname
     attr_reader namespace: Module

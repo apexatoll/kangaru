@@ -4,9 +4,10 @@ module Kangaru
 
     include ApplicationPaths
 
-    attr_reader :name, :dir, :namespace, :config, :database
+    attr_reader :paths, :name, :dir, :namespace, :config, :database
 
     def initialize(source:, namespace:)
+      @paths = PathBuilder.new(source:)
       @name = File.basename(source).delete_suffix(".rb")
       @dir = Pathname.new(File.dirname(source).delete_suffix("/#{name}/lib"))
       @namespace = namespace
