@@ -295,7 +295,7 @@ RSpec.describe "Running a command", :with_gem do
       before do
         gem.gem_dir("views").mkdir
         gem.gem_dir("views/default").mkdir
-        gem.view_file(controller: "default", action: "default").write(view_file)
+        gem.view_path(controller: "default", action: "default").write(view_file)
 
         gem.load!
       end

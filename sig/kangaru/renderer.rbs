@@ -8,6 +8,6 @@ module Kangaru
 
     private
 
-    def view_file: -> Pathname
+    def view_path: -> Pathname
   end
 end

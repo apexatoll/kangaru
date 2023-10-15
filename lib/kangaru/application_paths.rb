@@ -22,7 +22,7 @@ module Kangaru
       Pathname.new(File.join(lib_path.to_s, name, dir))
     end
 
-    def view_file(controller:, action:)
+    def view_path(controller:, action:)
       Pathname.new(
         File.join(gem_dir(VIEWS_DIR).to_s, controller, "#{action}.erb")
       )

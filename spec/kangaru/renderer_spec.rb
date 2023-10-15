@@ -2,9 +2,9 @@ RSpec.describe Kangaru::Renderer do
   subject(:renderer) { described_class.new(command) }
 
   let(:command)     { instance_spy(Kangaru::Command) }
-  let(:application) { instance_spy(Kangaru::Application, view_file:) }
+  let(:application) { instance_spy(Kangaru::Application, view_path:) }
 
-  let(:view_file) do
+  let(:view_path) do
     instance_spy(Pathname, read: view_file_contents, exist?: view_file_exists?)
   end
 

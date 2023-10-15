@@ -7,15 +7,15 @@ module Kangaru
     end
 
     def render(binding)
-      return unless view_file.exist?
+      return unless view_path.exist?
 
-      puts ERB.new(view_file.read).result(binding)
+      puts ERB.new(view_path.read).result(binding)
     end
 
     private
 
-    def view_file
-      Kangaru.application.view_file(
+    def view_path
+      Kangaru.application.view_path(
         controller: command.controller,
         action: command.action.to_s
       )
