@@ -2,8 +2,6 @@ module Kangaru
   class Application
     extend Forwardable
 
-    include ApplicationPaths
-
     attr_reader paths: PathBuilder
     attr_reader namespace: Module
     attr_reader config: Config
@@ -12,6 +10,7 @@ module Kangaru
     # Delegated to paths
     attr_reader name: String
     attr_reader dir: Pathname
+    def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
 
     def initialize: (source: String, namespace: Module) -> void
 

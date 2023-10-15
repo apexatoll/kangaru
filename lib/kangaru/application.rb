@@ -4,10 +4,8 @@ module Kangaru
 
     using Patches::Inflections
 
-    include ApplicationPaths
-
     # These should be removed if possible.
-    def_delegators :paths, :name, :dir
+    def_delegators :paths, :name, :dir, :view_path
 
     attr_reader :paths, :namespace, :config, :database
 
