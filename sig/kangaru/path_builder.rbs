@@ -1,0 +1,23 @@
+module Kangaru
+  class PathBuilder
+    attr_reader source: Pathname
+    attr_reader dir: Pathname
+    attr_reader name: String
+
+    def initialize: (source: String) -> void
+
+    def gem_path: (*String, ?ext: Symbol?) -> Pathname
+
+    def lib_path: (*String, ?ext: Symbol?) -> Pathname
+
+    def app_path: (*String, ?ext: Symbol?) -> Pathname
+
+    private
+
+    attr_reader gem_dir: Pathname
+    attr_reader lib_dir: Pathname
+    attr_reader app_dir: Pathname
+
+    def build_path: (*String, dir: Pathname, ext: Symbol?) -> Pathname
+  end
+end
