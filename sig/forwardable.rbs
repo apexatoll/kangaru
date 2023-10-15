@@ -1,0 +1,3 @@
+module Forwardable
+  def def_delegators: (Symbol, *Symbol) -> void
+end

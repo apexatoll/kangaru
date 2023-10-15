@@ -1,6 +1,7 @@
 require "zeitwerk"
 
 require "erb"
+require "forwardable"
 require "pathname"
 require "sequel"
 require "sqlite3"
