@@ -6,6 +6,18 @@ RSpec.describe Kangaru::Testing::Gem, :with_temp_dir do
   let(:name) { "some_gem" }
   let(:dir)  { temp_dir }
 
+  shared_examples :returns_path do |options|
+    let(:expected_path) { options[:for] }
+
+    it "returns a Pathname" do
+      expect(subject).to be_a(Pathname)
+    end
+
+    it "sets the expected path" do
+      expect(subject.to_s).to eq(expected_path)
+    end
+  end
+
   describe "#initialize" do
     context "when gem name is not specified" do
       let(:name) { nil }
@@ -30,6 +42,81 @@ RSpec.describe Kangaru::Testing::Gem, :with_temp_dir do
         expect(gem.name).to eq(name)
       end
     end
+  end
+
+  describe "#path" do
+    subject(:path) { gem.path }
+
+    it "returns a Pathname" do
+      expect(path).to be_a(Pathname)
+    end
+
+    it "returns the expected path" do
+      expect(path.to_s).to eq("#{dir}/#{name}")
+    end
+  end
+
+  describe "#lib_path" do
+    subject(:lib_path) { gem.lib_path }
+
+    it "returns a Pathname" do
+      expect(lib_path).to be_a(Pathname)
+    end
+
+    it "sets the expected path" do
+      expect(lib_path.to_s).to eq("#{dir}/#{name}/lib")
+    end
+  end
+
+  describe "#main_file" do
+    subject(:main_file) { gem.main_file }
+
+    it "returns a Pathname" do
+      expect(main_file).to be_a(Pathname)
+    end
+
+    it "returns the expected path" do
+      expect(main_file.to_s).to eq("#{dir}/#{name}/lib/#{name}.rb")
+    end
+  end
+
+  describe "#gem_file" do
+    subject(:gem_file) { gem.gem_file(file) }
+
+    let(:file) { "some_file" }
+
+    it "returns a Pathname" do
+      expect(gem_file).to be_a(Pathname)
+    end
+
+    it "returns the expected path" do
+      expect(gem_file.to_s).to eq("#{dir}/#{name}/lib/#{name}/#{file}.rb")
+    end
+  end
+
+  describe "#gem_dir" do
+    subject(:gem_dir) { gem.gem_dir(dir_arg) }
+
+    let(:dir_arg) { "some_dir" }
+
+    it "returns a Pathname" do
+      expect(gem_dir).to be_a(Pathname)
+    end
+
+    it "returns the expected path" do
+      expect(gem_dir.to_s).to eq("#{dir}/#{name}/lib/#{name}/#{dir_arg}")
+    end
+  end
+
+  describe "#view_file", skip: :deprecated do
+    subject(:view_file) { gem.view_file(controller:, action:) }
+
+    let(:controller) { "default" }
+
+    let(:action) { :do_something }
+
+    include_examples :returns_path, for:
+      "/foo/bar/double/lib/double/views/default/do_something.erb"
   end
 
   describe "#created?" do

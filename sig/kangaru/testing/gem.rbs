@@ -1,19 +1,27 @@
 module Kangaru
   module Testing
     class Gem
-      include ApplicationPaths
-
       class GemNotCreatedError < StandardError
       end
 
       DEFAULT_NAME: String
+      VIEWS_DIR: String
 
       @created: bool
 
       attr_reader dir: Pathname
       attr_reader name: String
+      attr_reader path: Pathname
+      attr_reader lib_path: Pathname
+      attr_reader main_file: Pathname
 
       def initialize: (dir: String, ?name: String) -> void
+
+      def gem_file: (String file) -> Pathname
+
+      def gem_dir: (String dir) -> Pathname
+
+      def view_path: (controller: String, action: String) -> Pathname
 
       def created?: -> bool
 
