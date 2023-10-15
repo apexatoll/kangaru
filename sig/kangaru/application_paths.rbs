@@ -1,6 +1,6 @@
 module Kangaru
   interface _Application
-    def dir: -> String
+    def dir: -> Pathname
     def name: -> String
   end
 

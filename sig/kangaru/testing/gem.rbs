@@ -10,7 +10,7 @@ module Kangaru
 
       @created: bool
 
-      attr_reader dir: String
+      attr_reader dir: Pathname
       attr_reader name: String
 
       def initialize: (dir: String, ?name: String) -> void

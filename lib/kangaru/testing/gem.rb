@@ -10,7 +10,7 @@ module Kangaru
       attr_reader :dir, :name
 
       def initialize(dir:, name: DEFAULT_NAME)
-        @dir  = dir
+        @dir  = Pathname.new(dir)
         @name = name
       end
 

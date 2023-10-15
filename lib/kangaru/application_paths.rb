@@ -3,7 +3,7 @@ module Kangaru
     VIEWS_DIR = "views".freeze
 
     def path
-      @path ||= Pathname.new(File.join(dir, name))
+      @path ||= dir.join(name)
     end
 
     def lib_path

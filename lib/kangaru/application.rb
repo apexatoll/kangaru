@@ -8,7 +8,7 @@ module Kangaru
 
     def initialize(source:, namespace:)
       @name = File.basename(source).delete_suffix(".rb")
-      @dir = File.dirname(source).delete_suffix("/#{name}/lib")
+      @dir = Pathname.new(File.dirname(source).delete_suffix("/#{name}/lib"))
       @namespace = namespace
       @config = Config.new
 

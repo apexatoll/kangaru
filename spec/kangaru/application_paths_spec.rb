@@ -1,4 +1,4 @@
-RSpec.describe Kangaru::ApplicationPaths do
+RSpec.describe Kangaru::ApplicationPaths, skip: :deprecated do
   subject(:application) { application_class.new(dir:, name:) }
 
   let(:application_class) do

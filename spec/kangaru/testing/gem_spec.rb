@@ -11,7 +11,7 @@ RSpec.describe Kangaru::Testing::Gem, :with_temp_dir do
       let(:name) { nil }
 
       it "sets the directory" do
-        expect(gem.dir).to eq(dir)
+        expect(gem.dir.to_s).to eq(dir)
       end
 
       it "sets the name to the default" do
@@ -23,7 +23,7 @@ RSpec.describe Kangaru::Testing::Gem, :with_temp_dir do
       let(:name) { "some_gem" }
 
       it "sets the directory" do
-        expect(gem.dir).to eq(dir)
+        expect(gem.dir.to_s).to eq(dir)
       end
 
       it "sets the name to the specified value" do

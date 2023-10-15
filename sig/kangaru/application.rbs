@@ -3,7 +3,7 @@ module Kangaru
     include ApplicationPaths
 
     attr_reader name: String
-    attr_reader dir: String
+    attr_reader dir: Pathname
     attr_reader namespace: Module
     attr_reader config: Config
     attr_reader database: Database
