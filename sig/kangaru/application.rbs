@@ -1,13 +1,17 @@
 module Kangaru
   class Application
+    extend Forwardable
+
     include ApplicationPaths
 
     attr_reader paths: PathBuilder
-    attr_reader name: String
-    attr_reader dir: Pathname
     attr_reader namespace: Module
     attr_reader config: Config
     attr_reader database: Database
+
+    # Delegated to paths
+    attr_reader name: String
+    attr_reader dir: Pathname
 
     def initialize: (source: String, namespace: Module) -> void
 

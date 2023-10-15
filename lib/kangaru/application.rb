@@ -1,15 +1,18 @@
 module Kangaru
   class Application
+    extend Forwardable
+
     using Patches::Inflections
 
     include ApplicationPaths
 
-    attr_reader :paths, :name, :dir, :namespace, :config, :database
+    # These should be removed if possible.
+    def_delegators :paths, :name, :dir
+
+    attr_reader :paths, :namespace, :config, :database
 
     def initialize(source:, namespace:)
       @paths = PathBuilder.new(source:)
-      @name = File.basename(source).delete_suffix(".rb")
-      @dir = Pathname.new(File.dirname(source).delete_suffix("/#{name}/lib"))
       @namespace = namespace
       @config = Config.new
 
