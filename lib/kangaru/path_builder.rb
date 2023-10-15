@@ -43,7 +43,13 @@ module Kangaru
       build_path(*, dir: app_dir, ext:)
     end
 
+    def view_path(controller:, action:, ext: :erb)
+      build_path(controller, action, dir: view_dir, ext:)
+    end
+
     private
+
+    VIEWS_DIRNAME = "views".freeze
 
     def gem_dir
       @gem_dir ||= lib_dir.dirname
@@ -55,6 +61,10 @@ module Kangaru
 
     def app_dir
       @app_dir ||= lib_dir.join(name)
+    end
+
+    def view_dir
+      @view_dir ||= app_dir.join(VIEWS_DIRNAME)
     end
 
     def build_path(*fragments, dir:, ext:)

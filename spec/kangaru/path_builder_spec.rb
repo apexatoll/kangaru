@@ -175,4 +175,26 @@ RSpec.describe Kangaru::PathBuilder do
       end
     end
   end
+
+  describe "#view_path" do
+    subject(:view_file) { path_builder.view_path(controller:, action:, ext:) }
+
+    let(:controller) { "default" }
+
+    let(:action) { :do_something }
+
+    context "when extension is not specified" do
+      let(:ext) { nil }
+
+      include_examples :builds_path, as:
+        "/foo/bar/gem%{version}/lib/gem/views/default/do_something"
+    end
+
+    context "when extension is specified" do
+      let(:ext) { :erb }
+
+      include_examples :builds_path, as:
+        "/foo/bar/gem%{version}/lib/gem/views/default/do_something.erb"
+    end
+  end
 end

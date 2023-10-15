@@ -12,11 +12,16 @@ module Kangaru
 
     def app_path: (*String, ?ext: Symbol?) -> Pathname
 
+    def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
+
     private
+
+    VIEWS_DIRNAME: String
 
     attr_reader gem_dir: Pathname
     attr_reader lib_dir: Pathname
     attr_reader app_dir: Pathname
+    attr_reader view_dir: Pathname
 
     def build_path: (*String, dir: Pathname, ext: Symbol?) -> Pathname
   end
