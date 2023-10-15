@@ -21,8 +21,6 @@ module Kangaru
 
       def gem_dir: (String dir) -> Pathname
 
-      def view_path: (controller: String, action: String) -> Pathname
-
       def created?: -> bool
 
       def create!: -> void
