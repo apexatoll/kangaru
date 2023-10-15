@@ -14,7 +14,7 @@ module Kangaru
 
     def run!: (Array[String]) -> void
 
-    def self.from_callsite: (String callsite, namespace: Module) -> Application
+    def self.from_callsite: (source: String, namespace: Module) -> Application
 
     private
 

@@ -135,11 +135,11 @@ RSpec.describe Kangaru::Application do
 
   describe ".from_callsite" do
     subject(:application) do
-      described_class.from_callsite(callsite, namespace:)
+      described_class.from_callsite(source:, namespace:)
     end
 
     context "when root file is not in a gem structure" do
-      let(:callsite) { "/foobar/some_dir/some_file.rb" }
+      let(:source) { "/foobar/some_dir/some_file.rb" }
 
       it "is an application" do
         expect(application).to be_a(described_class)
@@ -153,7 +153,7 @@ RSpec.describe Kangaru::Application do
     end
 
     context "when root file is in a gem structure" do
-      let(:callsite) { "/foobar/some_gem/lib/some_gem.rb" }
+      let(:source) { "/foobar/some_gem/lib/some_gem.rb" }
 
       it "is an application" do
         expect(application).to be_a(described_class)

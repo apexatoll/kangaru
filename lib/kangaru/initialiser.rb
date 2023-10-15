@@ -1,9 +1,9 @@
 module Kangaru
   module Initialiser
     def self.extended(namespace)
-      root_file = caller[0].gsub(/:.*$/, "")
+      source = caller[0].gsub(/:.*$/, "")
 
-      Kangaru.application = Application.from_callsite(root_file, namespace:)
+      Kangaru.application = Application.from_callsite(source:, namespace:)
 
       namespace.module_eval do
         def self.run!(argv)
