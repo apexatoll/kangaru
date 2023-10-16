@@ -10,6 +10,8 @@ module Kangaru
 
     attr_reader database: Configurators::DatabaseConfigurator
 
+    attr_reader application: Configurators::ApplicationConfigurator
+
     private
 
     def set_configurators!: -> Hash[Symbol, configurator]
