@@ -1,4 +1,4 @@
-RSpec.describe "Setting up a database in a target gem", :with_gem do
+RSpec.describe "Setting up a database in a target gem", :with_gem_deprecated do
   context "when no database adaptor is set" do
     before do
       gem.main_file.write(<<~RUBY)

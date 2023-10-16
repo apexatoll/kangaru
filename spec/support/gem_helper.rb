@@ -2,7 +2,7 @@ require "tmpdir"
 
 module GemHelper
   RSpec.configure do |config|
-    config.around(with_gem: true) do |spec|
+    config.around(with_gem_deprecated: true) do |spec|
       self.class.class_eval { attr_reader :gem }
 
       Dir.mktmpdir do |dir|

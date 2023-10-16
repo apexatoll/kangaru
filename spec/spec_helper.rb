@@ -1,4 +1,5 @@
 require "kangaru"
+require "zirconia/rspec"
 
 def load_support_files!
   Dir[File.join(__dir__, "support/**/*.rb")].each { |f| require f }

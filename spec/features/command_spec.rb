@@ -1,4 +1,4 @@
-RSpec.describe "Running a command", :with_gem do
+RSpec.describe "Running a command", :with_gem_deprecated do
   subject(:run_command!) { SomeGem.run!(argv) }
 
   let(:argv) { [] }
