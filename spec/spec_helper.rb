@@ -21,4 +21,10 @@ RSpec.configure do |config|
   config.include FileHelper
   config.include GemHelper
   config.include TempDirHelper
+
+  config.after(with_gem: true) do
+    if Kangaru.instance_variable_defined?(:@application)
+      Kangaru.remove_instance_variable(:@application)
+    end
+  end
 end
