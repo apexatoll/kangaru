@@ -1,4 +1,4 @@
-RSpec.describe "Running a command", :with_gem_deprecated do
+RSpec.describe "Running a command", with_gem: :some_gem do
   subject(:run_command!) { SomeGem.run!(argv) }
 
   let(:argv) { [] }
@@ -67,7 +67,7 @@ RSpec.describe "Running a command", :with_gem_deprecated do
 
       context "and default controller is defined" do
         before do
-          gem.gem_file("default_controller").write(controller)
+          gem.path("default_controller").write(controller)
           gem.load!
         end
 
@@ -119,7 +119,7 @@ RSpec.describe "Running a command", :with_gem_deprecated do
 
       context "and specified controller is defined" do
         before do
-          gem.gem_file("foobar_controller").write(controller)
+          gem.path("foobar_controller").write(controller)
           gem.load!
         end
 
@@ -171,7 +171,7 @@ RSpec.describe "Running a command", :with_gem_deprecated do
 
       context "and specified controller is defined" do
         before do
-          gem.gem_file("foobar_controller").write(controller)
+          gem.path("foobar_controller").write(controller)
           gem.load!
         end
 
@@ -223,8 +223,8 @@ RSpec.describe "Running a command", :with_gem_deprecated do
 
       context "and specified nested controller is defined" do
         before do
-          gem.gem_dir("namespace").mkdir
-          gem.gem_file("namespace/foobar_controller").write(controller)
+          gem.path("namespace", ext: nil).mkdir
+          gem.path("namespace", "foobar_controller").write(controller)
           gem.load!
         end
 
@@ -271,7 +271,7 @@ RSpec.describe "Running a command", :with_gem_deprecated do
 
   describe "rendering view files" do
     before do
-      gem.gem_file("default_controller").write(<<~RUBY)
+      gem.path("default_controller").write(<<~RUBY)
         module SomeGem
           class DefaultController < Kangaru::Controller
             def default
@@ -293,9 +293,9 @@ RSpec.describe "Running a command", :with_gem_deprecated do
 
     context "when view file exists" do
       before do
-        gem.gem_dir("views").mkdir
-        gem.gem_dir("views/default").mkdir
-        gem.view_path(controller: "default", action: "default").write(view_file)
+        gem.path("views", ext: nil).mkdir
+        gem.path("views", "default", ext: nil).mkdir
+        gem.path("views", "default", "default", ext: :erb).write(view_file)
 
         gem.load!
       end

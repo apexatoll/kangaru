@@ -1,8 +1,8 @@
-RSpec.describe "Initialising Kangaru in a target gem", :with_gem_deprecated do
+RSpec.describe "Initialising Kangaru in a target gem", with_gem: :some_gem do
   subject(:require_gem) { gem.load! }
 
   before do
-    gem.gem_file("foobar").write(<<~RUBY)
+    gem.path("foobar").write(<<~RUBY)
       module SomeGem
         class Foobar
         end
@@ -85,8 +85,8 @@ RSpec.describe "Initialising Kangaru in a target gem", :with_gem_deprecated do
 
       before { require_gem }
 
-      it "sets the application dir to the gem dir" do
-        expect(application.dir).to eq(gem.dir)
+      it "sets the application source to the gem main file" do
+        expect(application.paths.source).to eq(gem.main_file)
       end
 
       it "sets the application name to the expected value" do
