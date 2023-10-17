@@ -12,7 +12,7 @@ module Kangaru
     attr_accessor adaptor: Symbol
     attr_accessor path: String
 
-    @handler: Sequel::Database
+    attr_reader handler: Sequel::Database
 
     def setup!: -> void
 
