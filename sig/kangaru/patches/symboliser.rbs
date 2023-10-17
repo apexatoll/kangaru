@@ -1,0 +1,13 @@
+module Kangaru
+  module Patches
+    module Symboliser : Enumerable[untyped]
+      class ::Hash[unchecked out K, unchecked out V]
+        def symbolise: -> Hash[Symbol, untyped]
+      end
+
+      class Array[unchecked out Elem]
+        def symbolise: -> Hash[Symbol, untyped]
+      end
+    end
+  end
+end
