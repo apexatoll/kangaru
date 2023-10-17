@@ -9,7 +9,6 @@ module Kangaru
 
     # Delegated to paths
     attr_reader name: String
-    attr_reader dir: Pathname
     def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
 
     def initialize: (source: String, namespace: Module) -> void
