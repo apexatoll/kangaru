@@ -1,10 +1,11 @@
 RSpec.describe Kangaru::Database do
   subject(:database) { described_class.new(**attributes) }
 
-  let(:attributes) { { adaptor:, path: }.compact }
+  let(:attributes) { { adaptor:, path:, migration_path: }.compact }
 
-  let(:adaptor) { nil }
-  let(:path)    { nil }
+  let(:adaptor)        { nil }
+  let(:path)           { nil }
+  let(:migration_path) { nil }
 
   let(:sqlite) { instance_spy(Sequel::Database) }
 
@@ -60,6 +61,106 @@ RSpec.describe Kangaru::Database do
 
         it "sets the handler" do
           expect { setup! }.to change { database.handler }.from(nil).to(sqlite)
+        end
+      end
+    end
+  end
+
+  describe "#migrate!" do
+    subject(:migrate!) { database.migrate! }
+
+    before do
+      Sequel.extension(:migration)
+
+      allow(Sequel).to receive(:extension)
+      allow(Sequel::Migrator).to receive(:run)
+
+      database.instance_variable_set(:@handler, handler)
+    end
+
+    let(:handler) { sqlite }
+
+    shared_examples :does_not_run_migrations do
+      it "does not raise any errors" do
+        expect { migrate! }.not_to raise_error
+      end
+
+      it "does not import the Sequel migration extension" do
+        migrate!
+        expect(Sequel).not_to have_received(:extension)
+      end
+
+      it "does not run the migrations" do
+        migrate!
+        expect(Sequel::Migrator).not_to have_received(:run)
+      end
+    end
+
+    shared_examples :runs_migrations do
+      it "does not raise any errors" do
+        expect { migrate! }.not_to raise_error
+      end
+
+      it "imports the Sequel migration extension" do
+        migrate!
+        expect(Sequel).to have_received(:extension).with(:migration).once
+      end
+
+      it "runs the migrations" do
+        migrate!
+
+        expect(Sequel::Migrator)
+          .to have_received(:run)
+          .with(sqlite, migration_path)
+      end
+    end
+
+    context "when migration_path is not set" do
+      let(:migration_path) { nil }
+
+      include_examples :does_not_run_migrations
+    end
+
+    context "when migration_path is set" do
+      let(:migration_path) { "/foo/bar/some_gem/db/migrate" }
+
+      before do
+        allow(Dir).to receive(:exist?).with(migration_path).and_return(exists?)
+        allow(Dir).to receive(:empty?).with(migration_path).and_return(empty?)
+      end
+
+      context "and handler is not set" do
+        let(:handler) { nil }
+        let(:exists?) { true }
+        let(:empty?)  { false }
+
+        include_examples :does_not_run_migrations
+      end
+
+      context "and handler is set" do
+        let(:handler) { sqlite }
+
+        context "and migration directory does not exist" do
+          let(:exists?) { false }
+          let(:empty?) { true }
+
+          include_examples :does_not_run_migrations
+        end
+
+        context "and migration directory exists" do
+          let(:exists?) { true }
+
+          context "and the migration directory is empty" do
+            let(:empty?) { true }
+
+            include_examples :does_not_run_migrations
+          end
+
+          context "and the migration directory is not empty" do
+            let(:empty?) { false }
+
+            include_examples :runs_migrations
+          end
         end
       end
     end

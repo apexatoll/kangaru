@@ -8,7 +8,7 @@ module Kangaru
     class SQLiteError < StandardError
     end
 
-    attr_accessor :adaptor, :path
+    attr_accessor :adaptor, :path, :migration_path
 
     attr_reader :handler
 
@@ -21,7 +21,22 @@ module Kangaru
                  end
     end
 
+    def migrate!
+      return unless handler
+      return unless migrations_exist?
+
+      Sequel.extension(:migration)
+
+      Sequel::Migrator.run(handler, migration_path)
+    end
+
     private
+
+    def migrations_exist?
+      return false if migration_path.nil?
+
+      Dir.exist?(migration_path) && !Dir.empty?(migration_path)
+    end
 
     def setup_sqlite!
       raise SQLiteError, "path can't be blank" if path.nil?

@@ -11,12 +11,17 @@ module Kangaru
 
     attr_accessor adaptor: Symbol
     attr_accessor path: String
+    attr_accessor migration_path: String
 
     attr_reader handler: Sequel::Database
 
     def setup!: -> void
 
+    def migrate!: -> void
+
     private
+
+    def migrations_exist?: -> bool
 
     def setup_sqlite!: -> Sequel::Database
   end
