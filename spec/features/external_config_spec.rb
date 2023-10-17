@@ -49,7 +49,7 @@ RSpec.describe "External application config", with_gem: :some_gem do
         module SomeGem
           extend Kangaru::Initialiser
 
-          Kangaru.application.configure do |config|
+          configure do |config|
             config.application.config_path = "#{config_path}"
           end
         end

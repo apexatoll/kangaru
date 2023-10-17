@@ -7,7 +7,7 @@ RSpec.describe "Setting up a database in a target gem", with_gem: :some_gem do
         module SomeGem
           extend Kangaru::Initialiser
 
-          Kangaru.application.configure do |config|
+          configure do |config|
           end
         end
       RUBY
@@ -31,7 +31,7 @@ RSpec.describe "Setting up a database in a target gem", with_gem: :some_gem do
         module SomeGem
           extend Kangaru::Initialiser
 
-          Kangaru.application.configure do |config|
+          configure do |config|
             config.database.adaptor = :invalid
           end
         end
@@ -54,7 +54,7 @@ RSpec.describe "Setting up a database in a target gem", with_gem: :some_gem do
           module SomeGem
             extend Kangaru::Initialiser
 
-            Kangaru.application.configure do |config|
+            configure do |config|
               config.database.adaptor = :sqlite
             end
           end
@@ -76,7 +76,7 @@ RSpec.describe "Setting up a database in a target gem", with_gem: :some_gem do
           module SomeGem
             extend Kangaru::Initialiser
 
-            Kangaru.application.configure do |config|
+            configure do |config|
               config.database.adaptor = :sqlite
               config.database.path    = "#{gem.path.join('database.sqlite3')}"
             end
