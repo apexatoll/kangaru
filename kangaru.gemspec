@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.executables = []
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "colorize", "~> 1.1"
   spec.add_dependency "erb", "~> 4.0"
   spec.add_dependency "sequel", "~> 5.72"
   spec.add_dependency "sqlite3", "~> 1.6"

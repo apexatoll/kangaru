@@ -1,0 +1,32 @@
+class String
+def black: -> instance
+  def red: -> instance
+  def green: -> instance
+  def yellow: -> instance
+  def blue: -> instance
+  def magenta: -> instance
+  def cyan: -> instance
+  def white: -> instance
+  def default: -> instance
+  def light_black: -> instance
+  def light_red: -> instance
+  def light_green: -> instance
+  def light_yellow: -> instance
+  def light_blue: -> instance
+  def light_magenta: -> instance
+  def light_cyan: -> instance
+  def light_white: -> instance
+  def bold: -> instance
+  def dim: -> instance
+  def italic: -> instance
+  def underline: -> instance
+  def blink: -> instance
+  def blink_slow: -> instance
+  def blink_fast: -> instance
+  def invert: -> instance
+  def hide: -> instance
+  def strike: -> instance
+  def double_underline: -> instance
+  def reveal: -> instance
+  def overlined: -> instance
+end

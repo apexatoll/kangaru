@@ -1,5 +1,6 @@
 require "zeitwerk"
 
+require "colorize"
 require "erb"
 require "forwardable"
 require "pathname"
