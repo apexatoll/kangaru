@@ -1,0 +1,4 @@
+module YAML
+  def self.load_file: (String) -> Hash[String, untyped]
+                    | (String) -> Array[untyped]
+end
