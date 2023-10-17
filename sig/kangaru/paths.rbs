@@ -1,5 +1,5 @@
 module Kangaru
-  class PathBuilder
+  class Paths
     attr_reader source: Pathname
     attr_reader dir: Pathname
     attr_reader name: String

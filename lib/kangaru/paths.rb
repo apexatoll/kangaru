@@ -9,7 +9,7 @@
 #   | | |-- some_file.rb (app_path)
 #
 module Kangaru
-  class PathBuilder
+  class Paths
     attr_reader :source
 
     def initialize(source:)

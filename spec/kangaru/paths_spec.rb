@@ -1,5 +1,5 @@
-RSpec.describe Kangaru::PathBuilder do
-  subject(:path_builder) { described_class.new(source:) }
+RSpec.describe Kangaru::Paths do
+  subject(:paths) { described_class.new(source:) }
 
   let(:source) { "/foo/bar/#{gem_name}#{version}/lib/#{gem_name}.rb" }
 
@@ -46,13 +46,13 @@ RSpec.describe Kangaru::PathBuilder do
   end
 
   describe "#dir" do
-    subject(:dir) { path_builder.dir }
+    subject(:dir) { paths.dir }
 
     include_examples :builds_path, as: "/foo/bar"
   end
 
   describe "#name" do
-    subject(:name) { path_builder.name }
+    subject(:name) { paths.name }
 
     context "when gem is not installed" do
       include_context :local_gem_path
@@ -72,7 +72,7 @@ RSpec.describe Kangaru::PathBuilder do
   end
 
   describe "#gem_path" do
-    subject(:gem_path) { path_builder.gem_path(*fragments, ext:) }
+    subject(:gem_path) { paths.gem_path(*fragments, ext:) }
 
     context "when path fragments are not specified" do
       let(:fragments) { [] }
@@ -124,7 +124,7 @@ RSpec.describe Kangaru::PathBuilder do
   end
 
   describe "#lib_path" do
-    subject(:lib_path) { path_builder.lib_path(*fragments, ext:) }
+    subject(:lib_path) { paths.lib_path(*fragments, ext:) }
 
     context "when path fragments are not specified" do
       let(:fragments) { [] }
@@ -177,7 +177,7 @@ RSpec.describe Kangaru::PathBuilder do
   end
 
   describe "#view_path" do
-    subject(:view_file) { path_builder.view_path(controller:, action:, ext:) }
+    subject(:view_file) { paths.view_path(controller:, action:, ext:) }
 
     let(:controller) { "default" }
 

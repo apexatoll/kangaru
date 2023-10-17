@@ -2,7 +2,7 @@ module Kangaru
   class Application
     extend Forwardable
 
-    attr_reader paths: PathBuilder
+    attr_reader paths: Paths
     attr_reader namespace: Module
     attr_reader config: Config
     attr_reader database: Database

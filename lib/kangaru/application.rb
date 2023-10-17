@@ -10,7 +10,7 @@ module Kangaru
     attr_reader :paths, :namespace, :config, :database
 
     def initialize(source:, namespace:)
-      @paths = PathBuilder.new(source:)
+      @paths = Paths.new(source:)
       @namespace = namespace
       @config = Config.new
 
