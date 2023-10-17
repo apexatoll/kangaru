@@ -44,7 +44,10 @@ module Kangaru
     def setup_database!
       return unless config.database.adaptor
 
-      Database.new(**config.database.serialise).tap(&:setup!)
+      Database.new(**config.database.serialise).tap do |database|
+        database.setup!
+        database.migrate!
+      end
     end
   end
 end

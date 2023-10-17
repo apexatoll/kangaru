@@ -99,6 +99,11 @@ RSpec.describe Kangaru::Application do
           expect(database).to have_received(:setup!).once
         end
 
+        it "migrates the database" do
+          configure
+          expect(database).to have_received(:migrate!).once
+        end
+
         it "sets the application database instance" do
           expect { configure }
             .to change { application.database }
