@@ -1,3 +1,5 @@
 module Sequel
   def self.sqlite: (String path) -> Database
+
+  def self.extension: (Symbol) -> void
 end
