@@ -39,9 +39,11 @@ module Kangaru
     end
 
     def setup
-      return if config.database.adaptor.nil?
+      if config.database.adaptor
+        @database = Database.new(**config.database.serialise).tap(&:setup!)
+      end
 
-      @database = Database.new(**config.database.serialise).tap(&:setup!)
+      config.import_external_config!
     end
   end
 end
