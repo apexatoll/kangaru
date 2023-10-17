@@ -2,8 +2,6 @@ module Kangaru
   class Application
     extend Forwardable
 
-    using Patches::Inflections
-
     def_delegators :paths, :view_path
 
     attr_reader :paths, :namespace, :config, :database
