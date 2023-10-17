@@ -36,11 +36,15 @@ module Kangaru
     end
 
     def apply_config!
-      if config.database.adaptor
-        @database = Database.new(**config.database.serialise).tap(&:setup!)
-      end
-
       config.import_external_config!
+
+      @database = setup_database!
+    end
+
+    def setup_database!
+      return unless config.database.adaptor
+
+      Database.new(**config.database.serialise).tap(&:setup!)
     end
   end
 end
