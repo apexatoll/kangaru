@@ -1,6 +1,7 @@
 module Kangaru
   module Configurators
-    BASE_CONFIGURATORS = [Configurator].freeze
+    # These are not set as accessors by Config instances as they are abstract.
+    BASE_CONFIGURATORS = [Configurator, OpenConfigurator].freeze
 
     def self.classes
       constants.map    { |constant| const_get(constant) }
