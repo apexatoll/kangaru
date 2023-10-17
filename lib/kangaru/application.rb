@@ -15,7 +15,7 @@ module Kangaru
     def configure(&block)
       block.call(config)
 
-      setup
+      apply_config!
     end
 
     def run!(argv)
@@ -35,7 +35,7 @@ module Kangaru
       end
     end
 
-    def setup
+    def apply_config!
       if config.database.adaptor
         @database = Database.new(**config.database.serialise).tap(&:setup!)
       end

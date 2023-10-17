@@ -20,6 +20,6 @@ module Kangaru
 
     attr_reader autoloader: Zeitwerk::Loader
 
-    def setup: -> void
+    def apply_config!: -> void
   end
 end
