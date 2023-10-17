@@ -90,7 +90,7 @@ RSpec.describe "Initialising Kangaru in a target gem", with_gem: :some_gem do
       end
 
       it "sets the application name to the expected value" do
-        expect(application.name).to eq("some_gem")
+        expect(application.paths.name).to eq("some_gem")
       end
     end
   end

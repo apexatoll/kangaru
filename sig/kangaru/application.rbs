@@ -8,7 +8,6 @@ module Kangaru
     attr_reader database: Database
 
     # Delegated to paths
-    attr_reader name: String
     def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
 
     def initialize: (source: String, namespace: Module) -> void
