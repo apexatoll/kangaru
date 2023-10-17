@@ -2,8 +2,6 @@ module Kangaru
   class Application
     extend Forwardable
 
-    def_delegators :paths, :view_path
-
     attr_reader :paths, :namespace, :config, :database
 
     def initialize(source:, namespace:)
@@ -25,6 +23,8 @@ module Kangaru
 
       Router.new(command, namespace:).resolve
     end
+
+    def_delegators :paths, :view_path
 
     private
 

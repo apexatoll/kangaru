@@ -7,14 +7,14 @@ module Kangaru
     attr_reader config: Config
     attr_reader database: Database
 
-    # Delegated to paths
-    def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
-
     def initialize: (source: String, namespace: Module) -> void
 
     def configure: { (Config) -> void } -> void
 
     def run!: (Array[String]) -> void
+
+    # Delegated to paths
+    def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
 
     private
 
