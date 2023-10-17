@@ -10,6 +10,13 @@ module Kangaru
       configurators.transform_values(&:serialise)
     end
 
+    def import_external_config!
+      return unless external_config_exists?
+
+      @external = Configurators::ExternalConfigurator
+                    .from_yaml_file(application.config_path)
+    end
+
     private
 
     def set_configurators!
@@ -22,6 +29,10 @@ module Kangaru
 
         [configurator_class.name, configurator]
       end
+    end
+
+    def external_config_exists?
+      application.config_path && File.exist?(application.config_path)
     end
   end
 end

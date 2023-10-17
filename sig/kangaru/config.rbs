@@ -8,6 +8,9 @@ module Kangaru
 
     def serialise: -> Hash[Symbol, Hash[Symbol, untyped]]
 
+    def import_external_config!: -> void
+
+    # Configurators
     attr_reader database: Configurators::DatabaseConfigurator
 
     attr_reader application: Configurators::ApplicationConfigurator
@@ -17,5 +20,7 @@ module Kangaru
     private
 
     def set_configurators!: -> Hash[Symbol, configurator]
+
+    def external_config_exists?: -> bool
   end
 end

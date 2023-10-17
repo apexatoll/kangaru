@@ -84,4 +84,92 @@ RSpec.describe Kangaru::Config do
       end
     end
   end
+
+  describe "#import_external_config!" do
+    subject(:import_external_config!) { config.import_external_config! }
+
+    before do
+      allow(Kangaru::Configurators::ApplicationConfigurator)
+        .to receive(:new)
+        .and_return(application)
+    end
+
+    let(:application) do
+      instance_double(
+        Kangaru::Configurators::ApplicationConfigurator,
+        config_path:
+      )
+    end
+
+    shared_examples :does_not_import_external_config do
+      it "returns nil" do
+        expect(import_external_config!).to be_nil
+      end
+
+      it "does not raise any errors" do
+        expect { import_external_config! }.not_to raise_error
+      end
+
+      it "does not update the external configuration" do
+        expect { import_external_config! }.not_to change { config.external }
+      end
+    end
+
+    shared_examples :imports_external_config do
+      before do
+        allow(Kangaru::Configurators::ExternalConfigurator)
+          .to receive(:from_yaml_file)
+          .with(config_path)
+          .and_return(external)
+      end
+
+      let(:external) do
+        instance_double(Kangaru::Configurators::ExternalConfigurator)
+      end
+
+      it "does not raise any errors" do
+        expect { import_external_config! }.not_to raise_error
+      end
+
+      it "reads the yaml file and builds an external configurator" do
+        import_external_config!
+
+        expect(Kangaru::Configurators::ExternalConfigurator)
+          .to have_received(:from_yaml_file)
+          .with(config_path).once
+      end
+
+      it "updates the external config instance to the imported instance" do
+        expect { import_external_config! }
+          .to change { config.external }
+          .to(external)
+      end
+    end
+
+    context "when application config_path is not configured" do
+      let(:config_path) { nil }
+
+      include_examples :does_not_import_external_config
+    end
+
+    context "when application config_path is configured" do
+      let(:config_path) { "/some/path/config.yml" }
+
+      before do
+        allow(File).to receive(:exist?).with(config_path).and_return(exists?)
+      end
+
+      context "and no file exists at specified path" do
+        let(:exists?) { false }
+
+        include_examples :does_not_import_external_config
+      end
+
+      context "and file exists at specified path" do
+        let(:exists?) { true }
+
+        include_examples :imports_external_config
+      end
+    end
+  end
 end
