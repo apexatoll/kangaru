@@ -1,5 +1,9 @@
 module Kangaru
   module Initialiser
+    module InjectedMethods
+      def run!: (Array[String]) -> void
+    end
+
     def self.extended: (Module) -> void
   end
 end
