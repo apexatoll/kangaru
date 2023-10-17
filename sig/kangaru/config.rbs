@@ -12,6 +12,8 @@ module Kangaru
 
     attr_reader application: Configurators::ApplicationConfigurator
 
+    attr_reader external: Configurators::ExternalConfigurator
+
     private
 
     def set_configurators!: -> Hash[Symbol, configurator]
