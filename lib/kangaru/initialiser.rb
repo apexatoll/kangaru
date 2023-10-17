@@ -4,6 +4,18 @@ module Kangaru
       def run!(argv)
         Kangaru.application.run!(argv)
       end
+
+      def config
+        Kangaru.application.config
+      end
+
+      def configure(&)
+        Kangaru.application.configure(&)
+      end
+
+      def database
+        Kangaru.application.database
+      end
     end
 
     def self.extended(namespace)
