@@ -197,4 +197,46 @@ RSpec.describe Kangaru::Paths do
         "/foo/bar/gem%{version}/lib/gem/views/default/do_something.erb"
     end
   end
+
+  describe "#collapsed_dirs" do
+    subject(:collapsed_dirs) { paths.collapsed_dirs }
+
+    context "when gem is not installed" do
+      include_context :local_gem_path
+
+      let(:expected) do
+        %w[
+          /foo/bar/gem/lib/gem/models
+          /foo/bar/gem/lib/gem/controllers
+        ]
+      end
+
+      it "returns an array of strings" do
+        expect(collapsed_dirs).to all be_a(String)
+      end
+
+      it "returns the expected dirs" do
+        expect(collapsed_dirs).to eq(expected)
+      end
+    end
+
+    context "when gem is installed" do
+      include_context :installed_gem_path
+
+      let(:expected) do
+        %w[
+          /foo/bar/gem-0.1.0/lib/gem/models
+          /foo/bar/gem-0.1.0/lib/gem/controllers
+        ]
+      end
+
+      it "returns an array of strings" do
+        expect(collapsed_dirs).to all be_a(String)
+      end
+
+      it "returns the expected dirs" do
+        expect(collapsed_dirs).to eq(expected)
+      end
+    end
+  end
 end

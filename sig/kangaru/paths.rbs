@@ -14,15 +14,22 @@ module Kangaru
 
     def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
 
+    def collapsed_dirs: -> Array[String]
+
     private
 
+    MODELS_DIRNAME: String
     VIEWS_DIRNAME: String
+    CONTROLLERS_DIRNAME: String
 
     attr_reader gem_dir: Pathname
     attr_reader lib_dir: Pathname
     attr_reader app_dir: Pathname
+
+    attr_reader models_dir: Pathname
     attr_reader views_dir: Pathname
+    attr_reader controllers_dir: Pathname
 
     def build_path: (*String, dir: Pathname, ext: Symbol?) -> Pathname
   end
-en
+end
