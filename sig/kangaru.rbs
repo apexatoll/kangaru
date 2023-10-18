@@ -6,4 +6,15 @@ module Kangaru
   module ClassMethods
     attr_accessor application: Application
   end
+
+  # Included in target applications that extend Kangaru::Initialiser.
+  interface _ApplicationMethods
+    def run!: (Array[String]) -> void
+
+    def config: -> Config
+
+    def configure: { (Config) -> void } -> void
+
+    def database: -> Database?
+  end
 end

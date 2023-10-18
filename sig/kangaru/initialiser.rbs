@@ -1,13 +1,7 @@
 module Kangaru
   module Initialiser
     module InjectedMethods
-      def run!: (Array[String]) -> void
-
-      def config: -> Config
-
-      def configure: { (Config) -> void } -> void
-
-      def database: -> Database?
+      include Kangaru::_ApplicationMethods
     end
 
     def self.extended: (Module) -> void
