@@ -63,8 +63,8 @@ module Kangaru
       @app_dir ||= lib_dir.join(name)
     end
 
-    def view_dir
-      @view_dir ||= app_dir.join(VIEWS_DIRNAME)
+    def views_dir
+      @views_dir ||= app_dir.join(VIEWS_DIRNAME)
     end
 
     def build_path(*fragments, dir:, ext:)
