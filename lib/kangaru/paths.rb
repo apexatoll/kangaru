@@ -6,7 +6,7 @@
 #   | + lib/             (lib_dir)
 #   | |-- some_gem.rb    (source)
 #   | | + some_gem/      (app_dir)
-#   | | |-- some_file.rb (app_path)
+#   | | |-- some_file.rb (path)
 #
 module Kangaru
   class Paths
@@ -39,7 +39,7 @@ module Kangaru
     end
 
     # The gem application directory (gem/lib/gem_name).
-    def app_path(*, ext: :rb)
+    def path(*, ext: :rb)
       build_path(*, dir: app_dir, ext:)
     end
 
