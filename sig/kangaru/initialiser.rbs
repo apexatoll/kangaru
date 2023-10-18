@@ -7,7 +7,7 @@ module Kangaru
 
       def configure: { (Config) -> void } -> void
 
-      def database: -> Database
+      def database: -> Database?
     end
 
     def self.extended: (Module) -> void
