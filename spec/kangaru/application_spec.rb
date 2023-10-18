@@ -17,6 +17,13 @@ RSpec.describe Kangaru::Application do
   end
 
   describe "#initialize" do
+    let(:expected_collapsed_dirs) do
+      %w[
+        /foo/bar/some_app/lib/some_app/models
+        /foo/bar/some_app/lib/some_app/controllers
+      ]
+    end
+
     it "instantiates a Zeitwerk loader" do
       application
       expect(Zeitwerk::Loader).to have_received(:new).once
@@ -34,6 +41,14 @@ RSpec.describe Kangaru::Application do
     it "configures the loader to use the instantiated gem inflector" do
       application
       expect(loader).to have_received(:inflector=).with(gem_inflector).once
+    end
+
+    it "collapses the models and controller directories" do
+      application
+
+      expect(loader).to have_received(:collapse).with(
+        expected_collapsed_dirs
+      ).once
     end
 
     it "configures the loader to load the lib dir" do

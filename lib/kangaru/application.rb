@@ -31,6 +31,7 @@ module Kangaru
     def autoloader
       @autoloader ||= Zeitwerk::Loader.new.tap do |loader|
         loader.inflector = Zeitwerk::GemInflector.new(paths.source.to_s)
+        loader.collapse(paths.collapsed_dirs)
         loader.push_dir(paths.lib_path.to_s)
       end
     end
