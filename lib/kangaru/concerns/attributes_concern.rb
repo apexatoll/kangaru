@@ -9,9 +9,15 @@ module Kangaru
             attribute.to_s.delete_suffix("=").to_sym
           end
         end
+
+        def defaults
+          @defaults ||= {}
+        end
       end
 
       def initialize(**attributes)
+        attributes = self.class.defaults.merge(**attributes)
+
         attributes.slice(*self.class.attributes).each do |attr, value|
           instance_variable_set(:"@#{attr}", value)
         end
