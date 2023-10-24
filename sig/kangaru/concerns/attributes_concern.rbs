@@ -5,9 +5,15 @@ module Kangaru
 
       module ClassMethods
         def attributes: -> Array[Symbol]
+
+        def defaults: -> Hash[Symbol, untyped]
+
+        @defaults: Hash[Symbol, untyped]
       end
 
       extend ClassMethods
+
+      attr_reader defaults: Hash[Symbol, untyped]
 
       def instance_methods: -> Array[Symbol]
 

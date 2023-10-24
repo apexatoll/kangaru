@@ -6,28 +6,64 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
   end
 
   describe "#initialize" do
-    context "when target class has not defined any attr_accessors" do
-      context "and no attributes are given" do
-        let(:attributes) { {} }
+    before do
+      allow(model_class).to receive(:defaults).and_return(defaults)
+    end
 
-        it "does not raise any errors" do
-          expect { model }.not_to raise_error
+    context "when target class has not defined any attr_accessors" do
+      context "and defaults are not set" do
+        let(:defaults) { {} }
+
+        context "and no attributes are given" do
+          let(:attributes) { {} }
+
+          it "does not raise any errors" do
+            expect { model }.not_to raise_error
+          end
+
+          it "does not set any instance variables" do
+            expect { model }.not_to change { model_class.instance_variables }
+          end
         end
 
-        it "does not set any instance variables" do
-          expect { model }.not_to change { model_class.instance_variables }
+        context "and attributes are given" do
+          let(:attributes) { { foo: "foo", bar: "bar" } }
+
+          it "does not raise any errors" do
+            expect { model }.not_to raise_error
+          end
+
+          it "does not set the attributes" do
+            expect(model).not_to respond_to(*attributes.keys)
+          end
         end
       end
 
-      context "and attributes are given" do
-        let(:attributes) { { foo: "foo", bar: "bar" } }
+      context "and defaults are set" do
+        let(:defaults) { { foo: "foo" } }
 
-        it "does not raise any errors" do
-          expect { model }.not_to raise_error
+        context "and no attributes are given" do
+          let(:attributes) { {} }
+
+          it "does not raise any errors" do
+            expect { model }.not_to raise_error
+          end
+
+          it "does not set any instance variables" do
+            expect { model }.not_to change { model_class.instance_variables }
+          end
         end
 
-        it "does not set the attributes" do
-          expect(model).not_to respond_to(*attributes.keys)
+        context "and attributes are given" do
+          let(:attributes) { { foo: "foo", bar: "bar" } }
+
+          it "does not raise any errors" do
+            expect { model }.not_to raise_error
+          end
+
+          it "does not set the attributes" do
+            expect(model).not_to respond_to(*attributes.keys)
+          end
         end
       end
     end
@@ -41,23 +77,55 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
         end
       end
 
-      context "and no attributes are given" do
-        let(:attributes) { {} }
+      context "and defaults are not set" do
+        let(:defaults) { {} }
 
-        it "does not raise any errors" do
-          expect { model }.not_to raise_error
+        context "and no attributes are given" do
+          let(:attributes) { {} }
+
+          it "does not raise any errors" do
+            expect { model }.not_to raise_error
+          end
+        end
+
+        context "and attributes are given" do
+          let(:attributes) { { foo: "foo", bar: "bar" } }
+
+          it "does not raise any errors" do
+            expect { model }.not_to raise_error
+          end
+
+          it "sets the attributes" do
+            expect(model).to have_attributes(**attributes)
+          end
         end
       end
 
-      context "and attributes are given" do
-        let(:attributes) { { foo: "foo", bar: "bar" } }
+      context "and defaults are set" do
+        let(:defaults) { { foo: "foobar" } }
 
-        it "does not raise any errors" do
-          expect { model }.not_to raise_error
+        context "and no attributes are given" do
+          let(:attributes) { {} }
+
+          it "does not raise any errors" do
+            expect { model }.not_to raise_error
+          end
+
+          it "sets the default attributes" do
+            expect(model).to have_attributes(**defaults)
+          end
         end
 
-        it "sets the attributes" do
-          expect(model).to have_attributes(**attributes)
+        context "and attributes are given" do
+          let(:attributes) { { foo: "foo", bar: "bar" } }
+
+          it "does not raise any errors" do
+            expect { model }.not_to raise_error
+          end
+
+          it "sets the attributes ensuring that defaults are overrideable" do
+            expect(model).to have_attributes(**attributes)
+          end
         end
       end
     end
