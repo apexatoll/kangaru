@@ -6,7 +6,7 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
   end
 
   describe "#initialize" do
-    context "when concern has not defined any attr_accessors" do
+    context "when target class has not defined any attr_accessors" do
       context "and no attributes are given" do
         let(:attributes) { {} }
 
@@ -32,7 +32,7 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
       end
     end
 
-    context "when concern has defined attr_accessors" do
+    context "when target class has defined attr_accessors" do
       let(:model_class) do
         Class.new do
           include Kangaru::Concerns::AttributesConcern
