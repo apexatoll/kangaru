@@ -25,5 +25,9 @@ module Kangaru
     def eager_load(namespace)
       @loader.eager_load_namespace(namespace)
     end
+
+    def test?
+      env == :test
+    end
   end
 end
