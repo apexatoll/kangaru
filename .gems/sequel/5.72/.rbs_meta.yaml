@@ -1,0 +1,9 @@
+---
+name: sequel
+version: '5.72'
+source:
+  type: git
+  name: apexatoll/gem_signatures
+  revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+  remote: https://github.com/apexatoll/gem_signatures
+  repo_dir: sig

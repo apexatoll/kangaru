@@ -5,7 +5,13 @@ sources:
     revision: main
     repo_dir: gems
 
-path: .gem_rbs_collection
+  - type: git
+    name: apexatoll/gem_signatures
+    remote: https://github.com/apexatoll/gem_signatures
+    revision: main
+    repo_dir: sig
+
+path: .gems
 
 gems:
   - name: rake
@@ -16,3 +22,7 @@ gems:
     ignore: true
   - name: steep
     ignore: true
+  
+  - name: forwardable
+  - name: pathname
+  - name: yaml

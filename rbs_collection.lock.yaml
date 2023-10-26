@@ -1,11 +1,16 @@
 ---
 sources:
 - type: git
+  name: apexatoll/gem_signatures
+  revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+  remote: https://github.com/apexatoll/gem_signatures
+  repo_dir: sig
+- type: git
   name: ruby/gem_rbs_collection
   revision: 3e93a59bd5da185b68187991630ac9a54a2468a7
   remote: https://github.com/ruby/gem_rbs_collection.git
   repo_dir: gems
-path: ".gem_rbs_collection"
+path: ".gems"
 gems:
 - name: bigdecimal
   version: '0'
@@ -15,14 +20,58 @@ gems:
   version: '0'
   source:
     type: stdlib
+- name: colorize
+  version: '1.1'
+  source:
+    type: git
+    name: apexatoll/gem_signatures
+    revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+    remote: https://github.com/apexatoll/gem_signatures
+    repo_dir: sig
+- name: dbm
+  version: '0'
+  source:
+    type: stdlib
 - name: erb
   version: '0'
   source:
     type: stdlib
+- name: forwardable
+  version: '0'
+  source:
+    type: stdlib
+- name: pathname
+  version: '0'
+  source:
+    type: stdlib
+- name: pstore
+  version: '0'
+  source:
+    type: stdlib
+- name: sequel
+  version: '5.72'
+  source:
+    type: git
+    name: apexatoll/gem_signatures
+    revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+    remote: https://github.com/apexatoll/gem_signatures
+    repo_dir: sig
 - name: tempfile
   version: '0'
   source:
     type: stdlib
+- name: yaml
+  version: '0'
+  source:
+    type: stdlib
+- name: zeitwerk
+  version: '2.6'
+  source:
+    type: git
+    name: apexatoll/gem_signatures
+    revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+    remote: https://github.com/apexatoll/gem_signatures
+    repo_dir: sig
 - name: zirconia
   version: 0.1.2
   source:
