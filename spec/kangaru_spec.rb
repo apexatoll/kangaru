@@ -71,6 +71,26 @@ RSpec.describe Kangaru do
     end
   end
 
+  describe ".env?" do
+    before { described_class.env = :foo }
+
+    context "when value is not current env" do
+      let(:value) { :bar }
+
+      it "returns false" do
+        expect(described_class).not_to be_env(value)
+      end
+    end
+
+    context "when value is current env" do
+      let(:value) { :foo }
+
+      it "returns true" do
+        expect(described_class).to be_env(value)
+      end
+    end
+  end
+
   describe ".eager_load" do
     subject(:eager_load) { described_class.eager_load(namespace) }
 
