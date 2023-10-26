@@ -1,0 +1,5 @@
+module Zeitwerk
+  class Loader
+    def eager_load_namespace: (Module) -> void
+  end
+end

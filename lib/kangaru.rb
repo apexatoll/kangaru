@@ -13,5 +13,9 @@ module Kangaru
 
   class << self
     attr_accessor :application
+
+    def eager_load(namespace)
+      @loader.eager_load_namespace(namespace)
+    end
   end
 end
