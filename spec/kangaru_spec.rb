@@ -16,4 +16,23 @@ RSpec.describe Kangaru do
       expect(loader.dirs).to include(lib_directory)
     end
   end
+
+  describe ".eager_load" do
+    subject(:eager_load) { described_class.eager_load(namespace) }
+
+    let(:namespace) { Module.new }
+
+    let(:loader) { described_class.instance_variable_get(:@loader) }
+
+    before { allow(loader).to receive(:eager_load_namespace) }
+
+    it "delegates to the zeitwerk loader" do
+      eager_load
+
+      expect(loader)
+        .to have_received(:eager_load_namespace)
+        .with(namespace)
+        .once
+    end
+  end
 end
