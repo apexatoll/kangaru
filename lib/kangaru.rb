@@ -9,7 +9,16 @@ require "sqlite3"
 require "yaml"
 
 module Kangaru
-  @loader = Zeitwerk::Loader.for_gem(warn_on_extra_files: false).tap(&:setup)
+  INFLECTIONS = {
+    "rspec" => "RSpec"
+  }.freeze
+
+  @loader = Zeitwerk::Loader.for_gem(
+    warn_on_extra_files: false
+  ).tap do |loader|
+    loader.inflector.inflect(INFLECTIONS)
+    loader.setup
+  end
 
   class << self
     attr_accessor :application
