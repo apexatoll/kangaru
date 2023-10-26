@@ -113,7 +113,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
     zeitwerk (2.6.11)
-    zirconia (0.1.0)
+    zirconia (0.1.2)
 
 PLATFORMS
   arm64-darwin-21
@@ -126,7 +126,7 @@ DEPENDENCIES
   rubocop (~> 1.21)
   rubocop-rspec (~> 2.23)
   steep (~> 1.5)
-  zirconia
+  zirconia (~> 0.1)
 
 BUNDLED WITH
    2.4.1

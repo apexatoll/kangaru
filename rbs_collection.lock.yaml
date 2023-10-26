@@ -2,7 +2,7 @@
 sources:
 - type: git
   name: ruby/gem_rbs_collection
-  revision: 267dd270bb5aabcc1e21c87f44360f0680a8501c
+  revision: 3e93a59bd5da185b68187991630ac9a54a2468a7
   remote: https://github.com/ruby/gem_rbs_collection.git
   repo_dir: gems
 path: ".gem_rbs_collection"
@@ -23,4 +23,8 @@ gems:
   version: '0'
   source:
     type: stdlib
+- name: zirconia
+  version: 0.1.2
+  source:
+    type: rubygems
 gemfile_lock_path: Gemfile.lock
