@@ -9,6 +9,8 @@ module Kangaru
     attr_accessor application: Application
     attr_accessor env: Symbol
 
+    def env?: (Symbol) -> bool
+
     def eager_load: (Module) -> void
 
     def test?: -> bool

@@ -22,6 +22,10 @@ module Kangaru
       @env ||= :runtime
     end
 
+    def env?(value)
+      env == value
+    end
+
     def eager_load(namespace)
       @loader.eager_load_namespace(namespace)
     end
