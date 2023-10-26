@@ -17,6 +17,60 @@ RSpec.describe Kangaru do
     end
   end
 
+  describe ".env=" do
+    subject(:set_env) { described_class.env = env }
+
+    def env_ivar = described_class.instance_variable_get(:@env)
+
+    after do
+      described_class.remove_instance_variable(:@env) if env_ivar
+    end
+
+    context "when env is a symbol" do
+      let(:env) { :env }
+
+      it "sets to a symbol" do
+        expect { set_env }.to change { env_ivar }.to(env)
+      end
+    end
+
+    context "when env is a string" do
+      let(:env) { "env" }
+
+      it "sets to a symbol" do
+        expect { set_env }.to change { env_ivar }.to(env.to_sym)
+      end
+    end
+  end
+
+  describe ".env" do
+    subject(:env) { described_class.env }
+
+    def env_ivar = described_class.instance_variable_get(:@env)
+
+    around do |spec|
+      described_class.remove_instance_variable(:@env) if env_ivar
+      spec.run
+      described_class.remove_instance_variable(:@env) if env_ivar
+    end
+
+    context "when env is not set" do
+      it "returns :runtime" do
+        expect(described_class.env).to eq(:runtime)
+      end
+    end
+
+    context "when env is set" do
+      before { described_class.env = env }
+
+      let(:env) { :foobar }
+
+      it "returns the set value" do
+        expect(described_class.env).to eq(env)
+      end
+    end
+  end
+
   describe ".eager_load" do
     subject(:eager_load) { described_class.eager_load(namespace) }
 

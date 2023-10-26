@@ -14,6 +14,14 @@ module Kangaru
   class << self
     attr_accessor :application
 
+    def env=(value)
+      @env = value.to_sym
+    end
+
+    def env
+      @env ||= :runtime
+    end
+
     def eager_load(namespace)
       @loader.eager_load_namespace(namespace)
     end
