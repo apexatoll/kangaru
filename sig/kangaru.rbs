@@ -10,6 +10,8 @@ module Kangaru
     attr_accessor env: Symbol
 
     def eager_load: (Module) -> void
+
+    def test?: -> bool
   end
 
   # Included in target applications that extend Kangaru::Initialiser.
