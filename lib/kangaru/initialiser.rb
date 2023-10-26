@@ -22,6 +22,7 @@ module Kangaru
       source = caller[0].gsub(/:.*$/, "")
 
       Kangaru.application = Application.new(source:, namespace:)
+      Kangaru.eager_load(Initialisers)
 
       namespace.extend InjectedMethods
     end
