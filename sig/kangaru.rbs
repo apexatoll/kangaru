@@ -4,6 +4,8 @@ module Kangaru
   extend ClassMethods
 
   module ClassMethods
+    @loader: Zeitwerk::Loader
+
     attr_accessor application: Application
   end
 
