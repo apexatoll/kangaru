@@ -5,6 +5,7 @@ RSpec.describe Kangaru::Initialiser do
     stub_const "Namespace", Module.new
 
     allow(Kangaru::Application).to receive(:new).and_return(application)
+    allow(Kangaru).to receive(:eager_load)
 
     allow_any_instance_of(Kernel).to receive(:caller).and_return([callsite])
   end
@@ -39,6 +40,15 @@ RSpec.describe Kangaru::Initialiser do
         expect { extended }
           .to change { Kangaru.application }
           .to(application)
+      end
+
+      it "eager loads the Initialisers namespace" do
+        extended
+
+        expect(Kangaru)
+          .to have_received(:eager_load)
+          .with(Kangaru::Initialisers)
+          .once
       end
     end
 
