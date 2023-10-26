@@ -29,6 +29,8 @@ Naming/MethodParameterName:
     - by
     - to
 
+Style/ArgumentsForwarding:
+  Enabled: false
 Style/CharacterLiteral:
   Enabled: false
 Style/Documentation:
