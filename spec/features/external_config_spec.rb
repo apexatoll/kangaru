@@ -1,4 +1,6 @@
 RSpec.describe "External application config", with_gem: :some_gem do
+  subject(:apply_config!) { gem.load! }
+
   before do
     gem.main_file.write(main_file)
   end
@@ -7,22 +9,22 @@ RSpec.describe "External application config", with_gem: :some_gem do
 
   shared_examples :does_not_set_external_config do
     it "does not raise any errors" do
-      expect { gem.load! }.not_to raise_error
+      expect { apply_config! }.not_to raise_error
     end
 
     it "does not set any external config" do
-      gem.load!
+      apply_config!
       expect(external_config).to be_empty
     end
   end
 
   shared_examples :sets_external_config do
     it "does not raise any errors" do
-      expect { gem.load! }.not_to raise_error
+      expect { apply_config! }.not_to raise_error
     end
 
     it "sets the external config" do
-      gem.load!
+      apply_config!
       expect(external_config).to eq(frodo: { race: "hobbit", age: 48 })
     end
   end
