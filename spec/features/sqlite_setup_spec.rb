@@ -1,6 +1,4 @@
 RSpec.describe "SQLite database setup" do
-  include DatabaseSetupHelper
-
   subject(:apply_config!) { Kangaru.application.apply_config! }
 
   let(:main_file) do
