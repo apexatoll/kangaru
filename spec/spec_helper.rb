@@ -23,4 +23,7 @@ RSpec.configure do |config|
       Kangaru.remove_instance_variable(:@application)
     end
   end
+
+  config.include ConfigurationHelper, type: :feature
+  config.include DatabaseSetupHelper, type: :feature
 end
