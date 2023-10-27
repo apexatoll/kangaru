@@ -1,8 +1,9 @@
 RSpec.describe "External application config", with_gem: :some_gem do
-  subject(:apply_config!) { gem.load! }
+  subject(:apply_config!) { Kangaru.application.apply_config! }
 
   before do
     gem.main_file.write(main_file)
+    gem.load!
   end
 
   let(:external_config) { Kangaru.application.config.external.serialise }

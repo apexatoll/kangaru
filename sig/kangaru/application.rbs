@@ -11,6 +11,8 @@ module Kangaru
 
     def configure: { (Config) -> void } -> void
 
+    def apply_config!: -> void
+
     def run!: (Array[String]) -> void
 
     # Delegated to paths
@@ -19,8 +21,6 @@ module Kangaru
     private
 
     attr_reader autoloader: Zeitwerk::Loader
-
-    def apply_config!: -> void
 
     def setup_database!: -> Database?
   end

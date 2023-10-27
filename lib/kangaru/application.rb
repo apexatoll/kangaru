@@ -14,8 +14,12 @@ module Kangaru
 
     def configure(&block)
       block.call(config)
+    end
 
-      apply_config!
+    def apply_config!
+      config.import_external_config!
+
+      @database = setup_database!
     end
 
     def run!(argv)
@@ -34,12 +38,6 @@ module Kangaru
         loader.collapse(paths.collapsed_dirs)
         loader.push_dir(paths.lib_path.to_s)
       end
-    end
-
-    def apply_config!
-      config.import_external_config!
-
-      @database = setup_database!
     end
 
     def setup_database!

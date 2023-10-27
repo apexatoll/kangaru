@@ -1,7 +1,7 @@
 RSpec.describe "SQLite database setup", with_gem: :some_gem do
   include DatabaseSetupHelper
 
-  subject(:apply_config!) { gem.load! }
+  subject(:apply_config!) { Kangaru.application.apply_config! }
 
   let(:main_file) do
     <<~RUBY
@@ -23,7 +23,10 @@ RSpec.describe "SQLite database setup", with_gem: :some_gem do
   let(:path) { nil }
   let(:migration_path) { nil }
 
-  before { gem.main_file.write(main_file) }
+  before do
+    gem.main_file.write(main_file)
+    gem.load!
+  end
 
   shared_examples :invalid_config do |options|
     it "raises an error" do
