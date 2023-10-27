@@ -1,4 +1,4 @@
-RSpec.describe "Autoloader", with_gem: :some_gem do
+RSpec.describe "Autoloader" do
   include_context :kangaru_initialised
 
   describe "collapsed directories" do

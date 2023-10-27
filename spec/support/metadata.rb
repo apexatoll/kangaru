@@ -1,6 +1,6 @@
 RSpec.configure do |config|
   path_tags = {
-    %r{spec/features} => { type: :feature }
+    %r{spec/features} => { type: :feature, with_gem: :some_gem }
   }.freeze
 
   path_tags.each do |file_path, tags|
