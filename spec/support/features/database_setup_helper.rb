@@ -1,12 +1,14 @@
 module DatabaseSetupHelper
+  include ConfigurationHelper
+
   def build_database_config(adaptor:, path:, migration_path:)
-    <<~RUBY
-      configure do
+    configure_block do
+      <<~RUBY
         #{adaptor && adaptor_config(adaptor)}
         #{path && path_config(path)}
         #{migration_path && migration_path_config(migration_path)}
-      end
-    RUBY
+      RUBY
+    end
   end
 
   def write_create_table_migrations!(migration_path, table_names)
