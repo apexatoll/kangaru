@@ -9,8 +9,8 @@ module Kangaru
         Kangaru.application.config
       end
 
-      def configure(&)
-        Kangaru.application.configure(&)
+      def configure(env = nil, &)
+        Kangaru.application.configure(env, &)
       end
 
       def database

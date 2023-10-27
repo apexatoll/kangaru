@@ -9,7 +9,7 @@ module Kangaru
 
     def initialize: (source: String, namespace: Module) -> void
 
-    def configure: { (Config) -> void } -> void
+    def configure: (?Symbol?) { (Config) -> void } -> void
 
     def apply_config!: -> void
 
@@ -19,6 +19,8 @@ module Kangaru
     def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
 
     private
+
+    def current_env?: (Symbol?) -> bool
 
     attr_reader autoloader: Zeitwerk::Loader
 
