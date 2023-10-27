@@ -73,64 +73,94 @@ RSpec.describe Kangaru::Application do
   describe "#configure" do
     subject(:configure) { application.configure(&configure_block) }
 
-    let(:configure_block) { proc {} }
+    let(:database) { instance_spy(Kangaru::Database) }
 
     before do
+      allow(Kangaru::Database).to receive(:new).and_return(database)
+
       allow(application.config).to receive(:import_external_config!)
     end
 
-    describe "database setup" do
-      before do
-        allow(Kangaru::Database).to receive(:new).and_return(database)
+    context "when no configuration is set" do
+      let(:configure_block) { proc {} }
+
+      it "does not raise any errors" do
+        expect { configure }.not_to raise_error
       end
 
-      let(:database) { instance_spy(Kangaru::Database, setup!: nil) }
-
-      context "when no configuration is set" do
-        let(:configure_block) { proc {} }
-
-        it "does not create a database" do
-          configure
-          expect(Kangaru::Database).not_to have_received(:new)
-        end
-
-        it "does not set the application database instance" do
-          expect { configure }.not_to change { application.database }.from(nil)
-        end
+      it "does not change the config values" do
+        expect { configure }.not_to change { application.config.serialise }
       end
 
-      context "when configuration sets a database adaptor" do
-        let(:configure_block) do
-          ->(config) { config.database.adaptor = :sqlite }
-        end
+      it "does not create a database" do
+        configure
+        expect(Kangaru::Database).not_to have_received(:new)
+      end
 
-        it "creates a database" do
-          configure
-          expect(Kangaru::Database).to have_received(:new).once
-        end
+      it "does not set the application database instance" do
+        expect { configure }.not_to change { application.database }.from(nil)
+      end
 
-        it "sets up the database" do
-          configure
-          expect(database).to have_received(:setup!).once
-        end
+      it "runs the external config import" do
+        configure
 
-        it "migrates the database" do
-          configure
-          expect(database).to have_received(:migrate!).once
-        end
-
-        it "sets the application database instance" do
-          expect { configure }
-            .to change { application.database }
-            .from(nil)
-            .to(database)
-        end
+        expect(application.config)
+          .to have_received(:import_external_config!)
+          .once
       end
     end
 
-    it "imports external config" do
-      configure
-      expect(application.config).to have_received(:import_external_config!).once
+    context "when configuration sets a database adaptor" do
+      let(:configure_block) do
+        ->(config) { config.database.adaptor = adaptor }
+      end
+
+      let(:adaptor) { :sqlite }
+
+      it "does not raise any errors" do
+        expect { configure }.not_to raise_error
+      end
+
+      it "changes the config values" do
+        expect { configure }.to change { application.config.serialise }
+      end
+
+      it "sets the expected config value" do
+        expect { configure }
+          .to change { application.config.database.adaptor }
+          .from(nil)
+          .to(adaptor)
+      end
+
+      it "creates a database" do
+        configure
+        expect(Kangaru::Database).to have_received(:new).once
+      end
+
+      it "sets up the database" do
+        configure
+        expect(database).to have_received(:setup!).once
+      end
+
+      it "migrates the database" do
+        configure
+        expect(database).to have_received(:migrate!).once
+      end
+
+      it "sets the application database instance" do
+        expect { configure }
+          .to change { application.database }
+          .from(nil)
+          .to(database)
+      end
+
+      it "runs the external config import" do
+        configure
+
+        expect(application.config)
+          .to have_received(:import_external_config!)
+          .once
+      end
     end
   end
 
