@@ -1,4 +1,4 @@
-RSpec.describe "Initialising Kangaru in a target gem", with_gem: :some_gem do
+RSpec.describe "Initialising Kangaru in a target gem" do
   subject(:require_gem) { gem.load! }
 
   before do

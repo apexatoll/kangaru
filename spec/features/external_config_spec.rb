@@ -1,4 +1,4 @@
-RSpec.describe "External application config", with_gem: :some_gem do
+RSpec.describe "External application config" do
   subject(:apply_config!) { Kangaru.application.apply_config! }
 
   before do

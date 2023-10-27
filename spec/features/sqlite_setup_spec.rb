@@ -1,4 +1,4 @@
-RSpec.describe "SQLite database setup", with_gem: :some_gem do
+RSpec.describe "SQLite database setup" do
   include DatabaseSetupHelper
 
   subject(:apply_config!) { Kangaru.application.apply_config! }
