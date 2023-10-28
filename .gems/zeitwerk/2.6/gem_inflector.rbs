@@ -1,7 +1,0 @@
-module Zeitwerk
-  class GemInflector
-    def initialize: (String file) -> void
-
-    def inflect: (Hash[String, String]) -> void
-  end
-end

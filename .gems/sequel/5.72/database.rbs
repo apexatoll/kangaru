@@ -1,5 +1,0 @@
-module Sequel
-  class Database
-
-  end
-end
