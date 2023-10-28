@@ -5,6 +5,8 @@ module Kangaru
     include Concerns::AttributesConcern
 
     PLUGINS = %i[
+      enum
+      timestamps
     ].freeze
 
     attr_accessor :adaptor, :path, :migration_path
