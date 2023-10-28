@@ -1,5 +1,7 @@
 module Kangaru
   VERSION: String
+
+  COLLAPSED_DIRS: Array[String]
   DEFAULT_ENV: Symbol
   INFLECTIONS: Hash[String, String]
 
