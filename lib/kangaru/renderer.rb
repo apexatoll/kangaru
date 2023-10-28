@@ -9,7 +9,7 @@ module Kangaru
     def render(binding)
       return unless view_path.exist?
 
-      ERB.new(view_path.read).run(binding)
+      ERB.new(view_path.read, trim_mode: "-").run(binding)
     end
 
     private
