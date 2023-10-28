@@ -162,4 +162,16 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
       end
     end
   end
+
+  describe ".set_default" do
+    subject(:set_default) { model_class.set_default(**attributes) }
+
+    let(:attributes) { { bar: "bar", baz: "baz" } }
+
+    it "sets the default attributes" do
+      expect { set_default }
+        .to change { model_class.defaults }
+        .to(include(**attributes))
+    end
+  end
 end

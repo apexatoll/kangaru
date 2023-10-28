@@ -8,6 +8,8 @@ module Kangaru
 
         def defaults: -> Hash[Symbol, untyped]
 
+        def set_default: (**untyped) -> void
+
         @defaults: Hash[Symbol, untyped]
       end
 
