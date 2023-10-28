@@ -1,5 +1,0 @@
-module Sequel
-  class Migrator
-    def self.run: (Sequel::Database, String) -> void
-  end
-end
