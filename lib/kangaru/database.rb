@@ -41,6 +41,8 @@ module Kangaru
     def setup_sqlite!
       raise SQLiteError, "path can't be blank" if path.nil?
 
+      FileUtils.mkdir_p(File.dirname(path))
+
       Sequel.sqlite(path)
     end
   end

@@ -10,6 +10,7 @@ RSpec.describe Kangaru::Database do
   let(:sqlite) { instance_spy(Sequel::Database) }
 
   before do
+    allow(FileUtils).to receive(:mkdir_p)
     allow(Sequel).to receive(:sqlite).with(path).and_return(sqlite)
   end
 
@@ -52,6 +53,11 @@ RSpec.describe Kangaru::Database do
 
         it "does not raise any errors" do
           expect { setup! }.not_to raise_error
+        end
+
+        it "creates the directory if necessary" do
+          setup!
+          expect(FileUtils).to have_received(:mkdir_p).with("/some/sqlite").once
         end
 
         it "sets up the sqlite database" do
