@@ -2,6 +2,7 @@ require "zeitwerk"
 
 require "colorize"
 require "erb"
+require "fileutils"
 require "forwardable"
 require "pathname"
 require "sequel"

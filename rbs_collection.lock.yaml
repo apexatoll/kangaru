@@ -2,7 +2,7 @@
 sources:
 - type: git
   name: apexatoll/gem_signatures
-  revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+  revision: a6ee8a6175d4672e16cd149d88217aacf4f8dea1
   remote: https://github.com/apexatoll/gem_signatures
   repo_dir: sig
 - type: git
@@ -33,6 +33,10 @@ gems:
   source:
     type: stdlib
 - name: erb
+  version: '0'
+  source:
+    type: stdlib
+- name: fileutils
   version: '0'
   source:
     type: stdlib

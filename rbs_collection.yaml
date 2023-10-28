@@ -23,6 +23,7 @@ gems:
   - name: steep
     ignore: true
   
+  - name: fileutils
   - name: forwardable
   - name: pathname
   - name: yaml
