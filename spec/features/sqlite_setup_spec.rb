@@ -148,7 +148,7 @@ RSpec.describe "SQLite database setup" do
 
       let(:db_dir) { gem.gem_path("db") }
 
-      context "and database directory does not exist", skip: :awaiting_fix do
+      context "and database directory does not exist" do
         include_examples :sets_up_database
       end
 
