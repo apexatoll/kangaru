@@ -1,28 +1,21 @@
 RSpec.describe Kangaru::Renderer do
-  subject(:renderer) { described_class.new(command) }
+  subject(:renderer) { described_class.new(path) }
 
-  let(:command)     { instance_spy(Kangaru::Command) }
-  let(:application) { instance_spy(Kangaru::Application, view_path:) }
-
-  let(:view_path) do
-    instance_spy(Pathname, read: view_file_contents, exist?: view_file_exists?)
+  let(:path) do
+    instance_spy(Pathname, read: view_contents, exist?: view_exists?)
   end
 
-  let(:view_file_contents) do
+  let(:view_contents) do
     <<~ERB
       Your name is <%= @name %>, you are <%= @age %> years old.
     ERB
-  end
-
-  before do
-    allow(Kangaru).to receive(:application).and_return(application)
   end
 
   describe "#render" do
     subject(:render) { renderer.render(binding) }
 
     context "when view file does not exist" do
-      let(:view_file_exists?) { false }
+      let(:view_exists?) { false }
 
       it "does not output any text" do
         expect { render }.not_to output.to_stdout
@@ -30,9 +23,9 @@ RSpec.describe Kangaru::Renderer do
     end
 
     context "when view file exists" do
-      let(:view_file_exists?) { true }
+      let(:view_exists?) { true }
 
-      context "when instance variables do not exist in binding" do
+      context "and instance variables do not exist in binding" do
         let(:expected_output) do
           <<~STRING
             Your name is , you are  years old.
@@ -44,7 +37,7 @@ RSpec.describe Kangaru::Renderer do
         end
       end
 
-      context "when instance variables exist in binding" do
+      context "and instance variables exist in binding" do
         around do |spec|
           instance_variable_set(:@name, "Foo Bar")
           instance_variable_set(:@age, 30)

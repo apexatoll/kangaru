@@ -6,5 +6,9 @@ module Kangaru
     def initialize: (Command) -> void
 
     def execute: -> void
+
+    private
+
+    def view_path: -> Pathname
   end
 end
