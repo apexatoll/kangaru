@@ -1,0 +1,9 @@
+module Kangaru
+  class Component
+    def render: -> void
+
+    private
+
+    def view_file: -> Pathname
+  end
+end
