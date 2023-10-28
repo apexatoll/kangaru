@@ -5,6 +5,8 @@ module Kangaru
     include Concerns::AttributesConcern
     extend  Concerns::AttributesConcern::ClassMethods
 
+    PLUGINS: Array[Symbol]
+
     attr_accessor adaptor: Symbol
     attr_accessor path: String
     attr_accessor migration_path: String
