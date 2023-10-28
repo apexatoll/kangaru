@@ -1,13 +1,9 @@
 module Kangaru
   class Renderer
-    attr_reader command: Command
+    attr_reader path: Pathname
 
-    def initialize: (Command) -> void
+    def initialize: (Pathname) -> void
 
     def render: (Binding) -> void
-
-    private
-
-    def view_path: -> Pathname
   end
 end

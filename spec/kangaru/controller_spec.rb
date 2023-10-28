@@ -3,29 +3,29 @@
 RSpec.describe Kangaru::Controller do
   subject(:controller) { described_class.new(command) }
 
-  let(:command) { instance_double(Kangaru::Command, action:) }
+  let(:command) do
+    instance_double(Kangaru::Command, controller: controller_name, action:)
+  end
+
+  let(:controller_name) { :some_controller }
 
   let(:action) { :some_action }
+
+  let(:application) do
+    instance_spy(Kangaru::Application, namespace:, view_path:)
+  end
+
+  let(:namespace) { Namespace }
+
+  let(:view_path) { instance_spy(Pathname) }
 
   let(:renderer) { instance_spy(Kangaru::Renderer) }
 
   before do
+    stub_const "Namespace", Module.new
+
+    allow(Kangaru).to receive(:application).and_return(application)
     allow(Kangaru::Renderer).to receive(:new).and_return(renderer)
-  end
-
-  describe "#initialize" do
-    it "sets the command" do
-      expect(controller.command).to eq(command)
-    end
-
-    it "instantiates a renderer" do
-      controller
-      expect(Kangaru::Renderer).to have_received(:new).with(command).once
-    end
-
-    it "sets the renderer" do
-      expect(controller.renderer).to eq(renderer)
-    end
   end
 
   describe "#execute" do
@@ -46,6 +46,11 @@ RSpec.describe Kangaru::Controller do
       expect(controller).to have_received(action).once
     end
 
+    it "instantiates a renderer" do
+      execute
+      expect(Kangaru::Renderer).to have_received(:new).with(view_path).once
+    end
+
     it "renders the command output" do
       execute
       expect(renderer).to have_received(:render).with(a_kind_of(Binding)).once
@@ -56,16 +61,6 @@ RSpec.describe Kangaru::Controller do
     subject(:lookup_const) { described_class::Foobar }
 
     let(:foobar) { Module.new }
-
-    let(:application) do
-      instance_spy(Kangaru::Application, namespace: Namespace)
-    end
-
-    before do
-      stub_const "Namespace", Module.new
-
-      allow(Kangaru).to receive(:application).and_return(application)
-    end
 
     context "when specified const is not defined inside Controller" do
       context "and const not defined in application namespace" do

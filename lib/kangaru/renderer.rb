@@ -1,24 +1,15 @@
 module Kangaru
   class Renderer
-    attr_reader :command
+    attr_reader :path
 
-    def initialize(command)
-      @command = command
+    def initialize(path)
+      @path = path
     end
 
     def render(binding)
-      return unless view_path.exist?
+      return unless path.exist?
 
-      ERB.new(view_path.read, trim_mode: "-").run(binding)
-    end
-
-    private
-
-    def view_path
-      Kangaru.application.view_path(
-        controller: command.controller,
-        action: command.action.to_s
-      )
+      ERB.new(path.read, trim_mode: "-").run(binding)
     end
   end
 end
