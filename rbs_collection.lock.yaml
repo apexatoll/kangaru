@@ -2,7 +2,7 @@
 sources:
 - type: git
   name: apexatoll/gem_signatures
-  revision: 8eb0b43b978c3d9a00b6af015a4cb8e3cf5b1fd3
+  revision: f60764ff270347224daf26803917089bc9845c2a
   remote: https://github.com/apexatoll/gem_signatures
   repo_dir: sig
 - type: git
