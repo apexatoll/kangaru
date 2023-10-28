@@ -10,6 +10,8 @@ require "sqlite3"
 require "yaml"
 
 module Kangaru
+  DEFAULT_ENV = :runtime
+
   INFLECTIONS = {
     "rspec" => "RSpec"
   }.freeze
@@ -29,7 +31,7 @@ module Kangaru
     end
 
     def env
-      @env ||= :runtime
+      @env ||= DEFAULT_ENV
     end
 
     def env?(value)

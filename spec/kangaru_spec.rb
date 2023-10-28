@@ -55,8 +55,8 @@ RSpec.describe Kangaru do
     end
 
     context "when env is not set" do
-      it "returns :runtime" do
-        expect(described_class.env).to eq(:runtime)
+      it "returns the default env" do
+        expect(described_class.env).to eq(described_class::DEFAULT_ENV)
       end
     end
 
