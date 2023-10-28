@@ -2,22 +2,16 @@ module Kangaru
   class Database
     include Concerns::AttributesConcern
 
-    class AdaptorError < StandardError
-    end
-
-    class SQLiteError < StandardError
-    end
-
     attr_accessor :adaptor, :path, :migration_path
 
     attr_reader :handler
 
     def setup!
-      raise AdaptorError, "adaptor can't be blank" if adaptor.nil?
+      raise "adaptor can't be blank" if adaptor.nil?
 
       @handler = case adaptor
                  when :sqlite then setup_sqlite!
-                 else raise AdaptorError, "invalid adaptor '#{adaptor}'"
+                 else raise "invalid adaptor '#{adaptor}'"
                  end
     end
 
@@ -39,7 +33,7 @@ module Kangaru
     end
 
     def setup_sqlite!
-      raise SQLiteError, "path can't be blank" if path.nil?
+      raise "path can't be blank" if path.nil?
 
       FileUtils.mkdir_p(File.dirname(path))
 
