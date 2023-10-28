@@ -86,5 +86,47 @@ RSpec.describe "rendering erb templates" do
         end
       end
     end
+
+    describe "whitespace trimming" do
+      context "when trim tags are not used" do
+        let(:view_file) do
+          <<~ERB
+            <% %i[foo bar baz].each do |symbol| %>
+            <%= symbol %>
+            <% end %>
+          ERB
+        end
+
+        it "outputs the text with the expected formatting" do
+          expect { run_command! }.to output(<<~TEXT).to_stdout
+
+            foo
+
+            bar
+
+            baz
+
+          TEXT
+        end
+      end
+
+      context "when trim tags are used" do
+        let(:view_file) do
+          <<~ERB
+            <% %i[foo bar baz].each do |symbol| -%>
+            <%= symbol %>
+            <% end -%>
+          ERB
+        end
+
+        it "outputs the text with the expected formatting" do
+          expect { run_command! }.to output(<<~TEXT).to_stdout
+            foo
+            bar
+            baz
+          TEXT
+        end
+      end
+    end
   end
 end
