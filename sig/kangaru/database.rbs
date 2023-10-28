@@ -1,5 +1,7 @@
 module Kangaru
   class Database
+    extend Forwardable
+
     include Concerns::AttributesConcern
     extend  Concerns::AttributesConcern::ClassMethods
 
@@ -12,6 +14,9 @@ module Kangaru
     def setup!: -> void
 
     def migrate!: -> void
+
+    # Delegated to handler
+    def tables: -> Array[Symbol]
 
     private
 
