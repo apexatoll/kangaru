@@ -1,0 +1,12 @@
+module Kangaru
+  # This is a hacky fix to ensure that the definition of Model via Class.new is
+  # typed to be the same as if it was called with `class Model; end`.
+  # This is to prevent the inherited hook trying to find a `models` database
+  # table when Sequel::Model is inherited in the conventional way.
+  class Class
+    def self.new: (untyped) -> singleton(Model)
+  end
+
+  class Model < Sequel::Model
+  end
+end
