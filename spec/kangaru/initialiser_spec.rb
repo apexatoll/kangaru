@@ -23,6 +23,10 @@ RSpec.describe Kangaru::Initialiser do
   describe ".extended" do
     subject(:extended) { namespace.extend(described_class) }
 
+    before do
+      allow(Namespace).to receive(:extend).and_call_original
+    end
+
     shared_examples :initialises_application do |**options|
       let(:expected_dir)  { options[:dir] }
       let(:expected_name) { options[:name] }
@@ -48,6 +52,15 @@ RSpec.describe Kangaru::Initialiser do
         expect(Kangaru)
           .to have_received(:eager_load)
           .with(Kangaru::Initialisers)
+          .once
+      end
+
+      it "injects the application interface into the namespace" do
+        extended
+
+        expect(Namespace)
+          .to have_received(:extend)
+          .with(Kangaru::InjectedMethods)
           .once
       end
     end
