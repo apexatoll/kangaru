@@ -10,6 +10,10 @@ module Kangaru
           end
         end
 
+        def set_default(**attributes)
+          defaults.merge!(**attributes)
+        end
+
         def defaults
           @defaults ||= {}
         end
