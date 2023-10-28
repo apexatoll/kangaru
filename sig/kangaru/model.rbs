@@ -8,5 +8,6 @@ module Kangaru
   end
 
   class Model < Sequel::Model
+    def self.enum: (Symbol, **Integer) -> void
   end
 end
