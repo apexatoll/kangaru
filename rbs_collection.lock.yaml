@@ -2,12 +2,12 @@
 sources:
 - type: git
   name: apexatoll/gem_signatures
-  revision: a6ee8a6175d4672e16cd149d88217aacf4f8dea1
+  revision: 8eb0b43b978c3d9a00b6af015a4cb8e3cf5b1fd3
   remote: https://github.com/apexatoll/gem_signatures
   repo_dir: sig
 - type: git
   name: ruby/gem_rbs_collection
-  revision: 3e93a59bd5da185b68187991630ac9a54a2468a7
+  revision: 2de2d4535caba275f3b8533684aab110d921f553
   remote: https://github.com/ruby/gem_rbs_collection.git
   repo_dir: gems
 path: ".gems"
@@ -25,7 +25,7 @@ gems:
   source:
     type: git
     name: apexatoll/gem_signatures
-    revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+    revision: 8eb0b43b978c3d9a00b6af015a4cb8e3cf5b1fd3
     remote: https://github.com/apexatoll/gem_signatures
     repo_dir: sig
 - name: dbm
@@ -57,7 +57,7 @@ gems:
   source:
     type: git
     name: apexatoll/gem_signatures
-    revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+    revision: 8eb0b43b978c3d9a00b6af015a4cb8e3cf5b1fd3
     remote: https://github.com/apexatoll/gem_signatures
     repo_dir: sig
 - name: tempfile
@@ -73,7 +73,7 @@ gems:
   source:
     type: git
     name: apexatoll/gem_signatures
-    revision: 1094d5a2ee9a07f3fbf6880980eaa099fb655ba9
+    revision: 8eb0b43b978c3d9a00b6af015a4cb8e3cf5b1fd3
     remote: https://github.com/apexatoll/gem_signatures
     repo_dir: sig
 - name: zirconia
