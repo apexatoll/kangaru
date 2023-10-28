@@ -2,14 +2,18 @@ module Kangaru
   class Application
     extend Forwardable
 
-    attr_reader :paths, :namespace, :config, :database
+    attr_reader :paths, :namespace, :database
 
     def initialize(source:, namespace:)
       @paths = Paths.new(source:)
       @namespace = namespace
-      @config = Config.new
 
       autoloader.setup
+    end
+
+    # Lazy-loaded to allow defaults to be set after application is created.
+    def config
+      @config ||= Config.new
     end
 
     # If called with no env, the config will be applied regardless of current
