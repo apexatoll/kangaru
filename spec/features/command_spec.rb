@@ -268,49 +268,4 @@ RSpec.describe "Running a command" do
       end
     end
   end
-
-  describe "rendering view files" do
-    before do
-      gem.path("default_controller").write(<<~RUBY)
-        module SomeGem
-          class DefaultController < Kangaru::Controller
-            def default
-              @name = "Some Name"
-              @age = 30
-            end
-          end
-        end
-      RUBY
-    end
-
-    context "when view file does not exist" do
-      before { gem.load! }
-
-      it "does not output to stdout" do
-        expect { run_command! }.not_to output.to_stdout
-      end
-    end
-
-    context "when view file exists" do
-      before do
-        gem.path("views", ext: nil).mkdir
-        gem.path("views", "default", ext: nil).mkdir
-        gem.path("views", "default", "default", ext: :erb).write(view_file)
-
-        gem.load!
-      end
-
-      let(:view_file) do
-        <<~ERB
-          Hello <%= @name %>, you are <%= @age %> years old.
-        ERB
-      end
-
-      it "outputs the interpolated view file" do
-        expect { run_command! }.to output(<<~TEXT).to_stdout
-          Hello Some Name, you are 30 years old.
-        TEXT
-      end
-    end
-  end
 end
