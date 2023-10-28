@@ -1,5 +1,6 @@
 module Kangaru
   VERSION: String
+  DEFAULT_ENV: Symbol
   INFLECTIONS: Hash[String, String]
 
   extend ClassMethods
