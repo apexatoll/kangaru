@@ -4,6 +4,9 @@ module Kangaru
 
     include Concerns::AttributesConcern
 
+    PLUGINS = %i[
+    ].freeze
+
     attr_accessor :adaptor, :path, :migration_path
 
     attr_reader :handler
@@ -41,7 +44,9 @@ module Kangaru
 
       FileUtils.mkdir_p(File.dirname(path))
 
-      Sequel.sqlite(path)
+      Sequel.sqlite(path).tap do
+        PLUGINS.each { |plugin| Sequel::Model.plugin(plugin) }
+      end
     end
   end
 end

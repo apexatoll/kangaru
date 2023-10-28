@@ -12,6 +12,7 @@ RSpec.describe Kangaru::Database do
   before do
     allow(FileUtils).to receive(:mkdir_p)
     allow(Sequel).to receive(:sqlite).with(path).and_return(sqlite)
+    allow(Sequel::Model).to receive(:plugin)
   end
 
   describe "#setup!" do
@@ -63,6 +64,14 @@ RSpec.describe Kangaru::Database do
         it "sets up the sqlite database" do
           setup!
           expect(Sequel).to have_received(:sqlite).with(path).once
+        end
+
+        it "installs sequel plugins" do
+          setup!
+
+          described_class::PLUGINS.each do |plugin|
+            expect(Sequel::Model).to have_received(:plugin).with(plugin)
+          end
         end
 
         it "sets the handler" do
