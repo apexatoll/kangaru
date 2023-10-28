@@ -1,0 +1,15 @@
+module Kangaru
+  module InjectedMethods
+    interface _InjectedMethods
+      def run!: (Array[String]) -> void
+
+      def config: -> Config
+
+      def configure: (?Symbol?) { (Config) -> void } -> void
+
+      def database: -> Database?
+    end
+
+    include _InjectedMethods
+  end
+end

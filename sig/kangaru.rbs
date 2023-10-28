@@ -19,12 +19,6 @@ module Kangaru
 
   # Included in target applications that extend Kangaru::Initialiser.
   interface _ApplicationMethods
-    def run!: (Array[String]) -> void
-
-    def config: -> Config
-
-    def configure: (?Symbol?) { (Config) -> void } -> void
-
-    def database: -> Database?
+    include InjectedMethods::_InjectedMethods
   end
 end
