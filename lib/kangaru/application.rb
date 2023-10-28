@@ -23,10 +23,17 @@ module Kangaru
       block.call(config) if current_env?(env)
     end
 
+    def configured?
+      @configured == true
+    end
+
     def apply_config!
+      raise "config already applied" if configured?
+
       config.import_external_config!
 
       @database = setup_database!
+      @configured = true
     end
 
     def run!(argv)

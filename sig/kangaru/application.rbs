@@ -11,6 +11,8 @@ module Kangaru
 
     def configure: (?Symbol?) { (Config) -> void } -> void
 
+    def configured?: -> bool
+
     def apply_config!: -> void
 
     def run!: (Array[String]) -> void
@@ -19,6 +21,8 @@ module Kangaru
     def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
 
     private
+
+    @configured: bool
 
     def current_env?: (Symbol?) -> bool
 
