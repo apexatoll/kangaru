@@ -61,6 +61,9 @@ RSpec/DescribedClass:
   SkipBlocks: true
 RSpec/ExpectChange:
   EnforcedStyle: block
+RSpec/FilePath:
+  Exclude:
+    - spec/kangaru/components/**/*.rb
 RSpec/LetSetup:
   Enabled: false
 RSpec/MultipleMemoizedHelpers:

@@ -10,6 +10,10 @@ require "sqlite3"
 require "yaml"
 
 module Kangaru
+  COLLAPSED_DIRS = [
+    "#{__dir__}/kangaru/components"
+  ].freeze
+
   DEFAULT_ENV = :runtime
 
   INFLECTIONS = {
@@ -20,6 +24,7 @@ module Kangaru
     warn_on_extra_files: false
   ).tap do |loader|
     loader.inflector.inflect(INFLECTIONS)
+    loader.collapse(COLLAPSED_DIRS)
     loader.setup
   end
 
