@@ -1,5 +1,5 @@
 RSpec.describe "SQLite database setup" do
-  subject(:apply_config!) { Kangaru.application.apply_config! }
+  subject(:apply_config!) { SomeGem.apply_config! }
 
   let(:main_file) do
     <<~RUBY

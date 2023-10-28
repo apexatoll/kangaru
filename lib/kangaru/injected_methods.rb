@@ -12,6 +12,10 @@ module Kangaru
       Kangaru.application.configure(env, &)
     end
 
+    def apply_config!
+      Kangaru.application.apply_config!
+    end
+
     def database
       Kangaru.application.database
     end

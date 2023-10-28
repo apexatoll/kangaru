@@ -1,5 +1,5 @@
 RSpec.describe "External application config" do
-  subject(:apply_config!) { Kangaru.application.apply_config! }
+  subject(:apply_config!) { SomeGem.apply_config! }
 
   before do
     gem.main_file.write(main_file)
