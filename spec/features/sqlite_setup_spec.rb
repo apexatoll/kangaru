@@ -72,7 +72,7 @@ RSpec.describe "SQLite database setup" do
     shared_examples :does_not_apply_migrations do
       it "does not apply any migrations" do
         apply_config!
-        expect(SomeGem.database.handler.tables).to be_empty
+        expect(SomeGem.database.tables).to be_empty
       end
     end
 
@@ -81,7 +81,7 @@ RSpec.describe "SQLite database setup" do
 
       it "applies the migrations" do
         apply_config!
-        expect(SomeGem.database.handler.tables).to include(*tables)
+        expect(SomeGem.database.tables).to include(*tables)
       end
     end
 

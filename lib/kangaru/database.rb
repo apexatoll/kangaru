@@ -1,5 +1,7 @@
 module Kangaru
   class Database
+    extend Forwardable
+
     include Concerns::AttributesConcern
 
     attr_accessor :adaptor, :path, :migration_path
@@ -23,6 +25,8 @@ module Kangaru
 
       Sequel::Migrator.run(handler, migration_path)
     end
+
+    def_delegators :handler, :tables
 
     private
 
