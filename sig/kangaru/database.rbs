@@ -3,12 +3,6 @@ module Kangaru
     include Concerns::AttributesConcern
     extend  Concerns::AttributesConcern::ClassMethods
 
-    class AdaptorError < StandardError
-    end
-
-    class SQLiteError < StandardError
-    end
-
     attr_accessor adaptor: Symbol
     attr_accessor path: String
     attr_accessor migration_path: String

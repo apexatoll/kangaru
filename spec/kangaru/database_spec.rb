@@ -20,7 +20,7 @@ RSpec.describe Kangaru::Database do
     context "when adaptor is not set" do
       it "raises an error" do
         expect { setup! }.to raise_error(
-          described_class::AdaptorError, "adaptor can't be blank"
+          "adaptor can't be blank"
         )
       end
     end
@@ -30,7 +30,7 @@ RSpec.describe Kangaru::Database do
 
       it "raises an error" do
         expect { setup! }.to raise_error(
-          described_class::AdaptorError, "invalid adaptor 'invalid'"
+          "invalid adaptor 'invalid'"
         )
       end
     end
@@ -43,7 +43,7 @@ RSpec.describe Kangaru::Database do
 
         it "raises an error" do
           expect { setup! }.to raise_error(
-            described_class::SQLiteError, "path can't be blank"
+            "path can't be blank"
           )
         end
       end
