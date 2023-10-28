@@ -1,0 +1,9 @@
+module Kangaru
+  module Patches
+    module Source : Module
+      class ::Module
+        def source: -> String
+      end
+    end
+  end
+end
