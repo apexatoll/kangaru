@@ -1,0 +1,29 @@
+module Kangaru
+  module InputParsers
+    class RouteParser
+      type output = { path: String?, action: Symbol?, id: Integer? }
+
+      attr_reader tokens: Array[String]
+
+      def initialize: (*String) -> void
+
+      def parse: -> output
+
+      private
+
+      @path: String?
+      @action: String?
+      @id: String?
+
+      def attributes: -> output
+
+      def id_token_set?: -> bool
+
+      def path: -> String?
+
+      def action: -> Symbol?
+
+      def id: -> Integer?
+    end
+  end
+end
