@@ -5,7 +5,6 @@ RSpec.describe Kangaru::Router do
     instance_double(Kangaru::Command, controller_name:, action:)
   end
 
-  let(:controller)      { "some" }
   let(:controller_name) { "SomeController" }
 
   let(:action) { :some_action }
@@ -23,7 +22,6 @@ RSpec.describe Kangaru::Router do
 
   describe "#initialize" do
     context "when command controller is not defined" do
-      let(:controller)      { "another" }
       let(:controller_name) { "AnotherController" }
 
       it "raises an error" do
@@ -35,7 +33,7 @@ RSpec.describe Kangaru::Router do
     end
 
     context "when command controller is defined" do
-      let(:controller) { "some" }
+      let(:controller_name) { "SomeController" }
 
       context "and command action is not defined" do
         let(:controller_class) { Class.new(described_class) }
