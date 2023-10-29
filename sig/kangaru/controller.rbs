@@ -1,14 +1,10 @@
 module Kangaru
   class Controller
-    attr_reader command: LegacyCommand
+    attr_reader command: Command
     attr_reader renderer: Renderer
 
-    def initialize: (LegacyCommand) -> void
+    def initialize: (Command) -> void
 
     def execute: -> void
-
-    private
-
-    def view_path: -> Pathname
   end
 end

@@ -2,7 +2,7 @@ RSpec.describe Kangaru::Router do
   subject(:router) { described_class.new(command, namespace:) }
 
   let(:command) do
-    instance_double(Kangaru::LegacyCommand, controller:, action:)
+    instance_double(Kangaru::Command, controller_name:, action:)
   end
 
   let(:controller)      { "some" }

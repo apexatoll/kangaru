@@ -5,7 +5,7 @@ RSpec.describe Kangaru::Controller do
 
   let(:command) do
     instance_double(
-      Kangaru::LegacyCommand, controller: controller_name, action:
+      Kangaru::Command, controller_name:, action:, view_file: view_path
     )
   end
 

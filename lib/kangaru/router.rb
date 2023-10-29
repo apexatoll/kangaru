@@ -27,7 +27,7 @@ module Kangaru
     private
 
     def controller_name
-      @controller_name ||= command.controller.to_class_name + CONTROLLER_SUFFIX
+      command.controller_name
     end
 
     def controller_class

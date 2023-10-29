@@ -8,10 +8,10 @@ module Kangaru
 
     CONTROLLER_SUFFIX: String
 
-    attr_reader command: LegacyCommand
+    attr_reader command: Command
     attr_reader namespace: Module
 
-    def initialize: (LegacyCommand, ?namespace: Module) -> void
+    def initialize: (Command, ?namespace: Module) -> void
 
     def resolve: -> void
 
