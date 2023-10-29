@@ -1,37 +1,20 @@
-# rubocop:disable RSpec/SubjectStub
-
 RSpec.describe Kangaru::Controller do
   subject(:controller) { described_class.new(command) }
 
   let(:command) do
-    instance_double(
-      Kangaru::Command, controller_name:, action:, view_file: view_path
-    )
+    instance_double(Kangaru::Command, controller_name:, action:, view_file:)
   end
 
   let(:controller_name) { :some_controller }
 
   let(:action) { :some_action }
 
-  let(:application) do
-    instance_spy(Kangaru::Application, namespace:, view_path:)
-  end
-
-  let(:namespace) { Namespace }
-
-  let(:view_path) { instance_spy(Pathname) }
-
-  let(:renderer) { instance_spy(Kangaru::Renderer) }
-
-  before do
-    stub_const "Namespace", Module.new
-
-    allow(Kangaru).to receive(:application).and_return(application)
-    allow(Kangaru::Renderer).to receive(:new).and_return(renderer)
-  end
+  let(:view_file) { instance_spy(Pathname) }
 
   describe "#execute" do
     subject(:execute) { controller.execute }
+
+    let(:renderer) { instance_spy(Kangaru::Renderer) }
 
     around do |spec|
       described_class.define_method(action) { nil }
@@ -40,17 +23,18 @@ RSpec.describe Kangaru::Controller do
     end
 
     before do
-      allow(controller).to receive(action)
+      allow(Kangaru::Renderer).to receive(:new).and_return(renderer)
+      allow(controller).to receive(action) # rubocop:disable RSpec
     end
 
     it "sends the command action message to itself" do
       execute
-      expect(controller).to have_received(action).once
+      expect(controller).to have_received(action).once # rubocop:disable RSpec
     end
 
     it "instantiates a renderer" do
       execute
-      expect(Kangaru::Renderer).to have_received(:new).with(view_path).once
+      expect(Kangaru::Renderer).to have_received(:new).with(view_file).once
     end
 
     it "renders the command output" do
@@ -63,6 +47,18 @@ RSpec.describe Kangaru::Controller do
     subject(:lookup_const) { described_class::Foobar }
 
     let(:foobar) { Module.new }
+
+    let(:namespace) { Namespace }
+
+    let(:application) do
+      instance_spy(Kangaru::Application, namespace:)
+    end
+
+    before do
+      stub_const "Namespace", Module.new
+
+      allow(Kangaru).to receive(:application).and_return(application)
+    end
 
     context "when specified const is not defined inside Controller" do
       context "and const not defined in application namespace" do
@@ -97,5 +93,3 @@ RSpec.describe Kangaru::Controller do
     end
   end
 end
-
-# rubocop:enable RSpec/SubjectStub
