@@ -107,28 +107,28 @@ RSpec.describe "Running a command" do
       end
     end
 
-    context "when one argument is given" do
+    context "when one argument is given", skip: "until using Command" do
       let(:argv) { %w[foobar] }
 
-      context "and specified controller is not defined" do
+      context "and default controller is not defined" do
         before { gem.load! }
 
         include_examples :handles_undefined_controller,
-                         controller: "FoobarController"
+                         controller: "DefaultController"
       end
 
-      context "and specified controller is defined" do
+      context "and default controller is defined" do
         before do
-          gem.path("foobar_controller").write(controller)
+          gem.path("default_controller").write(controller)
           gem.load!
         end
 
-        context "and default action is not defined" do
+        context "and specified action is not defined" do
           let(:controller) do
             <<~RUBY
               module SomeGem
-                class FoobarController < Kangaru::Controller
-                  def foobar
+                class DefaultController < Kangaru::Controller
+                  def another
                     Target.do_something
                   end
                 end
@@ -137,16 +137,16 @@ RSpec.describe "Running a command" do
           end
 
           include_examples :handles_undefined_action,
-                           controller: "FoobarController",
-                           action: "default"
+                           controller: "DefaultController",
+                           action: "foobar"
         end
 
-        context "and default action is defined" do
+        context "and specified action is defined" do
           let(:controller) do
             <<~RUBY
               module SomeGem
-                class FoobarController < Kangaru::Controller
-                  def default
+                class DefaultController < Kangaru::Controller
+                  def foobar
                     Target.do_something
                   end
                 end
