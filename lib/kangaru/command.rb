@@ -1,0 +1,32 @@
+module Kangaru
+  class Command
+    using Patches::Inflections
+
+    DEFAULT_PATH = "default".freeze
+
+    DEFAULT_ACTION = :default
+
+    CONTROLLER_SUFFIX = "controller".freeze
+
+    attr_reader :id, :arguments
+
+    def initialize(path:, action:, id:, arguments:)
+      @path = path
+      @action = action
+      @id = id
+      @arguments = arguments
+    end
+
+    def path
+      @path || DEFAULT_PATH
+    end
+
+    def action
+      @action || DEFAULT_ACTION
+    end
+
+    def controller_name
+      [path, CONTROLLER_SUFFIX].join("_").to_class_name
+    end
+  end
+end
