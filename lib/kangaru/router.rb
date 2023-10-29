@@ -4,10 +4,6 @@ module Kangaru
 
     using Patches::Constantise
 
-    class UndefinedControllerError < StandardError; end
-
-    class UndefinedActionError < StandardError; end
-
     attr_reader :command, :namespace
 
     def initialize(command, namespace: Object)
@@ -35,15 +31,13 @@ module Kangaru
     def validate_controller_defined!
       return if namespace.const_defined?(controller_name)
 
-      raise UndefinedControllerError,
-            "#{controller_name} is not defined in #{namespace}"
+      raise "#{controller_name} is not defined in #{namespace}"
     end
 
     def validate_action_defined!
       return if controller_class.instance_methods.include?(command.action)
 
-      raise UndefinedActionError,
-            "#{command.action} is not defined by #{controller_name}"
+      raise "#{command.action} is not defined by #{controller_name}"
     end
   end
 end

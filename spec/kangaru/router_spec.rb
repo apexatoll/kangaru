@@ -26,7 +26,6 @@ RSpec.describe Kangaru::Router do
 
       it "raises an error" do
         expect { router }.to raise_error(
-          described_class::UndefinedControllerError,
           "#{controller_name} is not defined in #{namespace}"
         )
       end
@@ -40,7 +39,6 @@ RSpec.describe Kangaru::Router do
 
         it "raises an error" do
           expect { router }.to raise_error(
-            described_class::UndefinedActionError,
             "#{action} is not defined by #{controller_name}"
           )
         end

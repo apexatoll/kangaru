@@ -1,11 +1,5 @@
 module Kangaru
   class Router
-    class UndefinedControllerError < StandardError
-    end
-
-    class UndefinedActionError < StandardError
-    end
-
     attr_reader command: Command
     attr_reader namespace: Module
 

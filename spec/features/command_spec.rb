@@ -29,7 +29,6 @@ RSpec.describe "Running a command" do
 
       it "raises an UndefinedControllerError" do
         expect { run_command! }.to raise_error(
-          Kangaru::Router::UndefinedControllerError,
           "#{options[:controller]} is not defined in SomeGem"
         )
       end
@@ -38,7 +37,6 @@ RSpec.describe "Running a command" do
     shared_examples :handles_undefined_action do |**options|
       it "raises an UndefinedActionError" do
         expect { run_command! }.to raise_error(
-          Kangaru::Router::UndefinedActionError,
           "#{options[:action]} is not defined by #{options[:controller]}"
         )
       end
