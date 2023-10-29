@@ -1,5 +1,7 @@
 module Kangaru
   class Router
+    extend Forwardable
+
     attr_reader command: Command
     attr_reader namespace: Module
 
@@ -11,7 +13,9 @@ module Kangaru
 
     @controller_class: untyped
 
+    # Delegated to command
     def controller_name: -> String
+    def action: -> Symbol
 
     def controller_class: -> untyped
 

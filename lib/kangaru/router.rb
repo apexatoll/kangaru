@@ -1,7 +1,8 @@
 module Kangaru
   class Router
-    using Patches::Inflections
+    extend Forwardable
 
+    using Patches::Inflections
     using Patches::Constantise
 
     attr_reader :command, :namespace
@@ -20,12 +21,10 @@ module Kangaru
 
     private
 
-    def controller_name
-      command.controller_name
-    end
+    def_delegators :command, :controller_name, :action
 
     def controller_class
-      @controller_class ||= controller_name.constantise(root: namespace)
+      @controller_class ||= command.controller_name.constantise(root: namespace)
     end
 
     def validate_controller_defined!
@@ -35,9 +34,9 @@ module Kangaru
     end
 
     def validate_action_defined!
-      return if controller_class.instance_methods.include?(command.action)
+      return if controller_class.instance_methods.include?(action)
 
-      raise "#{command.action} is not defined by #{controller_name}"
+      raise "#{action} is not defined by #{controller_name}"
     end
   end
 end
