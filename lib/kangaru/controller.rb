@@ -1,10 +1,13 @@
 module Kangaru
   class Controller
-    attr_reader :command, :renderer
+    attr_reader :command
 
     def initialize(command)
       @command = command
-      @renderer = Renderer.new(command.view_file)
+    end
+
+    def renderer
+      @renderer ||= Renderer.new(command.view_file)
     end
 
     def execute
