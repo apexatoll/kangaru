@@ -285,19 +285,26 @@ RSpec.describe Kangaru::Application do
 
     let(:command) { instance_spy(Kangaru::Command) }
 
+    let(:input_parser) { instance_spy(Kangaru::InputParser, parse: command) }
+
     let(:router) { instance_spy(Kangaru::Router) }
 
     before do
-      allow(Kangaru::Command).to receive(:parse).and_return(command)
+      allow(Kangaru::InputParser).to receive(:new).and_return(input_parser)
       allow(Kangaru::Router).to receive(:new).and_return(router)
+    end
+
+    it "instantiates an input parser" do
+      run!
+      expect(Kangaru::InputParser).to have_received(:new).with(*argv)
     end
 
     it "parses the arguments into a command" do
       run!
-      expect(Kangaru::Command).to have_received(:parse).with(argv)
+      expect(input_parser).to have_received(:parse).once
     end
 
-    it "instantiates a router" do
+    it "instantiates a router with the created command object" do
       run!
       expect(Kangaru::Router).to have_received(:new).with(command, namespace:)
     end

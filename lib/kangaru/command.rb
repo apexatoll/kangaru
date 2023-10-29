@@ -32,9 +32,5 @@ module Kangaru
     def view_file
       Kangaru.application.view_path(path, action.to_s)
     end
-
-    def self.parse(tokens)
-      InputParser.new(*tokens).parse
-    end
   end
 end

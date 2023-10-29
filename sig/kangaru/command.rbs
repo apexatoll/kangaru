@@ -26,7 +26,5 @@ module Kangaru
     def controller_name: -> String
 
     def view_file: -> Pathname
-
-    def self.parse: (Array[String]) -> Command
   end
 end
