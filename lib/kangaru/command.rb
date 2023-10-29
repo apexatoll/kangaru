@@ -9,9 +9,9 @@ module Kangaru
     end
 
     def self.parse(tokens)
-      controller = InputParsers::ControllerParser.parse(tokens)
-      action     = InputParsers::ActionParser.parse(tokens)
-      arguments  = InputParsers::ArgumentParser.parse(tokens)
+      controller = LegacyInputParsers::ControllerParser.parse(tokens)
+      action     = LegacyInputParsers::ActionParser.parse(tokens)
+      arguments  = LegacyInputParsers::ArgumentParser.parse(tokens)
 
       new(controller:, action:, arguments:)
     end

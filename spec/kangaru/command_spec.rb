@@ -19,17 +19,17 @@ RSpec.describe Kangaru::Command do
     let(:tokens) { %w[foo bar baz] }
 
     before do
-      allow(Kangaru::InputParsers::ControllerParser)
+      allow(Kangaru::LegacyInputParsers::ControllerParser)
         .to receive(:parse)
         .with(tokens)
         .and_return(controller)
 
-      allow(Kangaru::InputParsers::ActionParser)
+      allow(Kangaru::LegacyInputParsers::ActionParser)
         .to receive(:parse)
         .with(tokens)
         .and_return(action)
 
-      allow(Kangaru::InputParsers::ArgumentParser)
+      allow(Kangaru::LegacyInputParsers::ArgumentParser)
         .to receive(:parse)
         .with(tokens)
         .and_return(arguments)

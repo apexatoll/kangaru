@@ -1,4 +1,4 @@
-RSpec.describe Kangaru::InputParsers::InputParser do
+RSpec.describe Kangaru::LegacyInputParsers::InputParser do
   subject(:input_parser) { described_class.new(tokens) }
 
   let(:tokens) { %w[foo bar baz] }

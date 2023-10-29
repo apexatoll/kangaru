@@ -1,5 +1,5 @@
 module Kangaru
-  module InputParsers
+  module LegacyInputParsers
     class ControllerParser < InputParser
       DEFAULT_CONTROLLER: String
       CONTROLLER_SUFFIX: String

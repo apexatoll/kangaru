@@ -1,5 +1,5 @@
 module Kangaru
-  module InputParsers
+  module LegacyInputParsers
     class ArgumentParser < InputParser
       using Patches::Inflections
 
