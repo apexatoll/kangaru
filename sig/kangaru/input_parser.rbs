@@ -1,0 +1,21 @@
+module Kangaru
+  class InputParser
+    ARGUMENT_TOKEN: Regexp
+
+    attr_reader tokens: Array[String]
+
+    def initialize: (*String) -> void
+
+    def parse: -> Hash[Symbol, untyped]
+
+    private
+
+    def route_tokens: -> Array[String]
+
+    def argument_tokens: -> Array[String]
+
+    def route: -> InputParsers::RouteParser::output
+
+    def arguments: -> Hash[Symbol, untyped]
+  end
+end
