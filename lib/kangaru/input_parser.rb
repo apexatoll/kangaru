@@ -9,10 +9,19 @@ module Kangaru
     end
 
     def parse
-      route.merge(arguments:)
+      Command.new(**command_attributes)
     end
 
     private
+
+    def command_attributes
+      {
+        path: route_attributes[:path],
+        action: route_attributes[:action],
+        id: route_attributes[:id],
+        arguments:
+      }
+    end
 
     def route_tokens
       tokens.take_while { |token| !token.match?(ARGUMENT_TOKEN) }
@@ -22,7 +31,7 @@ module Kangaru
       tokens.drop_while { |token| !token.match?(ARGUMENT_TOKEN) }
     end
 
-    def route
+    def route_attributes
       InputParsers::RouteParser.new(*route_tokens).parse
     end
 
