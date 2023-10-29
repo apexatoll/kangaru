@@ -43,8 +43,8 @@ module Kangaru
       build_path(*, dir: app_dir, ext:)
     end
 
-    def view_path(controller:, action:, ext: :erb)
-      build_path(controller, action, dir: views_dir, ext:)
+    def view_path(*, ext: :erb)
+      build_path(*, dir: views_dir, ext:)
     end
 
     def collapsed_dirs

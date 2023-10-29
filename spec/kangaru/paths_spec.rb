@@ -177,24 +177,60 @@ RSpec.describe Kangaru::Paths do
   end
 
   describe "#view_path" do
-    subject(:view_file) { paths.view_path(controller:, action:, ext:) }
+    subject(:view_file) { paths.view_path(*fragments, ext:) }
 
-    let(:controller) { "default" }
+    context "when path fragments are not specified" do
+      let(:fragments) { [] }
 
-    let(:action) { :do_something }
+      context "and extension is not specified" do
+        let(:ext) { nil }
 
-    context "when extension is not specified" do
-      let(:ext) { nil }
+        include_examples :builds_path,
+                         as: "/foo/bar/gem%{version}/lib/gem/views"
+      end
 
-      include_examples :builds_path, as:
-        "/foo/bar/gem%{version}/lib/gem/views/default/do_something"
+      context "and extension is specified" do
+        let(:ext) { :sqlite3 }
+
+        include_examples :builds_path,
+                         as: "/foo/bar/gem%{version}/lib/gem/views"
+      end
     end
 
-    context "when extension is specified" do
-      let(:ext) { :erb }
+    context "when one path fragment is specified" do
+      let(:fragments) { %w[file] }
 
-      include_examples :builds_path, as:
-        "/foo/bar/gem%{version}/lib/gem/views/default/do_something.erb"
+      context "and extension is not specified" do
+        let(:ext) { nil }
+
+        include_examples :builds_path,
+                         as: "/foo/bar/gem%{version}/lib/gem/views/file"
+      end
+
+      context "and extension is specified" do
+        let(:ext) { :erb }
+
+        include_examples :builds_path,
+                         as: "/foo/bar/gem%{version}/lib/gem/views/file.erb"
+      end
+    end
+
+    context "when multiple path fragments are specified" do
+      let(:fragments) { %w[dir file] }
+
+      context "and extension is not specified" do
+        let(:ext) { nil }
+
+        include_examples :builds_path,
+                         as: "/foo/bar/gem%{version}/lib/gem/views/dir/file"
+      end
+
+      context "and extension is specified" do
+        let(:ext) { :erb }
+
+        include_examples :builds_path,
+                         as: "/foo/bar/gem%{version}/lib/gem/views/dir/file.erb"
+      end
     end
   end
 
