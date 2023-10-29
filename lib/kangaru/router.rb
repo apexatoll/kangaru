@@ -8,8 +8,6 @@ module Kangaru
 
     class UndefinedActionError < StandardError; end
 
-    CONTROLLER_SUFFIX = "Controller".freeze
-
     attr_reader :command, :namespace
 
     def initialize(command, namespace: Object)

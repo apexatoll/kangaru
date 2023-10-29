@@ -6,8 +6,6 @@ module Kangaru
     class UndefinedActionError < StandardError
     end
 
-    CONTROLLER_SUFFIX: String
-
     attr_reader command: Command
     attr_reader namespace: Module
 
