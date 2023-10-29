@@ -17,7 +17,6 @@ module Kangaru
 
     private
 
-    @controller_name: String
     @controller_class: untyped
 
     def controller_name: -> String
