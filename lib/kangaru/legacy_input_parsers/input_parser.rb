@@ -1,5 +1,5 @@
 module Kangaru
-  module InputParsers
+  module LegacyInputParsers
     class InputParser
       ARGUMENT_TOKEN = /^-/
 

@@ -1,5 +1,5 @@
 module Kangaru
-  module InputParsers
+  module LegacyInputParsers
     class ControllerParser < InputParser
       using Patches::Inflections
 

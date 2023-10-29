@@ -1,5 +1,5 @@
 module Kangaru
-  module InputParsers
+  module LegacyInputParsers
     class ActionParser < InputParser
       DEFAULT_ACTION: Symbol
 

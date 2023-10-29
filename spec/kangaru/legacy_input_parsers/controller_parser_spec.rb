@@ -1,4 +1,4 @@
-RSpec.describe Kangaru::InputParsers::ControllerParser do
+RSpec.describe Kangaru::LegacyInputParsers::ControllerParser do
   let(:controller_parser) { described_class.new(tokens) }
 
   let(:tokens) { [command_tokens, argument_tokens].flatten.compact }
