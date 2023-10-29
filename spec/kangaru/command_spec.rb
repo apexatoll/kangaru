@@ -71,4 +71,91 @@ RSpec.describe Kangaru::Command do
       end
     end
   end
+
+  describe "#view_file" do
+    subject(:view_file) { command.view_file }
+
+    let(:application) { instance_spy(Kangaru::Application, view_path:) }
+    let(:view_path)   { instance_spy(Pathname) }
+
+    before do
+      allow(Kangaru).to receive(:application).and_return(application)
+    end
+
+    context "when path is nil" do
+      let(:path) { nil }
+
+      context "and action is nil" do
+        let(:action) { nil }
+
+        it "delegates to the application" do
+          view_file
+
+          expect(application).to have_received(:view_path).with(
+            described_class::DEFAULT_PATH,
+            described_class::DEFAULT_ACTION.to_s
+          ).once
+        end
+
+        it "returns the pathname" do
+          expect(view_file).to eq(view_path)
+        end
+      end
+
+      context "and action is set" do
+        let(:action) { :some_action }
+
+        it "delegates to the application" do
+          view_file
+
+          expect(application).to have_received(:view_path).with(
+            described_class::DEFAULT_PATH,
+            action.to_s
+          ).once
+        end
+
+        it "returns the pathname" do
+          expect(view_file).to eq(view_path)
+        end
+      end
+    end
+
+    context "when path is set" do
+      let(:path) { "foo/bar" }
+
+      context "and action is nil" do
+        let(:action) { nil }
+
+        it "delegates to the application" do
+          view_file
+
+          expect(application).to have_received(:view_path).with(
+            path,
+            described_class::DEFAULT_ACTION.to_s
+          ).once
+        end
+
+        it "returns the pathname" do
+          expect(view_file).to eq(view_path)
+        end
+      end
+
+      context "and action is set" do
+        let(:action) { :some_action }
+
+        it "delegates to the application" do
+          view_file
+
+          expect(application).to have_received(:view_path).with(
+            path,
+            action.to_s
+          ).once
+        end
+
+        it "returns the pathname" do
+          expect(view_file).to eq(view_path)
+        end
+      end
+    end
+  end
 end
