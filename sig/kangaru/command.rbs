@@ -1,0 +1,28 @@
+module Kangaru
+  class Command
+    DEFAULT_PATH: String
+
+    DEFAULT_ACTION: Symbol
+
+    CONTROLLER_SUFFIX: String
+
+    @path: String?
+    @action: Symbol?
+
+    attr_reader id: Integer?
+    attr_reader arguments: Hash[Symbol, untyped]
+
+    def initialize: (
+      path: String?,
+      action: Symbol?,
+      id: Integer?,
+      arguments: Hash[Symbol, untyped]
+    ) -> void
+
+    def path: -> String
+
+    def action: -> Symbol
+
+    def controller_name: -> String
+  end
+end
