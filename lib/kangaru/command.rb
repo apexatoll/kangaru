@@ -28,5 +28,9 @@ module Kangaru
     def controller_name
       [path, CONTROLLER_SUFFIX].join("_").to_class_name
     end
+
+    def view_file
+      Kangaru.application.view_path(path, action.to_s)
+    end
   end
 end

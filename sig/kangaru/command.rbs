@@ -24,5 +24,7 @@ module Kangaru
     def action: -> Symbol
 
     def controller_name: -> String
+
+    def view_file: -> Pathname
   end
 end
