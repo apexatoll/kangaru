@@ -37,7 +37,7 @@ module Kangaru
     end
 
     def run!(argv)
-      command = Command.parse(argv)
+      command = LegacyCommand.parse(argv)
 
       Router.new(command, namespace:).resolve
     end

@@ -4,7 +4,9 @@ RSpec.describe Kangaru::Controller do
   subject(:controller) { described_class.new(command) }
 
   let(:command) do
-    instance_double(Kangaru::Command, controller: controller_name, action:)
+    instance_double(
+      Kangaru::LegacyCommand, controller: controller_name, action:
+    )
   end
 
   let(:controller_name) { :some_controller }

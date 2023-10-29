@@ -1,5 +1,5 @@
 module Kangaru
-  class Command
+  class LegacyCommand
     attr_reader controller: String
     attr_reader action: Symbol
     attr_reader arguments: Hash[Symbol, untyped]
@@ -10,6 +10,6 @@ module Kangaru
       arguments: Hash[Symbol, untyped]
     ) -> void
 
-    def self.parse: (Array[String]) -> Command
+    def self.parse: (Array[String]) -> LegacyCommand
   end
 end

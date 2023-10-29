@@ -1,5 +1,5 @@
 module Kangaru
-  class Command
+  class LegacyCommand
     attr_reader :controller, :action, :arguments
 
     def initialize(controller:, action:, arguments:)
