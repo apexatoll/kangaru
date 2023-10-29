@@ -1,4 +1,4 @@
-RSpec.describe Kangaru::Command do
+RSpec.describe Kangaru::LegacyCommand do
   subject(:command) { described_class.new(**attributes) }
 
   let(:attributes) { { controller:, action:, arguments: } }
