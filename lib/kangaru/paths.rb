@@ -27,24 +27,24 @@ module Kangaru
     end
 
     # Paths inside the root directory of the gem.
-    def gem_path(*, ext: nil)
-      build_path(*, dir: gem_dir, ext:)
+    def gem_path(*fragments, ext: nil)
+      build_path(*fragments, dir: gem_dir, ext:)
     end
 
     # Paths inside the lib path of the gem. Conventionally contains two files:
     # 1. gem_name.rb   (source_file)
     # 2. gem_name/*.rb (app_path)
-    def lib_path(*, ext: :rb)
-      build_path(*, dir: lib_dir, ext:)
+    def lib_path(*fragments, ext: :rb)
+      build_path(*fragments, dir: lib_dir, ext:)
     end
 
     # The gem application directory (gem/lib/gem_name).
-    def path(*, ext: :rb)
-      build_path(*, dir: app_dir, ext:)
+    def path(*fragments, ext: :rb)
+      build_path(*fragments, dir: app_dir, ext:)
     end
 
-    def view_path(*, ext: :erb)
-      build_path(*, dir: views_dir, ext:)
+    def view_path(*fragments, ext: :erb)
+      build_path(*fragments, dir: views_dir, ext:)
     end
 
     def collapsed_dirs
