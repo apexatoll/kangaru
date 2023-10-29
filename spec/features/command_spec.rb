@@ -107,7 +107,7 @@ RSpec.describe "Running a command" do
       end
     end
 
-    context "when one argument is given", skip: "until using Command" do
+    context "when one argument is given" do
       let(:argv) { %w[foobar] }
 
       context "and default controller is not defined" do

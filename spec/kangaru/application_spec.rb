@@ -283,18 +283,18 @@ RSpec.describe Kangaru::Application do
 
     let(:argv) { %w[foo bar baz] }
 
-    let(:command) { instance_spy(Kangaru::LegacyCommand) }
+    let(:command) { instance_spy(Kangaru::Command) }
 
     let(:router) { instance_spy(Kangaru::Router) }
 
     before do
-      allow(Kangaru::LegacyCommand).to receive(:parse).and_return(command)
+      allow(Kangaru::Command).to receive(:parse).and_return(command)
       allow(Kangaru::Router).to receive(:new).and_return(router)
     end
 
     it "parses the arguments into a command" do
       run!
-      expect(Kangaru::LegacyCommand).to have_received(:parse).with(argv)
+      expect(Kangaru::Command).to have_received(:parse).with(argv)
     end
 
     it "instantiates a router" do

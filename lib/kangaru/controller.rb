@@ -4,7 +4,7 @@ module Kangaru
 
     def initialize(command)
       @command = command
-      @renderer = Renderer.new(view_path)
+      @renderer = Renderer.new(command.view_file)
     end
 
     def execute
@@ -25,11 +25,5 @@ module Kangaru
     end
 
     private_class_method :const_missing
-
-    private
-
-    def view_path
-      Kangaru.application.view_path(command.controller, command.action.to_s)
-    end
   end
 end
