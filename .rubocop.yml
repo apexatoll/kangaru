@@ -28,6 +28,7 @@ Naming/MethodParameterName:
   AllowedNames:
     - by
     - to
+    - id
 
 Style/ArgumentsForwarding:
   Enabled: false
