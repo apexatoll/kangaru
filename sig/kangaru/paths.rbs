@@ -12,7 +12,7 @@ module Kangaru
 
     def path: (*String, ?ext: Symbol?) -> Pathname
 
-    def view_path: (controller: String, action: String, ?ext: Symbol?) -> Pathname
+    def view_path: (*String, ?ext: Symbol?) -> Pathname
 
     def collapsed_dirs: -> Array[String]
 

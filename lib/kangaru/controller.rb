@@ -29,10 +29,7 @@ module Kangaru
     private
 
     def view_path
-      Kangaru.application.view_path(
-        controller: command.controller,
-        action: command.action.to_s
-      )
+      Kangaru.application.view_path(command.controller, command.action.to_s)
     end
   end
 end
