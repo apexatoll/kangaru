@@ -6,15 +6,22 @@ module Kangaru
 
     def initialize: (*String) -> void
 
-    def parse: -> Hash[Symbol, untyped]
+    def parse: -> Command
 
     private
+
+    def command_attributes: -> {
+      path: String?,
+      action: Symbol?,
+      id: Integer?,
+      arguments: Hash[Symbol, untyped] 
+    }
 
     def route_tokens: -> Array[String]
 
     def argument_tokens: -> Array[String]
 
-    def route: -> InputParsers::RouteParser::output
+    def route_attributes: -> InputParsers::RouteParser::output
 
     def arguments: -> Hash[Symbol, untyped]
   end
