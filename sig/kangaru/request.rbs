@@ -1,0 +1,8 @@
+module Kangaru
+  class Request
+    attr_reader path: String
+    attr_reader params: Hash[Symbol, untyped]
+
+    def initialize: (path: String, params: Hash[Symbol, untyped]) -> void
+  end
+end
