@@ -5,6 +5,8 @@ module Kangaru
 
     def initialize: (Command) -> void
 
+    def view_file: -> Pathname
+
     def execute: -> void
 
     def self.path: -> String

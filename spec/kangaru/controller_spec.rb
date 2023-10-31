@@ -43,6 +43,23 @@ RSpec.describe Kangaru::Controller do
     end
   end
 
+  describe "#view_file" do
+    let(:application) { instance_spy(Kangaru::Application) }
+
+    before do
+      allow(Kangaru).to receive(:application).and_return(application)
+    end
+
+    it "delegates to the application" do
+      controller.view_file
+
+      expect(application)
+        .to have_received(:view_path)
+        .with(described_class.path, action.to_s)
+        .once
+    end
+  end
+
   describe ".path" do
     subject(:path) { controller_class.path }
 

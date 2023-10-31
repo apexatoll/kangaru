@@ -12,6 +12,10 @@ module Kangaru
       @renderer ||= Renderer.new(command.view_file)
     end
 
+    def view_file
+      Kangaru.application.view_path(self.class.path, command.action.to_s)
+    end
+
     def execute
       public_send(command.action)
 
