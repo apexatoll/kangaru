@@ -1,0 +1,19 @@
+module Kangaru
+  class PathParser
+    attr_reader path: String
+
+    def initialize: (String) -> void
+
+    def controller: -> String?
+
+    def action: -> Symbol?
+
+    def id: -> Integer?
+
+    private
+
+    MATCHERS: Hash[Symbol, Regexp]
+
+    def match: (Symbol, ?cast: Symbol) -> untyped
+  end
+end
