@@ -1,0 +1,21 @@
+module Kangaru
+  class RequestBuilder
+    ARGUMENT_TOKEN: Regexp
+
+    attr_reader tokens: Array[String]
+
+    def initialize: (Array[String]) -> void
+
+    def build: -> Request
+
+    private
+
+    def path: -> String
+
+    def params: -> Hash[Symbol, untyped]
+
+    def path_tokens: -> Array[String]
+
+    def param_tokens: -> Array[String]
+  end
+end
