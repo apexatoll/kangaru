@@ -2,6 +2,8 @@ module Kangaru
   class Request
     DEFAULT_CONTROLLER: String
 
+    DEFAULT_ACTION: Symbol
+
     CONTROLLER_SUFFIX: String
 
     attr_reader path: String
@@ -10,6 +12,8 @@ module Kangaru
     def initialize: (path: String, params: Hash[Symbol, untyped]) -> void
 
     def controller: -> String
+
+    def action: -> Symbol
 
     private
 
