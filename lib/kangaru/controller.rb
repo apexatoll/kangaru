@@ -2,6 +2,8 @@ module Kangaru
   class Controller
     using Patches::Inflections
 
+    SUFFIX = "Controller".freeze
+
     attr_reader :request
 
     def initialize(request)
@@ -26,9 +28,7 @@ module Kangaru
     # The first module namespace is removed as this is either Kangaru or the
     # target gem namespace. Used to infer the location of view files.
     def self.path
-      name&.delete_suffix(Request::CONTROLLER_SUFFIX)
-          &.gsub(/^.*?::/, "")
-          &.to_snakecase || raise
+      name&.delete_suffix(SUFFIX)&.gsub(/^.*?::/, "")&.to_snakecase || raise
     end
 
     # The binding passed to the renderer is not scoped to the application

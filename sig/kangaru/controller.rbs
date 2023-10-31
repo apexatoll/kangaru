@@ -1,5 +1,7 @@
 module Kangaru
   class Controller
+    SUFFIX: String
+
     attr_reader request: Request
     attr_reader renderer: Renderer
 

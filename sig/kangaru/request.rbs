@@ -4,8 +4,6 @@ module Kangaru
 
     DEFAULT_ACTION: Symbol
 
-    CONTROLLER_SUFFIX: String
-
     attr_reader path: String
     attr_reader params: Hash[Symbol, untyped]
 

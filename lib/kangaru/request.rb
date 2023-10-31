@@ -6,8 +6,6 @@ module Kangaru
 
     DEFAULT_ACTION = :default
 
-    CONTROLLER_SUFFIX = "Controller".freeze
-
     attr_reader :path, :params
 
     def initialize(path:, params:)
@@ -18,7 +16,7 @@ module Kangaru
     def controller
       return DEFAULT_CONTROLLER if path_parser.controller.nil?
 
-      path_parser.controller&.to_class_name&.concat(CONTROLLER_SUFFIX) || raise
+      path_parser.controller&.to_class_name&.concat(Controller::SUFFIX) || raise
     end
 
     def action
