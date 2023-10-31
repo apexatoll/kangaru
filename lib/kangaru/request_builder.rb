@@ -19,7 +19,7 @@ module Kangaru
     end
 
     def params
-      InputParsers::ArgumentParser.new(*param_tokens).parse
+      ArgumentParser.new(*param_tokens).parse
     end
 
     def path_tokens

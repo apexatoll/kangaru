@@ -1,4 +1,4 @@
-RSpec.describe Kangaru::InputParsers::ArgumentParser do
+RSpec.describe Kangaru::ArgumentParser do
   subject(:argument_parser) { described_class.new(*tokens) }
 
   describe "#parse" do

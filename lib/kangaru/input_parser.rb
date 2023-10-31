@@ -36,7 +36,7 @@ module Kangaru
     end
 
     def arguments
-      InputParsers::ArgumentParser.new(*argument_tokens).parse
+      ArgumentParser.new(*argument_tokens).parse
     end
   end
 end

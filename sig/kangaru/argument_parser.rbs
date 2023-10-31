@@ -1,0 +1,17 @@
+module Kangaru
+  class ArgumentParser
+    attr_reader tokens: Array[String]
+
+    def initialize: (*String) -> void
+
+    def parse: -> Hash[Symbol, untyped]
+
+    private
+
+    def grouped_argument_tokens: -> Array[Array[String]]
+
+    def parse_key: (String) -> Symbol
+
+    def parse_value: (Array[untyped]) -> untyped
+  end
+end
