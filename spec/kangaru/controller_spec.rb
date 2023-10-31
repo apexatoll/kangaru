@@ -43,6 +43,58 @@ RSpec.describe Kangaru::Controller do
     end
   end
 
+  describe ".path" do
+    subject(:path) { controller_class.path }
+
+    let(:controller_class) { Class.new(described_class) }
+
+    let(:name) { "#{namespace}::#{controller_name}" }
+
+    before do
+      allow(controller_class).to receive(:name).and_return(name)
+    end
+
+    context "when controller is in Kangaru namespace" do
+      let(:namespace) { "Kangaru" }
+
+      context "and controller is not nested" do
+        let(:controller_name) { "BazController" }
+
+        it "returns the expected path" do
+          expect(path).to eq("baz")
+        end
+      end
+
+      context "and controller is nested" do
+        let(:controller_name) { "Foobar::BazController" }
+
+        it "returns the expected path" do
+          expect(path).to eq("foobar/baz")
+        end
+      end
+    end
+
+    context "when controller is in gem namespace" do
+      let(:namespace) { "SomeGem" }
+
+      context "and controller is not nested" do
+        let(:controller_name) { "BazController" }
+
+        it "returns the expected path" do
+          expect(path).to eq("baz")
+        end
+      end
+
+      context "and controller is nested" do
+        let(:controller_name) { "Foobar::BazController" }
+
+        it "returns the expected path" do
+          expect(path).to eq("foobar/baz")
+        end
+      end
+    end
+  end
+
   describe ".const_missing" do
     subject(:lookup_const) { described_class::Foobar }
 

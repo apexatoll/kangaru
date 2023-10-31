@@ -1,5 +1,7 @@
 module Kangaru
   class Controller
+    using Patches::Inflections
+
     attr_reader :command
 
     def initialize(command)
@@ -14,6 +16,15 @@ module Kangaru
       public_send(command.action)
 
       renderer.render(binding)
+    end
+
+    # Returns the partial path for the controller based on the class name.
+    # The first module namespace is removed as this is either Kangaru or the
+    # target gem namespace. Used to infer the location of view files.
+    def self.path
+      name&.delete_suffix(Request::CONTROLLER_SUFFIX)
+          &.gsub(/^.*?::/, "")
+          &.to_snakecase || raise
     end
 
     # The binding passed to the renderer is not scoped to the application

@@ -6,5 +6,7 @@ module Kangaru
     def initialize: (Command) -> void
 
     def execute: -> void
+
+    def self.path: -> String
   end
 end
