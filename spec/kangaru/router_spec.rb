@@ -1,11 +1,11 @@
 RSpec.describe Kangaru::Router do
-  subject(:router) { described_class.new(command, namespace:) }
+  subject(:router) { described_class.new(request, namespace:) }
 
-  let(:command) do
-    instance_double(Kangaru::Command, controller_name:, action:)
+  let(:request) do
+    instance_double(Kangaru::Request, controller:, action:)
   end
 
-  let(:controller_name) { "SomeController" }
+  let(:controller) { "SomeController" }
 
   let(:action) { :some_action }
 
@@ -21,25 +21,25 @@ RSpec.describe Kangaru::Router do
   end
 
   describe "#initialize" do
-    context "when command controller is not defined" do
-      let(:controller_name) { "AnotherController" }
+    context "when request controller is not defined" do
+      let(:controller) { "AnotherController" }
 
       it "raises an error" do
         expect { router }.to raise_error(
-          "#{controller_name} is not defined in #{namespace}"
+          "#{controller} is not defined in #{namespace}"
         )
       end
     end
 
     context "when command controller is defined" do
-      let(:controller_name) { "SomeController" }
+      let(:controller) { "SomeController" }
 
       context "and command action is not defined" do
         let(:controller_class) { Class.new(described_class) }
 
         it "raises an error" do
           expect { router }.to raise_error(
-            "#{action} is not defined by #{controller_name}"
+            "#{action} is not defined by #{controller}"
           )
         end
       end
@@ -50,7 +50,7 @@ RSpec.describe Kangaru::Router do
         end
 
         it "sets the attributes" do
-          expect(router).to have_attributes(command:, namespace:)
+          expect(router).to have_attributes(request:, namespace:)
         end
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe Kangaru::Router do
 
     it "instantiates a controller instance" do
       resolve
-      expect(controller_class).to have_received(:new).with(command)
+      expect(controller_class).to have_received(:new).with(request)
     end
 
     it "triggers the controller to execute the command" do

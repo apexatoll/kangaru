@@ -283,30 +283,37 @@ RSpec.describe Kangaru::Application do
 
     let(:argv) { %w[foo bar baz] }
 
-    let(:command) { instance_spy(Kangaru::Command) }
+    let(:request) { instance_spy(Kangaru::Request) }
 
-    let(:input_parser) { instance_spy(Kangaru::InputParser, parse: command) }
+    let(:request_builder) do
+      instance_spy(Kangaru::RequestBuilder, build: request)
+    end
 
     let(:router) { instance_spy(Kangaru::Router) }
 
     before do
-      allow(Kangaru::InputParser).to receive(:new).and_return(input_parser)
-      allow(Kangaru::Router).to receive(:new).and_return(router)
+      allow(Kangaru::RequestBuilder)
+        .to receive(:new)
+        .and_return(request_builder)
+
+      allow(Kangaru::Router)
+        .to receive(:new)
+        .and_return(router)
     end
 
-    it "instantiates an input parser" do
+    it "instantiates a request builder" do
       run!
-      expect(Kangaru::InputParser).to have_received(:new).with(*argv)
+      expect(Kangaru::RequestBuilder).to have_received(:new).with(argv)
     end
 
-    it "parses the arguments into a command" do
+    it "builds the request" do
       run!
-      expect(input_parser).to have_received(:parse).once
+      expect(request_builder).to have_received(:build).once
     end
 
-    it "instantiates a router with the created command object" do
+    it "instantiates a router with the request" do
       run!
-      expect(Kangaru::Router).to have_received(:new).with(command, namespace:)
+      expect(Kangaru::Router).to have_received(:new).with(request, namespace:)
     end
 
     it "resolves the request" do

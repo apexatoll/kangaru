@@ -37,9 +37,9 @@ module Kangaru
     end
 
     def run!(argv)
-      command = InputParser.new(*argv).parse
+      request = RequestBuilder.new(argv).build
 
-      Router.new(command, namespace:).resolve
+      Router.new(request, namespace:).resolve
     end
 
     def_delegators :paths, :view_path

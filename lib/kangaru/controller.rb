@@ -2,22 +2,22 @@ module Kangaru
   class Controller
     using Patches::Inflections
 
-    attr_reader :command
+    attr_reader :request
 
-    def initialize(command)
-      @command = command
+    def initialize(request)
+      @request = request
     end
 
     def renderer
-      @renderer ||= Renderer.new(command.view_file)
+      @renderer ||= Renderer.new(view_file)
     end
 
     def view_file
-      Kangaru.application.view_path(self.class.path, command.action.to_s)
+      Kangaru.application.view_path(self.class.path, request.action.to_s)
     end
 
     def execute
-      public_send(command.action)
+      public_send(request.action)
 
       renderer.render(binding)
     end

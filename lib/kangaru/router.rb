@@ -1,14 +1,12 @@
 module Kangaru
   class Router
-    extend Forwardable
-
     using Patches::Inflections
     using Patches::Constantise
 
-    attr_reader :command, :namespace
+    attr_reader :request, :namespace
 
-    def initialize(command, namespace: Object)
-      @command   = command
+    def initialize(request, namespace: Object)
+      @request   = request
       @namespace = namespace
 
       validate_controller_defined!
@@ -16,27 +14,25 @@ module Kangaru
     end
 
     def resolve
-      controller_class.new(command).execute
+      controller_class.new(request).execute
     end
 
     private
 
-    def_delegators :command, :controller_name, :action
-
     def controller_class
-      @controller_class ||= command.controller_name.constantise(root: namespace)
+      @controller_class ||= request.controller.constantise(root: namespace)
     end
 
     def validate_controller_defined!
-      return if namespace.const_defined?(controller_name)
+      return if namespace.const_defined?(request.controller)
 
-      raise "#{controller_name} is not defined in #{namespace}"
+      raise "#{request.controller} is not defined in #{namespace}"
     end
 
     def validate_action_defined!
-      return if controller_class.instance_methods.include?(action)
+      return if controller_class.instance_methods.include?(request.action)
 
-      raise "#{action} is not defined by #{controller_name}"
+      raise "#{request.action} is not defined by #{request.controller}"
     end
   end
 end

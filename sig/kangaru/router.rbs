@@ -2,10 +2,10 @@ module Kangaru
   class Router
     extend Forwardable
 
-    attr_reader command: Command
+    attr_reader request: Request
     attr_reader namespace: Module
 
-    def initialize: (Command, ?namespace: Module) -> void
+    def initialize: (Request, ?namespace: Module) -> void
 
     def resolve: -> void
 

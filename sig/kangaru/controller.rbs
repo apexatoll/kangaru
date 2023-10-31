@@ -1,9 +1,9 @@
 module Kangaru
   class Controller
-    attr_reader command: Command
+    attr_reader request: Request
     attr_reader renderer: Renderer
 
-    def initialize: (Command) -> void
+    def initialize: (Request) -> void
 
     def view_file: -> Pathname
 
