@@ -1,8 +1,18 @@
 module Kangaru
   class Request
+    DEFAULT_CONTROLLER: String
+
+    CONTROLLER_SUFFIX: String
+
     attr_reader path: String
     attr_reader params: Hash[Symbol, untyped]
 
     def initialize: (path: String, params: Hash[Symbol, untyped]) -> void
+
+    def controller: -> String
+
+    private
+
+    attr_reader path_parser: PathParser
   end
 end
