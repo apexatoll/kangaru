@@ -5,7 +5,7 @@ module Kangaru
 
       using Patches::Inflections
 
-      def self.name
+      def self.key
         to_s.gsub(/^.*::(?!.*::)/, "")
             .delete_suffix("Configurator")
             .to_snakecase

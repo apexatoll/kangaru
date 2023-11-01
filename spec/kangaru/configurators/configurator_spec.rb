@@ -1,6 +1,6 @@
 RSpec.describe Kangaru::Configurators::Configurator do
-  describe ".name" do
-    subject(:name) { configurator_class.name }
+  describe ".key" do
+    subject(:key) { configurator_class.key }
 
     let(:configurator_class) do
       Class.new(described_class) do
@@ -8,8 +8,8 @@ RSpec.describe Kangaru::Configurators::Configurator do
       end
     end
 
-    it "returns the expected name" do
-      expect(name).to eq(:foobar)
+    it "returns the expected key" do
+      expect(key).to eq(:foobar)
     end
   end
 

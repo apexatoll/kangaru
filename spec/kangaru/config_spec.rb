@@ -18,10 +18,10 @@ RSpec.describe Kangaru::Config do
         .and_return(configurator)
     end
 
-    after { described_class.undef_method(name) }
+    after { described_class.undef_method(key) }
 
     let(:configurator_class) do
-      class_spy(Kangaru::Configurators::Configurator, name:)
+      class_spy(Kangaru::Configurators::Configurator, key:)
     end
 
     let(:configurator) do
@@ -31,7 +31,7 @@ RSpec.describe Kangaru::Config do
       )
     end
 
-    let(:name) { :foobar }
+    let(:key) { :foobar }
 
     let(:configurator_hash) { { hello: "world" } }
   end
@@ -51,7 +51,7 @@ RSpec.describe Kangaru::Config do
       it "sets a reader" do
         expect { config }
           .to change { described_class.instance_methods }
-          .to(include(name))
+          .to(include(key))
       end
 
       it "instantiates a configurator" do
@@ -60,7 +60,7 @@ RSpec.describe Kangaru::Config do
       end
 
       it "sets the configurators instance variable" do
-        expect(config.configurators).to eq(foobar: configurator)
+        expect(config.configurators).to eq(key => configurator)
       end
     end
   end
