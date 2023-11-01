@@ -7,33 +7,33 @@ RSpec.describe Kangaru::Config do
     end
   end
 
-  shared_context :configurator_defined do
+  shared_context :foobar_configurator_defined do
     before do
       allow(Kangaru::Configurators)
         .to receive(:classes)
-        .and_return([configurator_class])
+        .and_return([foobar_configurator_class])
 
-      allow(configurator_class)
+      allow(foobar_configurator_class)
         .to receive(:new)
-        .and_return(configurator)
+        .and_return(foobar_configurator)
+
+      allow(foobar_configurator)
+        .to receive(:serialise)
+        .and_return(foobar_configurator_hash)
     end
 
-    after { described_class.undef_method(key) }
+    after { described_class.undef_method(:foobar) }
 
-    let(:configurator_class) do
-      class_spy(Kangaru::Configurators::Configurator, key:)
+    let(:foobar_configurator_class) do
+      Class.new(Kangaru::Configurators::Configurator) do
+        def self.name = "FoobarConfigurator"
+        def self.key  = :foobar
+      end
     end
 
-    let(:configurator) do
-      instance_spy(
-        Kangaru::Configurators::Configurator,
-        serialise: configurator_hash
-      )
-    end
+    let(:foobar_configurator) { foobar_configurator_class.new }
 
-    let(:key) { :foobar }
-
-    let(:configurator_hash) { { hello: "world" } }
+    let(:foobar_configurator_hash) { { hello: "world" } }
   end
 
   describe "#initialize" do
@@ -46,21 +46,21 @@ RSpec.describe Kangaru::Config do
     end
 
     context "when configurators defined" do
-      include_context :configurator_defined
+      include_context :foobar_configurator_defined
 
       it "sets a reader" do
         expect { config }
           .to change { described_class.instance_methods }
-          .to(include(key))
+          .to(include(:foobar))
       end
 
       it "instantiates a configurator" do
         config
-        expect(configurator_class).to have_received(:new).once
+        expect(foobar_configurator_class).to have_received(:new).once
       end
 
       it "sets the configurators instance variable" do
-        expect(config.configurators).to eq(key => configurator)
+        expect(config.configurators).to eq(foobar: foobar_configurator)
       end
     end
   end
@@ -77,7 +77,7 @@ RSpec.describe Kangaru::Config do
     end
 
     context "when configurators set" do
-      include_context :configurator_defined
+      include_context :foobar_configurator_defined
 
       it "returns the expected hash" do
         expect(hash).to eq(foobar: { hello: "world" })
