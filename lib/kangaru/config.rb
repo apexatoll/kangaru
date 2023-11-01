@@ -21,13 +21,13 @@ module Kangaru
 
     def set_configurators!
       Configurators.classes.to_h do |configurator_class|
-        self.class.class_eval { attr_reader configurator_class.name }
+        self.class.class_eval { attr_reader configurator_class.key }
 
         configurator = configurator_class.new
 
-        instance_variable_set(:"@#{configurator_class.name}", configurator)
+        instance_variable_set(:"@#{configurator_class.key}", configurator)
 
-        [configurator_class.name, configurator]
+        [configurator_class.key, configurator]
       end
     end
 
