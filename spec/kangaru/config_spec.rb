@@ -172,4 +172,36 @@ RSpec.describe Kangaru::Config do
       end
     end
   end
+
+  describe "#for" do
+    subject(:configurator) { config.for(configurator_name) }
+
+    context "when configurator with given name is not set" do
+      include_context :no_configurators_defined
+
+      let(:configurator_name) { "AnotherConfigurator" }
+
+      it "does not raise any errors" do
+        expect { configurator }.not_to raise_error
+      end
+
+      it "returns nil" do
+        expect(configurator).to be_nil
+      end
+    end
+
+    context "when configurator with given name is set" do
+      include_context :foobar_configurator_defined
+
+      let(:configurator_name) { "FoobarConfigurator" }
+
+      it "does not raise any errors" do
+        expect { configurator }.not_to raise_error
+      end
+
+      it "returns the expected configurator" do
+        expect(configurator).to eq(foobar_configurator)
+      end
+    end
+  end
 end
