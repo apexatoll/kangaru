@@ -29,7 +29,11 @@ module Kangaru
   end
 
   class << self
-    attr_accessor :application
+    attr_writer :application
+
+    def application
+      @application || raise("application not set")
+    end
 
     def env=(value)
       @env = value.to_sym
