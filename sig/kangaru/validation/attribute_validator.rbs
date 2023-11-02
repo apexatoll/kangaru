@@ -1,0 +1,10 @@
+module Kangaru
+  module Validation
+    class AttributeValidator
+      attr_reader model: untyped
+      attr_reader attribute: Symbol
+
+      def initialize: (model: untyped, attribute: Symbol) -> void
+    end
+  end
+end
