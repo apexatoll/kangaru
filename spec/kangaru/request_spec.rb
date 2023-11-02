@@ -32,8 +32,42 @@ RSpec.describe Kangaru::Request do
     context "when no controller is extracted from the path" do
       let(:path_controller) { nil }
 
-      it "returns the default controller name" do
-        expect(controller).to eq(described_class::DEFAULT_CONTROLLER)
+      let(:configurator) do
+        instance_double(Kangaru::Configurators::RequestConfigurator, **config)
+      end
+
+      let(:config) { { default_controller: } }
+
+      before do
+        stub_const "CustomController", Class.new
+
+        allow_any_instance_of(described_class)
+          .to receive(:config)
+          .and_return(configurator)
+      end
+
+      context "and custom default controller is not set by config" do
+        let(:default_controller) { nil }
+
+        it "returns the default controller name" do
+          expect(controller).to eq(described_class::DEFAULT_CONTROLLER)
+        end
+      end
+
+      context "and custom default controller class is set by config" do
+        let(:default_controller) { CustomController }
+
+        it "returns the custom controller name" do
+          expect(controller).to eq("CustomController")
+        end
+      end
+
+      context "and custom default controller name is set by config" do
+        let(:default_controller) { "CustomController" }
+
+        it "returns the custom controller name" do
+          expect(controller).to eq("CustomController")
+        end
       end
     end
 
