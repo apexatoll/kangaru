@@ -1,0 +1,10 @@
+module Kangaru
+  module Validation
+    class Error
+      attr_reader attribute: Symbol
+      attr_reader type: Symbol
+
+      def initialize: (attribute: Symbol, type: Symbol) -> void
+    end
+  end
+end
