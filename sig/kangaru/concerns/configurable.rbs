@@ -9,7 +9,7 @@ module Kangaru
       end
 
       def name: -> String
-      def config: -> Configurators::Configurator
+      def config: [C < Configurators::Configurator] -> C
     end
   end
 end

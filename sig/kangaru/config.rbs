@@ -10,7 +10,7 @@ module Kangaru
 
     def import_external_config!: -> void
 
-    def for: (String) -> Configurators::Configurator?
+    def for: (String) -> untyped
 
     # Configurators
     attr_reader database: Configurators::DatabaseConfigurator
