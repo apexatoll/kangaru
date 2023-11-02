@@ -1,5 +1,7 @@
 module Kangaru
   class Request
+    include Concerns::Configurable
+
     DEFAULT_CONTROLLER: String
 
     DEFAULT_ACTION: Symbol

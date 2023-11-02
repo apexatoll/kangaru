@@ -2,6 +2,8 @@ module Kangaru
   class Request
     using Patches::Inflections
 
+    include Concerns::Configurable
+
     DEFAULT_CONTROLLER = "DefaultController".freeze
 
     DEFAULT_ACTION = :default
