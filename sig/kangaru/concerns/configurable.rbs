@@ -1,19 +1,14 @@
 module Kangaru
   module Concerns
-    interface _Name
-      def name: -> String
-    end
-
-    module Configurable : _Name
+    module Configurable
       extend Concern
-      extend _Name
+      extend ClassMethods
 
-      module ClassMethods : _Name
+      module ClassMethods
         def configurator_name: -> String
       end
 
-      extend ClassMethods
-
+      def name: -> String
       def config: -> Configurators::Configurator
     end
   end

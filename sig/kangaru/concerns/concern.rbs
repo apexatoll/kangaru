@@ -5,7 +5,7 @@ module Kangaru
 
       def append_features: (untyped) -> void
 
-      def class_methods: { -> void } -> void
+      def class_methods: { [self: singleton(Class)] -> void } -> void
 
       def included: (?untyped?) ?{ -> void } -> void
 
