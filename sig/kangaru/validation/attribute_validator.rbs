@@ -5,6 +5,17 @@ module Kangaru
       attr_reader attribute: Symbol
 
       def initialize: (model: untyped, attribute: Symbol) -> void
+
+      def validate: (Symbol, **untyped) -> void
+
+      private
+
+      def validator_name: (Symbol) -> String
+
+      def load_validator: (
+        validator: Symbol,
+        params: Hash[Symbol, untyped]
+      ) -> Validators::Validator
     end
   end
 end
