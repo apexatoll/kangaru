@@ -10,6 +10,8 @@ module Kangaru
 
       module ClassMethods
         attr_reader validations: validations
+
+        def validates: (Symbol, **untyped) -> void
       end
 
       attr_reader errors: Array[Validation::Error]

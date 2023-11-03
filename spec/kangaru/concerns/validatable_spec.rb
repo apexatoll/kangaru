@@ -5,6 +5,57 @@ RSpec.describe Kangaru::Concerns::Validatable do
     Class.new { include Kangaru::Concerns::Validatable }
   end
 
+  describe ".validates" do
+    subject(:validates) do
+      validatable_class.validates(attribute, **validations)
+    end
+
+    after do
+      validatable_class.remove_instance_variable(:@validations)
+    end
+
+    let(:attribute) { :some_attribute }
+
+    context "when one validation rule is specified" do
+      let(:validations) { { validator_name => params } }
+
+      let(:validator_name) { :some_validator }
+
+      context "and validation params are not specified" do
+        let(:params) { true }
+
+        it "sets the expected validations" do
+          expect { validates }
+            .to change { validatable_class.validations }
+            .to(attribute => { validator_name => true })
+        end
+      end
+
+      context "and validation params are specified" do
+        let(:params) { { foo: "foo" } }
+
+        it "sets the expected validations" do
+          expect { validates }
+            .to change { validatable_class.validations }
+            .to(attribute => { validator_name => params })
+        end
+      end
+    end
+
+    context "when two validation rules are specified" do
+      let(:validations) { { validator_one => true, validator_two => true } }
+
+      let(:validator_one) { :some_validator }
+      let(:validator_two) { :another_validator }
+
+      it "sets the expected validations" do
+        expect { validates }
+          .to change { validatable_class.validations }
+          .to(attribute => { validator_one => true, validator_two => true })
+      end
+    end
+  end
+
   describe "#validate" do
     subject(:validate) { validatable.validate }
 
