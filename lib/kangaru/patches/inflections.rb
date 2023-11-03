@@ -13,6 +13,10 @@ module Kangaru
         def to_snakecase
           Inflectors::SnakecaseInflector.inflect(self)
         end
+
+        def to_humanised
+          Inflectors::HumanInflector.inflect(self)
+        end
       end
     end
   end

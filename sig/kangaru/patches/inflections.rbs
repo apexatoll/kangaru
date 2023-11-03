@@ -7,6 +7,8 @@ module Kangaru
         def to_constant_name: -> String
 
         def to_snakecase: -> String
+
+        def to_humanised: -> String
       end
     end
   end

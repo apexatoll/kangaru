@@ -43,5 +43,12 @@ RSpec.describe Kangaru::Patches::Inflections do
       include_examples :delegates_to_inflector,
                        inflector: Kangaru::Inflectors::SnakecaseInflector
     end
+
+    describe "#to_humanised" do
+      subject(:snakecased) { string.to_humanised }
+
+      include_examples :delegates_to_inflector,
+                       inflector: Kangaru::Inflectors::HumanInflector
+    end
   end
 end
