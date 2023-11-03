@@ -12,6 +12,10 @@ RSpec.describe Kangaru::Validators::Validator do
       def initialize(some_attribute:)
         @some_attribute = some_attribute
       end
+
+      def errors
+        @errors ||= []
+      end
     end
   end
 
@@ -38,6 +42,26 @@ RSpec.describe Kangaru::Validators::Validator do
 
     it "raises an not implemented error" do
       expect { validate }.to raise_error(NotImplementedError)
+    end
+  end
+
+  describe "#add_error!" do
+    subject(:add_error!) { validator.add_error!(type) }
+
+    let(:type) { :some_error }
+
+    it "adds an object to the model errors" do
+      expect { add_error! }.to change { model.errors.count }.by(1)
+    end
+
+    it "adds an error object" do
+      add_error!
+      expect(model.errors.last).to be_a(Kangaru::Validation::Error)
+    end
+
+    it "sets the expected error attributes" do
+      add_error!
+      expect(model.errors.last).to have_attributes(attribute:, type:)
     end
   end
 end

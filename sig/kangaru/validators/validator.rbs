@@ -13,6 +13,8 @@ module Kangaru
       ) -> void
 
       def validate: -> void
+
+      def add_error!: (Symbol) -> void
     end
   end
 end
