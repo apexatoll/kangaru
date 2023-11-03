@@ -4,10 +4,12 @@ module Kangaru
   # This is to prevent the inherited hook trying to find a `models` database
   # table when Sequel::Model is inherited in the conventional way.
   class Class
-    def self.new: (untyped) -> singleton(Model)
+    def self.new: (untyped) { -> void } -> singleton(Model)
   end
 
   class Model < Sequel::Model
+    include Concerns::Validatable
+
     def self.enum: (Symbol, **Integer) -> void
   end
 end
