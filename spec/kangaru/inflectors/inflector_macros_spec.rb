@@ -124,4 +124,36 @@ RSpec.describe Kangaru::Inflectors::InflectorMacros do
         .to(joiner)
     end
   end
+
+  describe "#post_process_with" do
+    context "when called with a proc" do
+      subject(:post_process_with) do
+        target_class.post_process_with(&block)
+      end
+
+      let(:block) { ->(token) { token.upcase } }
+
+      it "sets the instance variable" do
+        expect { post_process_with }
+          .to change { target_class.instance_variable_get(:@post_processor) }
+          .from(nil)
+          .to(block)
+      end
+    end
+
+    context "when calledd iwth a symbol" do
+      subject(:post_process_with) do
+        target_class.post_process_with(symbol)
+      end
+
+      let(:symbol) { :method }
+
+      it "sets the instance variable" do
+        expect { post_process_with }
+          .to change { target_class.instance_variable_get(:@post_processor) }
+          .from(nil)
+          .to(symbol)
+      end
+    end
+  end
 end

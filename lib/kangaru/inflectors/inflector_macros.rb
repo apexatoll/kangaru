@@ -24,6 +24,10 @@ module Kangaru
       def join_groups_with(joiner)
         @group_joiner = joiner
       end
+
+      def post_process_with(symbol = nil, &block)
+        @post_processor = symbol || block
+      end
     end
   end
 end

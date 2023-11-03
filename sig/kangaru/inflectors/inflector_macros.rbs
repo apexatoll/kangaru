@@ -5,6 +5,7 @@ module Kangaru
       @token_transformer: untyped
       @token_joiner: untyped
       @group_joiner: untyped
+      @post_processor: untyped
 
       def inherited: (Class) -> void
 
@@ -15,6 +16,8 @@ module Kangaru
       def join_tokens_with: (String) -> void
 
       def join_groups_with: (String) -> void
+
+      def post_process_with: (?Symbol?) ?{ (String) -> String } -> void
     end
   end
 end
