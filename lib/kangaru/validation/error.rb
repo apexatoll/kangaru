@@ -3,7 +3,9 @@ module Kangaru
     class Error
       using Patches::Inflections
 
-      MESSAGES = {}.freeze
+      MESSAGES = {
+        blank: "can't be blank"
+      }.freeze
 
       attr_reader :attribute, :type
 
