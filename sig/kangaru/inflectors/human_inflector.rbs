@@ -1,0 +1,6 @@
+module Kangaru
+  module Inflectors
+    class HumanInflector < Inflector
+    end
+  end
+end
