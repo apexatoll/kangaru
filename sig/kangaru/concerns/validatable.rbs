@@ -1,9 +1,24 @@
 module Kangaru
   module Concerns
     module Validatable
+      type validations = Hash[Symbol, Hash[Symbol, untyped]]
+
       extend Concern
+      extend ClassMethods
+
+      @validations: validations
+
+      module ClassMethods
+        attr_reader validations: validations
+      end
 
       attr_reader errors: Array[Validation::Error]
+
+      def validate: -> void
+
+      private
+
+      def validator_for: (Symbol) -> Validation::AttributeValidator
     end
   end
 end
