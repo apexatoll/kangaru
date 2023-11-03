@@ -12,8 +12,8 @@ module Kangaru
     
     private
 
-    attr_reader renderer: Renderer
+    def view_path: (String) -> Pathname
 
-    def view_file: -> Pathname
+    def renderer_for: (String) -> Renderer
   end
 end

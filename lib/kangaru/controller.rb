@@ -13,7 +13,7 @@ module Kangaru
     def execute
       public_send(request.action)
 
-      renderer.render(binding)
+      renderer_for(request.action.to_s).render(binding)
     end
 
     # Returns the partial path for the controller based on the class name.
@@ -25,12 +25,12 @@ module Kangaru
 
     private
 
-    def renderer
-      @renderer ||= Renderer.new(view_file)
+    def view_path(file)
+      Kangaru.application.view_path(self.class.path, file)
     end
 
-    def view_file
-      Kangaru.application.view_path(self.class.path, request.action.to_s)
+    def renderer_for(file)
+      Renderer.new(view_path(file))
     end
 
     # The binding passed to the renderer is not scoped to the application
