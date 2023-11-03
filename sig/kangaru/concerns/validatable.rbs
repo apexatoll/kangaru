@@ -18,6 +18,8 @@ module Kangaru
 
       def validate: -> void
 
+      def valid?: -> bool
+
       private
 
       def validator_for: (Symbol) -> Validation::AttributeValidator

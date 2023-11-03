@@ -29,6 +29,12 @@ module Kangaru
         end
       end
 
+      def valid?
+        validate
+
+        errors.empty?
+      end
+
       private
 
       def validator_for(attribute)
