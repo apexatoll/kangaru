@@ -1,0 +1,9 @@
+module Kangaru
+  module Concerns
+    module Validatable
+      extend Concern
+
+      attr_reader errors: Array[Validation::Error]
+    end
+  end
+end
