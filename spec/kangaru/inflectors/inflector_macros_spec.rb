@@ -79,7 +79,7 @@ RSpec.describe Kangaru::Inflectors::InflectorMacros do
       end
     end
 
-    context "when calledd iwth a symbol" do
+    context "when called with a symbol" do
       subject(:transform_tokens_with) do
         target_class.transform_tokens_with(symbol)
       end
