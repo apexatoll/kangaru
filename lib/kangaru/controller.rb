@@ -16,10 +16,6 @@ module Kangaru
       renderer.render(binding)
     end
 
-    def view_file
-      Kangaru.application.view_path(self.class.path, request.action.to_s)
-    end
-
     # Returns the partial path for the controller based on the class name.
     # The first module namespace is removed as this is either Kangaru or the
     # target gem namespace. Used to infer the location of view files.
@@ -31,6 +27,10 @@ module Kangaru
 
     def renderer
       @renderer ||= Renderer.new(view_file)
+    end
+
+    def view_file
+      Kangaru.application.view_path(self.class.path, request.action.to_s)
     end
 
     # The binding passed to the renderer is not scoped to the application

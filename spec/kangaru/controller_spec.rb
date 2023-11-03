@@ -26,6 +26,8 @@ RSpec.describe Kangaru::Controller do
   describe "#execute" do
     subject(:execute) { controller.execute }
 
+    let(:action_view_file) { instance_spy(Pathname) }
+
     let(:renderer) { instance_spy(Kangaru::Renderer) }
 
     around do |spec|
@@ -37,6 +39,11 @@ RSpec.describe Kangaru::Controller do
     before do
       allow(Kangaru::Renderer).to receive(:new).and_return(renderer)
 
+      allow(application)
+        .to receive(:view_path)
+        .with(described_class.path, request_action.to_s)
+        .and_return(action_view_file)
+
       allow(controller).to receive(request_action)
     end
 
@@ -45,12 +52,21 @@ RSpec.describe Kangaru::Controller do
       expect(controller).to have_received(request_action).once
     end
 
-    it "instantiates a renderer" do
+    it "queries the application for the location of the view file" do
+      execute
+
+      expect(application)
+        .to have_received(:view_path)
+        .with(described_class.path, request_action.to_s)
+        .once
+    end
+
+    it "instantiates a renderer for the action view file" do
       execute
 
       expect(Kangaru::Renderer)
         .to have_received(:new)
-        .with(controller.view_file)
+        .with(action_view_file)
         .once
     end
 
@@ -60,19 +76,6 @@ RSpec.describe Kangaru::Controller do
       expect(renderer)
         .to have_received(:render)
         .with(a_kind_of(Binding))
-        .once
-    end
-  end
-
-  describe "#view_file" do
-    subject(:view_file) { controller.view_file }
-
-    it "delegates to the application" do
-      view_file
-
-      expect(application)
-        .to have_received(:view_path)
-        .with(described_class.path, request_action.to_s)
         .once
     end
   end
