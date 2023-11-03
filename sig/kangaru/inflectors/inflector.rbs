@@ -29,6 +29,8 @@ module Kangaru
 
       def group_joiner: -> untyped
 
+      def post_processor: -> untyped
+
       def filter_input: (String) -> String
 
       def transform_and_join_tokens: (Array[Array[String]]) -> Array[String]
@@ -38,6 +40,8 @@ module Kangaru
       def join_tokens: (Array[String]) -> String
 
       def join_groups: (Array[String]) -> String
+
+      def post_process: (String) -> String
     end
   end
 end

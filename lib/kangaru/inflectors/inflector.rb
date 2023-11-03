@@ -12,8 +12,10 @@ module Kangaru
       end
 
       def inflect
-        join_groups(
-          transform_and_join_tokens(tokeniser.split)
+        post_process(
+          join_groups(
+            transform_and_join_tokens(tokeniser.split)
+          )
         )
       end
 
@@ -47,6 +49,10 @@ module Kangaru
         class_attribute(:group_joiner) || DEFAULT_GROUP_JOINER
       end
 
+      def post_processor
+        class_attribute(:post_processor)
+      end
+
       def filter_input(input)
         case input_filter
         when Regexp then input.gsub(input_filter, "")
@@ -76,6 +82,16 @@ module Kangaru
 
       def join_groups(words)
         words.join(group_joiner)
+      end
+
+      def post_process(string)
+        return string if post_processor.nil?
+
+        case post_processor
+        when Proc   then post_processor.call(string)
+        when Symbol then string.send(post_processor)
+        else string
+        end
       end
     end
   end

@@ -8,7 +8,8 @@ RSpec.describe Kangaru::Inflectors::Inflector do
       "@input_filter": input_filter,
       "@token_transformer": token_transformer,
       "@token_joiner": token_joiner,
-      "@group_joiner": group_joiner
+      "@group_joiner": group_joiner,
+      "@post_processor": post_processor
     }.compact
   end
 
@@ -16,6 +17,7 @@ RSpec.describe Kangaru::Inflectors::Inflector do
   let(:token_transformer) { nil }
   let(:token_joiner)      { nil }
   let(:group_joiner)      { nil }
+  let(:post_processor)    { nil }
 
   around do |spec|
     inflector_params.each do |key, value|
@@ -319,6 +321,36 @@ RSpec.describe Kangaru::Inflectors::Inflector do
               include_examples :inflects, to: "Foo-Bar/Baz"
             end
           end
+        end
+      end
+    end
+
+    describe "post processing" do
+      let(:token_groups) { [%w[foobarbaz]] }
+
+      context "when no post processor is set" do
+        let(:post_processor) { nil }
+
+        it "returns the expected string" do
+          expect(inflection).to eq("foobarbaz")
+        end
+      end
+
+      context "when a symbol post processor is set" do
+        let(:post_processor) { :capitalize }
+
+        it "returns the expected string" do
+          expect(inflection).to eq("Foobarbaz")
+        end
+      end
+
+      context "when a proc post processor is set" do
+        let(:post_processor) do
+          ->(string) { string.capitalize.reverse }
+        end
+
+        it "returns the expected string" do
+          expect(inflection).to eq("zabrabooF")
         end
       end
     end
