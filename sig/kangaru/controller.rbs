@@ -3,7 +3,6 @@ module Kangaru
     SUFFIX: String
 
     attr_reader request: Request
-    attr_reader renderer: Renderer
 
     def initialize: (Request) -> void
 
@@ -12,5 +11,9 @@ module Kangaru
     def execute: -> void
 
     def self.path: -> String
+    
+    private
+
+    attr_reader renderer: Renderer
   end
 end
