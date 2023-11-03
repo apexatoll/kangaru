@@ -1,10 +1,20 @@
 module Kangaru
   module Validation
     class Error
+      MESSAGES: Hash[Symbol, String]
+
       attr_reader attribute: Symbol
       attr_reader type: Symbol
 
       def initialize: (attribute: Symbol, type: Symbol) -> void
+
+      def full_message: -> String
+
+      private
+
+      def human_attribute: -> String
+
+      def message: -> String
     end
   end
 end
