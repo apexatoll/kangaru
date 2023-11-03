@@ -68,7 +68,7 @@ RSpec/FilePath:
 RSpec/LetSetup:
   Enabled: false
 RSpec/MultipleMemoizedHelpers:
-  Max: 10
+  Max: 15
 RSpec/NestedGroups:
   Enabled: false
 RSpec/SharedExamples:
