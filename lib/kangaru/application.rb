@@ -36,7 +36,7 @@ module Kangaru
       @configured = true
     end
 
-    def run!(argv)
+    def run!(*argv)
       request = RequestBuilder.new(argv).build
 
       Router.new(request, namespace:).resolve

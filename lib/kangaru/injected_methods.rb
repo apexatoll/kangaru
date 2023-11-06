@@ -1,7 +1,7 @@
 module Kangaru
   module InjectedMethods
-    def run!(argv)
-      Kangaru.application.run!(argv)
+    def run!(*argv)
+      Kangaru.application.run!(*argv)
     end
 
     def config

@@ -1,7 +1,7 @@
 module Kangaru
   module InjectedMethods
     interface _InjectedMethods
-      def run!: (Array[String]) -> void
+      def run!: (*String) -> void
 
       def config: -> Config
 

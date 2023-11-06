@@ -1,5 +1,5 @@
 RSpec.describe "rendering erb templates" do
-  subject(:run_command!) { SomeGem.run!([]) }
+  subject(:run_command!) { SomeGem.run! }
 
   let(:action) { nil }
 

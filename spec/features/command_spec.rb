@@ -1,5 +1,5 @@
 RSpec.describe "Running a command" do
-  subject(:run_command!) { SomeGem.run!(argv) }
+  subject(:run_command!) { SomeGem.run!(*argv) }
 
   let(:argv) { [] }
 

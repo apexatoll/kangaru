@@ -279,7 +279,7 @@ RSpec.describe Kangaru::Application do
   end
 
   describe "#run!" do
-    subject(:run!) { application.run!(argv) }
+    subject(:run!) { application.run!(*argv) }
 
     let(:argv) { %w[foo bar baz] }
 

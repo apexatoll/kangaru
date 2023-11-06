@@ -15,7 +15,7 @@ module Kangaru
 
     def apply_config!: -> void
 
-    def run!: (Array[String]) -> void
+    def run!: (*String) -> void
 
     # Delegated to paths
     def view_path: (*String, ?ext: Symbol?) -> Pathname
