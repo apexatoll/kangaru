@@ -1,5 +1,7 @@
 module Kangaru
   class Controller
+    extend Forwardable
+
     SUFFIX: String
 
     attr_reader request: Request
@@ -9,6 +11,8 @@ module Kangaru
     def execute: -> void
 
     def self.path: -> String
+
+    def params: -> Hash[Symbol, untyped]
     
     private
 

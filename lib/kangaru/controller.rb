@@ -1,5 +1,7 @@
 module Kangaru
   class Controller
+    extend Forwardable
+
     using Patches::Inflections
 
     SUFFIX = "Controller".freeze
@@ -22,6 +24,8 @@ module Kangaru
     def self.path
       name&.delete_suffix(SUFFIX)&.gsub(/^.*?::/, "")&.to_snakecase || raise
     end
+
+    def_delegators :request, :params
 
     private
 
