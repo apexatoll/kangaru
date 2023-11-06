@@ -9,6 +9,7 @@ module Kangaru
 
   class Model < Sequel::Model
     include Concerns::Validatable
+    extend  Concerns::Validatable::ClassMethods
 
     def self.enum: (Symbol, **Integer) -> void
   end
