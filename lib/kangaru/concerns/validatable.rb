@@ -4,12 +4,13 @@ module Kangaru
       extend Concern
 
       class_methods do
-        attr_reader :validations
+        def validation_rules
+          @validation_rules ||= {}
+        end
 
         def validates(attribute, **validations)
-          @validations ||= {}
-          @validations[attribute] ||= {}
-          @validations[attribute].merge!(**validations)
+          validation_rules[attribute] ||= {}
+          validation_rules[attribute].merge!(**validations)
         end
       end
 
@@ -18,7 +19,7 @@ module Kangaru
       end
 
       def validate
-        self.class.validations.each do |attribute, validations|
+        self.class.validation_rules.each do |attribute, validations|
           validator = validator_for(attribute)
 
           validations.each do |validator_name, params|

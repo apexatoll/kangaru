@@ -11,7 +11,7 @@ RSpec.describe Kangaru::Concerns::Validatable do
     end
 
     after do
-      validatable_class.remove_instance_variable(:@validations)
+      validatable_class.remove_instance_variable(:@validation_rules)
     end
 
     let(:attribute) { :some_attribute }
@@ -26,7 +26,7 @@ RSpec.describe Kangaru::Concerns::Validatable do
 
         it "sets the expected validations" do
           expect { validates }
-            .to change { validatable_class.validations }
+            .to change { validatable_class.validation_rules }
             .to(attribute => { validator_name => true })
         end
       end
@@ -36,7 +36,7 @@ RSpec.describe Kangaru::Concerns::Validatable do
 
         it "sets the expected validations" do
           expect { validates }
-            .to change { validatable_class.validations }
+            .to change { validatable_class.validation_rules }
             .to(attribute => { validator_name => params })
         end
       end
@@ -50,7 +50,7 @@ RSpec.describe Kangaru::Concerns::Validatable do
 
       it "sets the expected validations" do
         expect { validates }
-          .to change { validatable_class.validations }
+          .to change { validatable_class.validation_rules }
           .to(attribute => { validator_one => true, validator_two => true })
       end
     end
@@ -60,9 +60,9 @@ RSpec.describe Kangaru::Concerns::Validatable do
     subject(:validate) { validatable.validate }
 
     around do |spec|
-      validatable_class.instance_variable_set(:@validations, validations)
+      validatable_class.instance_variable_set(:@validation_rules, validations)
       spec.run
-      validatable_class.remove_instance_variable(:@validations)
+      validatable_class.remove_instance_variable(:@validation_rules)
     end
 
     let(:attribute_validator) do
@@ -75,7 +75,7 @@ RSpec.describe Kangaru::Concerns::Validatable do
         .and_return(attribute_validator)
     end
 
-    context "when no class validations are set", skip: :requires_fix do
+    context "when no class validations are set" do
       let(:validations) { nil }
 
       it "does not raise any errors" do

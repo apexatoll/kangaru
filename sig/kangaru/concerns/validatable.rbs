@@ -6,10 +6,10 @@ module Kangaru
       extend Concern
       extend ClassMethods
 
-      @validations: validations
+      attr_reader validation_rules: validations
 
       module ClassMethods
-        attr_reader validations: validations
+        attr_reader validation_rules: validations
 
         def validates: (Symbol, **untyped) -> void
       end
