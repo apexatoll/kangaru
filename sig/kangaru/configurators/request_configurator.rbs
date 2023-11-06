@@ -1,7 +1,7 @@
 module Kangaru
   module Configurators
     class RequestConfigurator < Configurator
-      attr_accessor default_controller: (String | Class | Symbol)
+      attr_accessor default_controller: (String | Symbol | singleton(Controller))
     end
   end
 end
