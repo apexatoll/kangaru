@@ -1,7 +1,7 @@
 RSpec.describe "rendering erb templates" do
   subject(:run_command!) { SomeGem.run! }
 
-  let(:action) { nil }
+  let(:action) { true }
 
   include_context :kangaru_initialised
 
