@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir.chdir(__dir__) do
     `git ls-files`.split("\n").reject do |f|
-      f == __FILE__ || f.match?(/\A(bin|sig|spec|\.git|\.github)/)
+      f == __FILE__ || f.match?(/\A(bin|spec|\.git|\.github)/)
     end
   end
   spec.bindir = "bin"
