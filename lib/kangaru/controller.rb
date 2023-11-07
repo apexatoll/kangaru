@@ -13,7 +13,7 @@ module Kangaru
     end
 
     def execute
-      public_send(request.action)
+      return unless public_send(request.action)
 
       renderer_for(request.action.to_s).render(binding)
     end

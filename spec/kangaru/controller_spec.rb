@@ -37,46 +37,80 @@ RSpec.describe Kangaru::Controller do
     end
 
     before do
-      allow(Kangaru::Renderer).to receive(:new).and_return(renderer)
+      allow(Kangaru::Renderer)
+        .to receive(:new)
+        .and_return(renderer)
 
       allow(application)
         .to receive(:view_path)
         .with(described_class.path, request_action.to_s)
         .and_return(action_view_file)
 
-      allow(controller).to receive(request_action)
+      allow(controller)
+        .to receive(request_action)
+        .and_return(method_return)
     end
 
-    it "sends the command action message to itself" do
-      execute
-      expect(controller).to have_received(request_action).once
+    shared_examples :executes_command do
+      it "sends the command action message to itself" do
+        execute
+        expect(controller).to have_received(request_action).once
+      end
     end
 
-    it "queries the application for the location of the view file" do
-      execute
+    context "when method returns a falsy value" do
+      let(:method_return) { false }
 
-      expect(application)
-        .to have_received(:view_path)
-        .with(described_class.path, request_action.to_s)
-        .once
+      include_examples :executes_command
+
+      it "does not query the application for the location of the view file" do
+        execute
+
+        expect(application)
+          .not_to have_received(:view_path)
+          .with(described_class.path, request_action.to_s)
+      end
+
+      it "does not instantiate a renderer" do
+        execute
+
+        expect(Kangaru::Renderer)
+          .not_to have_received(:new)
+          .with(action_view_file)
+      end
     end
 
-    it "instantiates a renderer for the action view file" do
-      execute
+    context "when method returns a truthy value" do
+      let(:method_return) { true }
 
-      expect(Kangaru::Renderer)
-        .to have_received(:new)
-        .with(action_view_file)
-        .once
-    end
+      include_examples :executes_command
 
-    it "renders the command output" do
-      execute
+      it "queries the application for the location of the view file" do
+        execute
 
-      expect(renderer)
-        .to have_received(:render)
-        .with(a_kind_of(Binding))
-        .once
+        expect(application)
+          .to have_received(:view_path)
+          .with(described_class.path, request_action.to_s)
+          .once
+      end
+
+      it "instantiates a renderer for the action view file" do
+        execute
+
+        expect(Kangaru::Renderer)
+          .to have_received(:new)
+          .with(action_view_file)
+          .once
+      end
+
+      it "renders the command output" do
+        execute
+
+        expect(renderer)
+          .to have_received(:render)
+          .with(a_kind_of(Binding))
+          .once
+      end
     end
   end
 
