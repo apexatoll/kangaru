@@ -3,6 +3,8 @@ target :lib do
 
   check "lib"
 
+  ignore "lib/kangaru/initialisers/rspec*"
+
   configure_code_diagnostics do |hash|
     hash[Steep::Diagnostic::Ruby::FallbackAny] = nil
     hash[Steep::Diagnostic::Ruby::UnknownConstant] = :error
