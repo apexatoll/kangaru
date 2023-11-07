@@ -16,6 +16,10 @@ module Kangaru
       @config ||= Config.new
     end
 
+    def router
+      @router ||= Router.new(namespace:)
+    end
+
     # If called with no env, the config will be applied regardless of current
     # env. If multiple configure calls matching the current env are made, the
     # most recent calls will overwrite older changes.
@@ -39,7 +43,7 @@ module Kangaru
     def run!(*argv)
       request = RequestBuilder.new(argv).build
 
-      Router.new(request, namespace:).resolve
+      router.resolve(request)
     end
 
     def_delegators :paths, :view_path

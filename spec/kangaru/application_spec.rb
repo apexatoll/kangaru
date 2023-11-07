@@ -311,9 +311,9 @@ RSpec.describe Kangaru::Application do
       expect(request_builder).to have_received(:build).once
     end
 
-    it "instantiates a router with the request" do
+    it "instantiates a router" do
       run!
-      expect(Kangaru::Router).to have_received(:new).with(request, namespace:)
+      expect(Kangaru::Router).to have_received(:new).with(namespace:).once
     end
 
     it "resolves the request" do
