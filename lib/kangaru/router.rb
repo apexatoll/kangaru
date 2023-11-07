@@ -5,15 +5,16 @@ module Kangaru
 
     attr_reader :request, :namespace
 
-    def initialize(request, namespace: Object)
-      @request   = request
+    def initialize(namespace: Object)
       @namespace = namespace
+    end
+
+    def resolve(request)
+      @request = request
 
       validate_controller_defined!
       validate_action_defined!
-    end
 
-    def resolve
       controller_class.new(request).execute
     end
 
