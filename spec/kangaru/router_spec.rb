@@ -1,12 +1,12 @@
 RSpec.describe Kangaru::Router do
-  subject(:router) { described_class.new(request, namespace:) }
+  subject(:router) { described_class.new(namespace:) }
 
   let(:namespace) { SomeNamespace }
 
   before { stub_const "SomeNamespace", Module.new }
 
   describe "#resolve" do
-    subject(:resolve) { router.resolve }
+    subject(:resolve) { router.resolve(request) }
 
     let(:request) do
       instance_double(Kangaru::Request, controller:, action:)

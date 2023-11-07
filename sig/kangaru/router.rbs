@@ -5,9 +5,9 @@ module Kangaru
     attr_reader request: Request
     attr_reader namespace: Module
 
-    def initialize: (Request, ?namespace: Module) -> void
+    def initialize: (?namespace: Module) -> void
 
-    def resolve: -> void
+    def resolve: (Request) -> void
 
     private
 
