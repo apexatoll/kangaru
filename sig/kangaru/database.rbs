@@ -18,7 +18,9 @@ module Kangaru
     def migrate!: -> void
 
     # Delegated to handler
+    def rollback_on_exit: -> void
     def tables: -> Array[Symbol]
+    def transaction: { -> void } -> void
 
     private
 

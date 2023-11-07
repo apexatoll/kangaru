@@ -31,7 +31,7 @@ module Kangaru
       Sequel::Migrator.run(handler, migration_path)
     end
 
-    def_delegators :handler, :tables
+    def_delegators :handler, :rollback_on_exit, :tables, :transaction
 
     private
 
