@@ -29,10 +29,10 @@ module Kangaru
   end
 
   class << self
-    attr_writer :application
+    attr_accessor :application
 
-    def application
-      @application || raise("application not set")
+    def application!
+      application || raise("application not set")
     end
 
     def env=(value)

@@ -30,7 +30,7 @@ module Kangaru
     private
 
     def view_path(file)
-      Kangaru.application.view_path(self.class.path, file)
+      Kangaru.application!.view_path(self.class.path, file)
     end
 
     def renderer_for(file)
@@ -43,9 +43,9 @@ module Kangaru
     # within the application namespace by delegating const lookups to said
     # namespace if the constant is not in scope from the current class.
     def self.const_missing(const)
-      return super unless Kangaru.application.namespace.const_defined?(const)
+      return super unless Kangaru.application!.namespace.const_defined?(const)
 
-      Kangaru.application.namespace.const_get(const)
+      Kangaru.application!.namespace.const_get(const)
     end
 
     private_class_method :const_missing

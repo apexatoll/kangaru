@@ -85,7 +85,7 @@ RSpec.describe Kangaru::Concerns::Configurable do
         .to receive(:application)
         .and_return(application)
 
-      allow(Kangaru.application)
+      allow(Kangaru.application!)
         .to receive(:config)
         .and_return(application_config)
 

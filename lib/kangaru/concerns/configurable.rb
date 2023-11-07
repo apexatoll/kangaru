@@ -14,7 +14,7 @@ module Kangaru
       end
 
       def config
-        Kangaru.application.config.for(self.class.configurator_name) ||
+        Kangaru.application!.config.for(self.class.configurator_name) ||
           raise("inferred configurator not set by application")
       end
     end

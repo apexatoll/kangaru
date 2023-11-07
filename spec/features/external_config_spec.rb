@@ -6,7 +6,7 @@ RSpec.describe "External application config" do
     gem.load!
   end
 
-  let(:external_config) { Kangaru.application.config.external.serialise }
+  let(:external_config) { Kangaru.application!.config.external.serialise }
 
   shared_examples :does_not_set_external_config do
     it "does not raise any errors" do
