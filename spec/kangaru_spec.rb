@@ -21,8 +21,12 @@ RSpec.describe Kangaru do
     subject(:application) { described_class.application }
 
     context "when application is not set" do
-      it "raises an error" do
-        expect { application }.to raise_error("application not set")
+      it "does not raise any errors" do
+        expect { application }.not_to raise_error
+      end
+
+      it "returns nil" do
+        expect(application).to be_nil
       end
     end
 
@@ -41,6 +45,34 @@ RSpec.describe Kangaru do
 
       it "returns the application instance" do
         expect(application).to eq(instance)
+      end
+    end
+  end
+
+  describe "#application!" do
+    subject(:application!) { described_class.application! }
+
+    context "when application is not set" do
+      it "raises an error" do
+        expect { application! }.to raise_error("application not set")
+      end
+    end
+
+    context "when application is set" do
+      around do |spec|
+        described_class.instance_variable_set(:@application, instance)
+        spec.run
+        described_class.remove_instance_variable(:@application)
+      end
+
+      let(:instance) { instance_double(Kangaru::Application) }
+
+      it "does not raise any errors" do
+        expect { application! }.not_to raise_error
+      end
+
+      it "returns the application instance" do
+        expect(application!).to eq(instance)
       end
     end
   end

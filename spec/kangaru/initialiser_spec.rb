@@ -41,8 +41,7 @@ RSpec.describe Kangaru::Initialiser do
       end
 
       it "sets the Kangaru application to the created application" do
-        extended
-        expect(Kangaru.application).to eq(application)
+        expect { extended }.to change { Kangaru.application }.to(application)
       end
 
       it "eager loads the Initialisers namespace" do

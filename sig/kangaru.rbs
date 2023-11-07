@@ -10,8 +10,10 @@ module Kangaru
   module ClassMethods
     @loader: Zeitwerk::Loader
 
-    attr_accessor application: Application
+    attr_accessor application: Application?
     attr_accessor env: Symbol
+
+    def application!: -> Application
 
     def env?: (Symbol) -> bool
 

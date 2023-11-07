@@ -1,6 +1,6 @@
 RSpec.describe "configuration" do
   subject(:application_config) do
-    Kangaru.application.config.test.serialise
+    Kangaru.application!.config.test.serialise
   end
 
   let(:configurator_class) do

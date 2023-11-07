@@ -35,8 +35,7 @@ RSpec.describe "Initialising Kangaru in a target gem" do
       end
 
       it "does not set the Kangaru application reference" do
-        require_gem
-        expect { Kangaru.application }.to raise_error("application not set")
+        expect { require_gem }.not_to change { Kangaru.application }.from(nil)
       end
 
       it "does not define the run! method in the gem's root module" do
@@ -71,8 +70,9 @@ RSpec.describe "Initialising Kangaru in a target gem" do
       end
 
       it "sets the Kangaru application reference" do
-        require_gem
-        expect(Kangaru.application).to be_a(Kangaru::Application)
+        expect { require_gem }
+          .to change { Kangaru.application }
+          .to be_a(Kangaru::Application)
       end
 
       it "defines the run! method in the gem's root module" do
@@ -81,7 +81,7 @@ RSpec.describe "Initialising Kangaru in a target gem" do
       end
 
       describe "application reference" do
-        subject(:application) { Kangaru.application }
+        subject(:application) { Kangaru.application! }
 
         before { require_gem }
 
