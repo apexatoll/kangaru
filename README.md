@@ -1,35 +1,49 @@
-# Kangaru
+# Kangaru - A Ruby Framework for Building Command Line Applications
 
-TODO: Delete this and the text below, and describe your gem
+Kangaru is an open-source framework written in Ruby for building powerful and efficient command line applications. This project aims to make it easier for developers to create complex CLI programs with minimal effort, by providing a set of useful tools and libraries in a configurable ecosystem.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/kangaru`. To experiment with that code, run `bin/console` for an interactive prompt.
+## Features
 
-## Installation
+- MVC architecture drawing heavy inspiration from Rails
+- ERB rendering of view templates with embedded Ruby capabilities
+- SQLite and Sequel integration allowing databases to be created and used by your CLI
+- A powerful command parser that routes terminal requests to their controller
+- Zeitwerk-based autoloading of gem files
+- Simple installation, integration and configuration
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
-Install the gem and add to the application's Gemfile by executing:
+## Quick Setup
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+It is recommended to create a new Ruby gem for each Kangaru CLI application. This can be executed through `bundler` with the following command:
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+```sh
+bundle gem gem_name
+```
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+Next add Kangaru to your Gem's Gemfile and bundle install:
 
-## Usage
+```ruby
+# Gemfile
+gem "kangaru"
+```
+```sh
+bundle install
+```
 
-TODO: Write usage instructions here
+Kangaru's set up is bundled up into a single Ruby module that must be extended from the entry file for your Gem application. Conventionally this will be the Ruby file at `/gem_name/lib/gem_name.rb`, where `gem_name` is the name of the application specified with the `bundle gem` command.
 
-## Development
+For example:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```ruby
+# gem_name/lib/gem_name.rb
+require "kangaru"
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+module GemName
+  extend Kangaru::Initialiser
+end
+```
 
-## Contributing
+This extension will set up Kangaru in the context of your Gem, including setting up processes such as the autoloader and config.
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/kangaru.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+## Documentation
+- TBC
