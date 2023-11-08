@@ -2,7 +2,7 @@
 
 Kangaru is an open-source framework written in Ruby for building powerful and efficient command line applications. This project aims to make it easier for developers to create complex CLI programs with minimal effort, by providing a set of useful tools and libraries in a configurable ecosystem.
 
-> Note: This software is currently in beta mode, meaning it may contain bugs and be subject to changes. Please exercise caution when using this software and report any issues you encounter. The first production-ready release of Kangaru will be version 0.2.0.
+> Note: This software is currently in beta mode, meaning it may contain bugs and be subject to changes. Please exercise caution when using this software and report any issues you encounter. The first production-ready release of Kangaru will be version 1.0.0.
 
 ## Features
 
