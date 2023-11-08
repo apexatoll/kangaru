@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.email = ["71787007+apexatoll@users.noreply.github.com"]
 
   spec.summary = "A lightweight framework for building command line interfaces"
+  spec.homepage = "https://github.com/apexatoll/kangaru"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.2.0"
 
@@ -15,6 +16,11 @@ Gem::Specification.new do |spec|
       f == __FILE__ || f.match?(/\A(bin|spec|\.git|\.github)/)
     end
   end
+
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = spec.homepage
+  spec.metadata["changelog_uri"] = "#{spec.homepage}/releases"
+
   spec.bindir = "bin"
   spec.executables = []
   spec.require_paths = ["lib"]
