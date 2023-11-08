@@ -2,8 +2,6 @@ module Kangaru
   module Initialisers
     module RSpec
       module RequestHelper
-        extend ::RSpec::Matchers::DSL
-
         attr_reader :request
 
         def stub_output(&block)
@@ -28,24 +26,28 @@ module Kangaru
           Kangaru.application!.view_path(described_class.path, name.to_s)
         end
 
-        matcher :render_template do |name|
-          supports_block_expectations
+        if Object.const_defined?(:RSpec)
+          extend ::RSpec::Matchers::DSL
 
-          match do |action|
-            renderer = instance_double(Kangaru::Renderer, render: nil)
-            allow(Kangaru::Renderer).to receive(:new).and_return(renderer)
-            expect(Kangaru::Renderer).not_to have_received(:new)
+          matcher :render_template do |name|
+            supports_block_expectations
 
-            action.call
+            match do |action|
+              renderer = instance_double(Kangaru::Renderer, render: nil)
+              allow(Kangaru::Renderer).to receive(:new).and_return(renderer)
+              expect(Kangaru::Renderer).not_to have_received(:new)
 
-            expect(Kangaru::Renderer)
-              .to have_received(:new)
-              .with(view_path(name))
-              .once
+              action.call
 
-            expect(renderer)
-              .to have_received(:render)
-              .once
+              expect(Kangaru::Renderer)
+                .to have_received(:new)
+                .with(view_path(name))
+                .once
+
+              expect(renderer)
+                .to have_received(:render)
+                .once
+            end
           end
         end
       end
