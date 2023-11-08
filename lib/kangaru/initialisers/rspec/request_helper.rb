@@ -24,6 +24,10 @@ module Kangaru
           Kangaru.application.router.resolve(request)
         end
 
+        def view_path(name)
+          Kangaru.application!.view_path(described_class.path, name.to_s)
+        end
+
         matcher :render_template do |name|
           supports_block_expectations
 
@@ -43,12 +47,6 @@ module Kangaru
               .to have_received(:render)
               .once
           end
-        end
-
-        private
-
-        def view_path(name)
-          Kangaru.application!.view_path(described_class.path, name.to_s)
         end
       end
 
