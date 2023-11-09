@@ -66,17 +66,25 @@ RSpec.describe "External application config" do
     end
 
     context "and config exists at the specified path" do
-      let(:config_file) do
-        <<~YAML
-          frodo:
-            race: hobbit
-            age: 48
-        YAML
-      end
-
       before { config_path.write(config_file) }
 
-      include_examples :sets_external_config
+      context "and config file is empty", skip: :bug_fix do
+        let(:config_file) { "" }
+
+        include_examples :does_not_set_external_config
+      end
+
+      context "and config file is not empty" do
+        let(:config_file) do
+          <<~YAML
+            frodo:
+              race: hobbit
+              age: 48
+          YAML
+        end
+
+        include_examples :sets_external_config
+      end
     end
   end
 end
