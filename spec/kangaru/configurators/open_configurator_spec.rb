@@ -35,16 +35,32 @@ RSpec.describe Kangaru::Configurators::OpenConfigurator do
     context "when specified file exists" do
       let(:exists?) { true }
 
-      it "does not raise any errors" do
-        expect { open_configurator }.not_to raise_error
+      context "and file is empty", skip: :bug_fix do
+        let(:string_hash) { nil }
+
+        it "does not raise any errors" do
+          expect { open_configurator }.not_to raise_error
+        end
+
+        it "returns an OpenConfigurator" do
+          expect(open_configurator).to be_a(described_class)
+        end
       end
 
-      it "returns an OpenConfigurator" do
-        expect(open_configurator).to be_a(described_class)
-      end
+      context "and file is not empty" do
+        let(:string_hash) { { "foo" => "foo", "bar" => "bar", "baz" => "baz" } }
 
-      it "parses and sets the attributes" do
-        expect(open_configurator).to have_attributes(**expected_attributes)
+        it "does not raise any errors" do
+          expect { open_configurator }.not_to raise_error
+        end
+
+        it "returns an OpenConfigurator" do
+          expect(open_configurator).to be_a(described_class)
+        end
+
+        it "parses and sets the attributes" do
+          expect(open_configurator).to have_attributes(**expected_attributes)
+        end
       end
     end
   end
