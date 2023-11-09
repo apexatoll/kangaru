@@ -35,7 +35,7 @@ RSpec.describe Kangaru::Configurators::OpenConfigurator do
     context "when specified file exists" do
       let(:exists?) { true }
 
-      context "and file is empty", skip: :bug_fix do
+      context "and file is empty" do
         let(:string_hash) { nil }
 
         it "does not raise any errors" do

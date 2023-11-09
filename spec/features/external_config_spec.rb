@@ -68,7 +68,7 @@ RSpec.describe "External application config" do
     context "and config exists at the specified path" do
       before { config_path.write(config_file) }
 
-      context "and config file is empty", skip: :bug_fix do
+      context "and config file is empty" do
         let(:config_file) { "" }
 
         include_examples :does_not_set_external_config

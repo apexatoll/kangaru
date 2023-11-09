@@ -16,7 +16,7 @@ module Kangaru
       def self.from_yaml_file(path)
         raise "path does not exist" unless File.exist?(path)
 
-        attributes = YAML.load_file(path).symbolise
+        attributes = YAML.load_file(path)&.symbolise || {}
 
         new(**attributes)
       end
