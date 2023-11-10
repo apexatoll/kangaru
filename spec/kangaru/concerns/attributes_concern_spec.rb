@@ -1,14 +1,28 @@
 RSpec.describe Kangaru::Concerns::AttributesConcern do
   subject(:model) { model_class.new(**attributes) }
 
-  let(:model_class) do
-    Class.new { include Kangaru::Concerns::AttributesConcern }
+  shared_context :no_attributes_defined do
+    let(:model_class) do
+      Class.new { include Kangaru::Concerns::AttributesConcern }
+    end
+  end
+
+  shared_context :attributes_defined do
+    let(:model_class) do
+      Class.new do
+        include Kangaru::Concerns::AttributesConcern
+
+        attr_accessor :foo, :bar, :baz
+      end
+    end
   end
 
   describe ".attributes" do
     subject(:attributes) { model_class.attributes }
 
     context "when no attr_accessors are set" do
+      include_context :no_attributes_defined
+
       it "does not raise any errors" do
         expect { attributes }.not_to raise_error
       end
@@ -19,13 +33,7 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
     end
 
     context "when attr_accessors are set" do
-      let(:model_class) do
-        Class.new do
-          include Kangaru::Concerns::AttributesConcern
-
-          attr_accessor :foo, :bar, :baz
-        end
-      end
+      include_context :attributes_defined
 
       it "does not raise any errors" do
         expect { attributes }.not_to raise_error
@@ -40,7 +48,9 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
   describe ".set_default" do
     subject(:set_default) { model_class.set_default(**attributes) }
 
-    let(:attributes) { { bar: "bar", baz: "baz" } }
+    include_context :attributes_defined
+
+    let(:attributes) { { foo: "foo", bar: "bar", baz: "baz" } }
 
     it "sets the default attributes" do
       expect { set_default }
@@ -55,6 +65,8 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
     end
 
     context "when target class has not defined any attr_accessors" do
+      include_context :no_attributes_defined
+
       context "and defaults are not set" do
         let(:defaults) { {} }
 
@@ -113,13 +125,7 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
     end
 
     context "when target class has defined attr_accessors" do
-      let(:model_class) do
-        Class.new do
-          include Kangaru::Concerns::AttributesConcern
-
-          attr_accessor :foo, :bar, :baz
-        end
-      end
+      include_context :attributes_defined
 
       context "and defaults are not set" do
         let(:defaults) { {} }
@@ -191,9 +197,7 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
     end
 
     context "when target class has not defined any attr_accessors" do
-      let(:model_class) do
-        Class.new { include Kangaru::Concerns::AttributesConcern }
-      end
+      include_context :no_attributes_defined
 
       context "and no new attributes are specified" do
         let(:new_attributes) { {} }
@@ -209,13 +213,7 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
     end
 
     context "when target class has defined attr_accessors" do
-      let(:model_class) do
-        Class.new do
-          include Kangaru::Concerns::AttributesConcern
-
-          attr_accessor :foo, :bar, :baz
-        end
-      end
+      include_context :attributes_defined
 
       context "and no new attributes are specified" do
         let(:new_attributes) { {} }
