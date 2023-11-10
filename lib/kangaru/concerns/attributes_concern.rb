@@ -22,9 +22,7 @@ module Kangaru
       def initialize(**attributes)
         attributes = self.class.defaults.merge(**attributes)
 
-        attributes.slice(*self.class.attributes).each do |attr, value|
-          instance_variable_set(:"@#{attr}", value)
-        end
+        merge!(**attributes)
       end
 
       def merge!(**attributes)
