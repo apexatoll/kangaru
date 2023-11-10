@@ -4,9 +4,15 @@ module Kangaru
     BASE_CONFIGURATORS = [Configurator, OpenConfigurator].freeze
 
     def self.classes
-      constants.map    { |constant| const_get(constant) }
-               .select { |constant| constant.is_a?(Class) }
-               .reject { |constant| BASE_CONFIGURATORS.include?(constant) }
+      load_classes(self)
     end
+
+    def self.load_classes(root)
+      root.constants.map    { |const| root.const_get(const) }
+                    .select { |const| const.is_a?(Class) }
+                    .reject { |const| BASE_CONFIGURATORS.include?(const) }
+    end
+
+    private_class_method :load_classes
   end
 end
