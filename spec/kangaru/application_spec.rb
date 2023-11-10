@@ -321,4 +321,36 @@ RSpec.describe Kangaru::Application do
       expect(router).to have_received(:resolve)
     end
   end
+
+  describe "#const_set" do
+    subject(:constant) { application.const_get(const_name) }
+
+    let(:const_name) { "Foobar" }
+
+    context "when constant is not defined in application namespace" do
+      it "does not raise any errors" do
+        expect { constant }.not_to raise_error
+      end
+
+      it "returns nil" do
+        expect(constant).to be_nil
+      end
+    end
+
+    context "when constant is defined in application namespace" do
+      before do
+        stub_const "#{namespace}::#{const_name}", application_constant
+      end
+
+      let(:application_constant) { Class.new }
+
+      it "does not raise any errors" do
+        expect { constant }.not_to raise_error
+      end
+
+      it "returns the application constant" do
+        expect(constant).to eq(application_constant)
+      end
+    end
+  end
 end

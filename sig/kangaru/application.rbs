@@ -18,6 +18,9 @@ module Kangaru
 
     def run!: (*String) -> void
 
+    def const_get: (String | Symbol) -> Module?
+                 | (String | Symbol) -> Class?
+
     # Delegated to paths
     def view_path: (*String, ?ext: Symbol?) -> Pathname
 
