@@ -46,6 +46,12 @@ module Kangaru
       router.resolve(request)
     end
 
+    def const_get(const)
+      return unless namespace.const_defined?(const)
+
+      namespace.const_get(const)
+    end
+
     def_delegators :paths, :view_path
 
     private
