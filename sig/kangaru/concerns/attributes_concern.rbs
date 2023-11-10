@@ -20,6 +20,8 @@ module Kangaru
       def instance_methods: -> Array[Symbol]
 
       def initialize: (**untyped) -> void
+
+      def merge!: (**untyped) -> void
     end
   end
 end
