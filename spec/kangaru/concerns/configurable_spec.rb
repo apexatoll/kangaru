@@ -71,21 +71,13 @@ RSpec.describe Kangaru::Concerns::Configurable do
     end
   end
 
-  describe "#config" do
+  describe "#config", :stub_application do
     subject(:config) { configurable.config }
-
-    let(:application) do
-      instance_double(Kangaru::Application, config: application_config)
-    end
 
     let(:application_config) { instance_spy(Kangaru::Config) }
 
     before do
-      allow(Kangaru)
-        .to receive(:application)
-        .and_return(application)
-
-      allow(Kangaru.application!)
+      allow(application)
         .to receive(:config)
         .and_return(application_config)
 
