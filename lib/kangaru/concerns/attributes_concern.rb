@@ -26,6 +26,12 @@ module Kangaru
           instance_variable_set(:"@#{attr}", value)
         end
       end
+
+      def merge!(**attributes)
+        attributes.slice(*self.class.attributes).each do |attr, value|
+          instance_variable_set(:"@#{attr}", value)
+        end
+      end
     end
   end
 end
