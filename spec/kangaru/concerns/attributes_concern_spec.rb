@@ -5,6 +5,50 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
     Class.new { include Kangaru::Concerns::AttributesConcern }
   end
 
+  describe ".attributes" do
+    subject(:attributes) { model_class.attributes }
+
+    context "when no attr_accessors are set" do
+      it "does not raise any errors" do
+        expect { attributes }.not_to raise_error
+      end
+
+      it "returns an empty array" do
+        expect(attributes).to be_empty
+      end
+    end
+
+    context "when attr_accessors are set" do
+      let(:model_class) do
+        Class.new do
+          include Kangaru::Concerns::AttributesConcern
+
+          attr_accessor :foo, :bar, :baz
+        end
+      end
+
+      it "does not raise any errors" do
+        expect { attributes }.not_to raise_error
+      end
+
+      it "returns the expected attributes" do
+        expect(attributes).to contain_exactly(:foo, :bar, :baz)
+      end
+    end
+  end
+
+  describe ".set_default" do
+    subject(:set_default) { model_class.set_default(**attributes) }
+
+    let(:attributes) { { bar: "bar", baz: "baz" } }
+
+    it "sets the default attributes" do
+      expect { set_default }
+        .to change { model_class.defaults }
+        .to(include(**attributes))
+    end
+  end
+
   describe "#initialize" do
     before do
       allow(model_class).to receive(:defaults).and_return(defaults)
@@ -128,50 +172,6 @@ RSpec.describe Kangaru::Concerns::AttributesConcern do
           end
         end
       end
-    end
-  end
-
-  describe ".attributes" do
-    subject(:attributes) { model_class.attributes }
-
-    context "when no attr_accessors are set" do
-      it "does not raise any errors" do
-        expect { attributes }.not_to raise_error
-      end
-
-      it "returns an empty array" do
-        expect(attributes).to be_empty
-      end
-    end
-
-    context "when attr_accessors are set" do
-      let(:model_class) do
-        Class.new do
-          include Kangaru::Concerns::AttributesConcern
-
-          attr_accessor :foo, :bar, :baz
-        end
-      end
-
-      it "does not raise any errors" do
-        expect { attributes }.not_to raise_error
-      end
-
-      it "returns the expected attributes" do
-        expect(attributes).to contain_exactly(:foo, :bar, :baz)
-      end
-    end
-  end
-
-  describe ".set_default" do
-    subject(:set_default) { model_class.set_default(**attributes) }
-
-    let(:attributes) { { bar: "bar", baz: "baz" } }
-
-    it "sets the default attributes" do
-      expect { set_default }
-        .to change { model_class.defaults }
-        .to(include(**attributes))
     end
   end
 end
