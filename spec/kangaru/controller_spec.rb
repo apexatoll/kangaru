@@ -1,5 +1,5 @@
 # rubocop:disable RSpec/SubjectStub
-RSpec.describe Kangaru::Controller do
+RSpec.describe Kangaru::Controller, :stub_application do
   subject(:controller) { described_class.new(request) }
 
   let(:request) do
@@ -12,16 +12,6 @@ RSpec.describe Kangaru::Controller do
   let(:request_controller) { "SomeController" }
 
   let(:request_action) { :some_action }
-
-  let(:application) { instance_spy(Kangaru::Application, namespace:) }
-
-  let(:namespace) { Namespace }
-
-  before do
-    stub_const "Namespace", Module.new
-
-    allow(Kangaru).to receive(:application).and_return(application)
-  end
 
   describe "#execute" do
     subject(:execute) { controller.execute }
@@ -119,7 +109,7 @@ RSpec.describe Kangaru::Controller do
 
     let(:controller_class) { Class.new(described_class) }
 
-    let(:name) { "#{namespace}::#{controller_name}" }
+    let(:name) { "#{application.namespace}::#{controller_name}" }
 
     before do
       allow(controller_class).to receive(:name).and_return(name)
@@ -179,7 +169,7 @@ RSpec.describe Kangaru::Controller do
       end
 
       context "and const defined in application namespace" do
-        before { stub_const "Namespace::Foobar", foobar }
+        before { stub_const "#{application.namespace}::Foobar", foobar }
 
         it "does not raise any errors" do
           expect { lookup_const }.not_to raise_error
