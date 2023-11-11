@@ -1,8 +1,6 @@
 module Kangaru
   class Config
-    type configurator = Configurators::Configurator
-
-    attr_reader configurators: Hash[Symbol, configurator]
+    attr_reader configurators: Hash[Symbol, Configurator]
 
     def initialize: -> void
 
@@ -20,7 +18,7 @@ module Kangaru
 
     private
 
-    def set_configurators!: -> Hash[Symbol, configurator]
+    def set_configurators!: -> Hash[Symbol, Configurator]
 
     def external_config_exists?: -> bool
   end

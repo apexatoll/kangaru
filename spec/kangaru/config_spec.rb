@@ -25,7 +25,7 @@ RSpec.describe Kangaru::Config do
     after { described_class.undef_method(:foobar) }
 
     let(:foobar_configurator_class) do
-      Class.new(Kangaru::Configurators::Configurator) do
+      Class.new(Kangaru::Configurator) do
         def self.name = "FoobarConfigurator"
         def self.key  = :foobar
       end

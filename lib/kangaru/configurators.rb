@@ -1,7 +1,7 @@
 module Kangaru
   module Configurators
     # These are not set as accessors by Config instances as they are abstract.
-    BASE_CONFIGURATORS = [Configurator, OpenConfigurator].freeze
+    BASE_CONFIGURATORS = [OpenConfigurator].freeze
 
     def self.classes
       load_classes(self)

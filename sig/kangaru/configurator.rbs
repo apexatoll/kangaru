@@ -1,0 +1,12 @@
+module Kangaru
+  class Configurator
+    include Concerns::AttributesConcern
+    extend  Concerns::AttributesConcern::ClassMethods
+
+    def self.key: -> Symbol
+
+    def self.name: -> String
+
+    def serialise: -> Hash[Symbol, untyped]
+  end
+end
