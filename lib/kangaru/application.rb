@@ -34,7 +34,7 @@ module Kangaru
     def apply_config!
       raise "config already applied" if configured?
 
-      config.import!
+      config.import!(config.application.config_path)
 
       @database = setup_database!
       @configured = true
