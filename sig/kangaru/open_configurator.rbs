@@ -1,0 +1,9 @@
+module Kangaru
+  class OpenConfigurator < Configurator
+    def self.from_yaml_file: (String) -> instance
+
+    private
+
+    def set_accessors!: (**untyped) -> void
+  end
+end
