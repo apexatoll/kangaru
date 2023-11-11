@@ -1,4 +1,4 @@
-RSpec.describe Kangaru::Configurators::OpenConfigurator do
+RSpec.describe Kangaru::OpenConfigurator do
   subject(:open_configurator) { described_class.new(**attributes) }
 
   let(:attributes) { { foo: "foo", bar: "bar", baz: "baz" } }
