@@ -98,9 +98,7 @@ RSpec.describe Kangaru::Concerns::Configurable do
     end
 
     context "when inferred configurator has been set by application" do
-      let(:configurator) do
-        instance_double(Kangaru::Configurators::Configurator)
-      end
+      let(:configurator) { instance_double(Kangaru::Configurator) }
 
       it "does not raise any errors" do
         expect { config }.not_to raise_error

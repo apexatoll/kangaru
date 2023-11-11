@@ -4,9 +4,7 @@ RSpec.describe "configuration" do
   end
 
   let(:configurator_class) do
-    Class.new(Kangaru::Configurators::Configurator) do
-      attr_accessor :value
-    end
+    Class.new(Kangaru::Configurator) { attr_accessor :value }
   end
 
   let(:main_file) do
