@@ -24,22 +24,13 @@ RSpec.describe Kangaru::Configurators do
 
     context "when configurator classes are defined" do
       include_context :stub_configurators,
-                      with: %i[BaseConfigurator FooConfigurator BazConfigurator]
-
-      before do
-        stub_const "#{described_class}::BASE_CONFIGURATORS",
-                   [described_class::BaseConfigurator]
-      end
+                      with: %i[FooConfigurator BazConfigurator]
 
       it "returns the expected configurators from the current namespace" do
         expect(classes).to contain_exactly(
           described_class::FooConfigurator,
           described_class::BazConfigurator
         )
-      end
-
-      it "does not return base configurators" do
-        expect(classes).not_to include(described_class::BaseConfigurator)
       end
     end
   end

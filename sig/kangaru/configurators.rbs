@@ -1,7 +1,5 @@
 module Kangaru
   module Configurators
-    BASE_CONFIGURATORS: Array[singleton(Configurator)]
-
     def self.classes: -> Array[singleton(Configurator)]
 
     private
