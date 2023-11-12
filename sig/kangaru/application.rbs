@@ -2,6 +2,9 @@ module Kangaru
   class Application
     extend Forwardable
 
+    class InvalidConfigError < StandardError
+    end
+
     attr_reader paths: Paths
     attr_reader namespace: Module
     attr_reader config: Config
@@ -33,6 +36,8 @@ module Kangaru
     def current_env?: (Symbol?) -> bool
 
     attr_reader autoloader: Zeitwerk::Loader
+
+    def validate_config!: -> void
 
     def setup_database!: -> Database?
   end

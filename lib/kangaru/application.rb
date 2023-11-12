@@ -2,6 +2,8 @@ module Kangaru
   class Application
     extend Forwardable
 
+    class InvalidConfigError < StandardError; end
+
     attr_reader :paths, :namespace, :database
 
     attr_accessor :config_path
@@ -38,6 +40,8 @@ module Kangaru
 
       config.import!(config_path) unless config_path.nil?
 
+      validate_config!
+
       @database = setup_database!
       @configured = true
     end
@@ -71,6 +75,14 @@ module Kangaru
         loader.collapse(paths.collapsed_dirs)
         loader.push_dir(paths.lib_path.to_s)
       end
+    end
+
+    def validate_config!
+      return if config.valid?
+
+      message = config.errors.map(&:full_message).join(", ")
+
+      raise InvalidConfigError, message
     end
 
     def setup_database!
