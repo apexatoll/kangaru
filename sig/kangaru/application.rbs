@@ -7,8 +7,9 @@ module Kangaru
 
     attr_reader paths: Paths
     attr_reader namespace: Module
-    attr_reader config: Config
     attr_reader database: Database?
+
+    attr_reader config: Config
     attr_reader router: Router
 
     def initialize: (source: String, namespace: Module) -> void
