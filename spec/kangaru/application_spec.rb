@@ -180,13 +180,22 @@ RSpec.describe Kangaru::Application do
 
     let(:database) { instance_spy(Kangaru::Database) }
 
+    let(:config_valid?) { true }
+    let(:config_errors) { [] }
+
     before do
       allow(Kangaru::Database).to receive(:new).and_return(database)
 
-      allow(application.config).to receive(:import!)
+      allow(application.config).to receive_messages(
+        import!: nil, valid?: config_valid?, errors: config_errors
+      )
     end
 
     shared_examples :configures_application do
+      it "does not raise any errors" do
+        expect { apply_config! }.not_to raise_error
+      end
+
       it "marks the application as configured" do
         expect { apply_config! }
           .to change { application.configured? }
@@ -255,48 +264,71 @@ RSpec.describe Kangaru::Application do
     end
 
     context "when config has not already been applied" do
-      before do
-        application.config_path = config_path
-        application.config.database.adaptor = adaptor
-      end
+      context "and config is invalid" do
+        let(:config_valid?) { false }
 
-      context "and config path is not set" do
-        let(:config_path) { nil }
-
-        context "and database adaptor is not set" do
-          let(:adaptor) { nil }
-
-          include_examples :configures_application
-          include_examples :does_not_set_up_database
-          include_examples :does_not_import_external_config
+        let(:config_errors) do
+          [Kangaru::Validation::Error.new(attribute:, type:)]
         end
 
-        context "and database adaptor is set" do
-          let(:adaptor) { :sqlite }
+        let(:attribute) { :some_attribute }
+        let(:type)      { :blank }
 
-          include_examples :configures_application
-          include_examples :sets_up_database
-          include_examples :does_not_import_external_config
+        it "raises an error" do
+          expect { apply_config! }.to raise_error(
+            described_class::InvalidConfigError,
+            "Some attribute can't be blank"
+          )
         end
       end
 
-      context "and config path is set" do
-        let(:config_path) { "/foo/bar/config.yml" }
+      context "and config is valid" do
+        let(:valid?) { true }
+        let(:errors) { [] }
 
-        context "and database adaptor is not set" do
-          let(:adaptor) { nil }
-
-          include_examples :configures_application
-          include_examples :does_not_set_up_database
-          include_examples :imports_external_config
+        before do
+          application.config_path = config_path
+          application.config.database.adaptor = adaptor
         end
 
-        context "and database adaptor is set" do
-          let(:adaptor) { :sqlite }
+        context "and config path is not set" do
+          let(:config_path) { nil }
 
-          include_examples :configures_application
-          include_examples :sets_up_database
-          include_examples :imports_external_config
+          context "and database adaptor is not set" do
+            let(:adaptor) { nil }
+
+            include_examples :configures_application
+            include_examples :does_not_set_up_database
+            include_examples :does_not_import_external_config
+          end
+
+          context "and database adaptor is set" do
+            let(:adaptor) { :sqlite }
+
+            include_examples :configures_application
+            include_examples :sets_up_database
+            include_examples :does_not_import_external_config
+          end
+        end
+
+        context "and config path is set" do
+          let(:config_path) { "/foo/bar/config.yml" }
+
+          context "and database adaptor is not set" do
+            let(:adaptor) { nil }
+
+            include_examples :configures_application
+            include_examples :does_not_set_up_database
+            include_examples :imports_external_config
+          end
+
+          context "and database adaptor is set" do
+            let(:adaptor) { :sqlite }
+
+            include_examples :configures_application
+            include_examples :sets_up_database
+            include_examples :imports_external_config
+          end
         end
       end
     end

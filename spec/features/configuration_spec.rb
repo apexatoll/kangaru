@@ -125,7 +125,27 @@ RSpec.describe "configuration" do
   describe "applying config" do
     subject(:apply_config!) { SomeGem.apply_config! }
 
-    let(:configuration) { nil }
+    let(:configuration) do
+      configure_block do
+        <<~RUBY
+          config.test.required_attribute = :some_value
+        RUBY
+      end
+    end
+
+    let(:configurator_class) do
+      <<~RUBY
+        module SomeGem
+          module Configurators
+            class TestConfigurator < Kangaru::Configurator
+              attr_accessor :required_attribute
+
+              validates :required_attribute, required: true
+            end
+          end
+        end
+      RUBY
+    end
 
     before { gem.load! }
 
@@ -138,8 +158,29 @@ RSpec.describe "configuration" do
     end
 
     context "when config is applied once" do
-      it "does not raise any errors" do
-        expect { apply_config! }.not_to raise_error
+      context "and config is not valid" do
+        let(:configuration) { nil }
+
+        it "raises an error" do
+          expect { apply_config! }.to raise_error(
+            Kangaru::Application::InvalidConfigError,
+            "Required attribute can't be blank"
+          )
+        end
+      end
+
+      context "and config is valid" do
+        let(:configuration) do
+          configure_block do
+            <<~RUBY
+              config.test.required_attribute = :some_value
+            RUBY
+          end
+        end
+
+        it "does not raise any errors" do
+          expect { apply_config! }.not_to raise_error
+        end
       end
     end
   end
