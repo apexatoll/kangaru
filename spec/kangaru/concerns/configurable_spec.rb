@@ -5,7 +5,7 @@ RSpec.describe Kangaru::Concerns::Configurable do
     Class.new { include Kangaru::Concerns::Configurable }
   end
 
-  let(:name) { "Kangaru::SomeClass" }
+  let(:name) { "Kangaru::SomeNamespace::Example" }
 
   before { allow(configurable_class).to receive(:name).and_return(name) }
 
@@ -114,19 +114,18 @@ RSpec.describe Kangaru::Concerns::Configurable do
 
     let(:application_config) { instance_spy(Kangaru::Config) }
 
+    let(:configurators) { { example: example_configurator }.compact }
+
     before do
       allow(application)
         .to receive(:config)
         .and_return(application_config)
 
-      allow(application_config)
-        .to receive(:for)
-        .with(configurable.class.configurator_name)
-        .and_return(configurator)
+      allow(application_config).to receive(:[]) { |key| configurators[key] }
     end
 
     context "when inferred configurator has not been set by application" do
-      let(:configurator) { nil }
+      let(:example_configurator) { nil }
 
       it "raises an error" do
         expect { config }.to raise_error(
@@ -136,7 +135,7 @@ RSpec.describe Kangaru::Concerns::Configurable do
     end
 
     context "when inferred configurator has been set by application" do
-      let(:configurator) { instance_double(Kangaru::Configurator) }
+      let(:example_configurator) { instance_double(Kangaru::Configurator) }
 
       it "does not raise any errors" do
         expect { config }.not_to raise_error
@@ -144,15 +143,11 @@ RSpec.describe Kangaru::Concerns::Configurable do
 
       it "queries the application config for the inferred configurator" do
         config
-
-        expect(application_config)
-          .to have_received(:for)
-          .with(configurable.class.configurator_name)
-          .once
+        expect(application_config).to have_received(:[]).with(:example).once
       end
 
       it "returns the configurator" do
-        expect(config).to eq(configurator)
+        expect(config).to eq(example_configurator)
       end
     end
   end

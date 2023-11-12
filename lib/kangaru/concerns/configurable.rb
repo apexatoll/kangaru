@@ -22,7 +22,7 @@ module Kangaru
       end
 
       def config
-        Kangaru.application!.config.for(self.class.configurator_name) ||
+        Kangaru.application!.config[self.class.configurator_key] ||
           raise("inferred configurator not set by application")
       end
     end
