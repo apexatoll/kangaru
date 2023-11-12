@@ -9,6 +9,8 @@ module Kangaru
 
       def apply_config!: -> void
 
+      def import_config_from!: (String) -> void
+
       def database: -> Database?
     end
 

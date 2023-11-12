@@ -12,6 +12,10 @@ module Kangaru
       Kangaru.application!.configure(env, &)
     end
 
+    def import_config_from!(path)
+      Kangaru.application!.config_path = path
+    end
+
     def apply_config!
       Kangaru.application!.apply_config!
     end
