@@ -101,6 +101,46 @@ RSpec.describe Kangaru::Config do
     end
   end
 
+  describe "#[]" do
+    subject(:configurator) { config[configurator_key] }
+
+    include_context :stub_configurator_classes, with: %i[FoobarConfigurator]
+
+    let(:foobar_configurator) do
+      instance_double(Kangaru::Configurators::FoobarConfigurator)
+    end
+
+    before do
+      allow(Kangaru::Configurators::FoobarConfigurator)
+        .to receive(:new)
+        .and_return(foobar_configurator)
+    end
+
+    context "when configurator with given key does not exist" do
+      let(:configurator_key) { :invalid }
+
+      it "does not raise any errors" do
+        expect { configurator }.not_to raise_error
+      end
+
+      it "returns nil" do
+        expect(configurator).to be_nil
+      end
+    end
+
+    context "when configurator with given key exists" do
+      let(:configurator_key) { :foobar }
+
+      it "does not raise any errors" do
+        expect { configurator }.not_to raise_error
+      end
+
+      it "returns the configurator instance" do
+        expect(configurator).to eq(foobar_configurator)
+      end
+    end
+  end
+
   describe "#import!" do
     subject(:import!) { config.import!(path) }
 

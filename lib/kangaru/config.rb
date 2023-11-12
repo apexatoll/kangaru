@@ -12,6 +12,10 @@ module Kangaru
       configurators.transform_values(&:serialise)
     end
 
+    def [](key)
+      configurators[key.to_sym]
+    end
+
     def import!(path)
       read_external_config(path).each do |key, config|
         configurators[key]&.merge!(**config)
