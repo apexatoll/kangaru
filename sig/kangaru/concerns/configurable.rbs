@@ -6,6 +6,7 @@ module Kangaru
 
       module ClassMethods
         def configurator_name: -> String
+        def configurator_key: -> Symbol
       end
 
       def name: -> String

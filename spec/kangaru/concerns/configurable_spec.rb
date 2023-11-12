@@ -71,6 +71,44 @@ RSpec.describe Kangaru::Concerns::Configurable do
     end
   end
 
+  describe ".configurator_key" do
+    subject(:configurator_key) { configurable_class.configurator_key }
+
+    shared_examples :returns_configurator_key do
+      context "when class name is not set" do
+        let(:name) { nil }
+
+        it "raises an error" do
+          expect { configurator_key }.to raise_error("class name not set")
+        end
+      end
+
+      context "when class name is set" do
+        let(:name) { "#{base}::SomeClass" }
+
+        it "does not raise any errors" do
+          expect { configurator_key }.not_to raise_error
+        end
+
+        it "returns the expected configurator class name" do
+          expect(configurator_key).to eq(:some_class)
+        end
+      end
+    end
+
+    describe "within Kangaru" do
+      let(:base) { "Kangaru" }
+
+      include_examples :returns_configurator_key
+    end
+
+    describe "within target gem" do
+      let(:base) { "SomeGem" }
+
+      include_examples :returns_configurator_key
+    end
+  end
+
   describe "#config", :stub_application do
     subject(:config) { configurable.config }
 
