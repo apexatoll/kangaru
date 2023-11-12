@@ -10,6 +10,12 @@ module Kangaru
 
     def []: (Symbol) -> Configurator?
 
+    def valid?: -> bool
+
+    def validate: -> void
+
+    def errors: -> Array[Validation::Error]
+
     # Native Configurators
     attr_reader database: Configurators::DatabaseConfigurator
     attr_reader request:  Configurators::RequestConfigurator

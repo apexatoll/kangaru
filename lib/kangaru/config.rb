@@ -22,6 +22,19 @@ module Kangaru
       configurators[key.to_sym]
     end
 
+    def valid?
+      validate
+      errors.empty?
+    end
+
+    def validate
+      configurators.each_value(&:validate)
+    end
+
+    def errors
+      configurators.values.flat_map(&:errors)
+    end
+
     private
 
     def set_configurators!
