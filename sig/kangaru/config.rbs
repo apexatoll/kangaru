@@ -18,5 +18,7 @@ module Kangaru
     private
 
     def set_configurators!: -> Hash[Symbol, Configurator]
+
+    def read_external_config: (String) -> Hash[Symbol, untyped]
   end
 end

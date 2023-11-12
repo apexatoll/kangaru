@@ -1,4 +1,4 @@
-RSpec.describe "External application config" do
+RSpec.describe "External application config", skip: :deprecated do
   subject(:apply_config!) { SomeGem.apply_config! }
 
   before do

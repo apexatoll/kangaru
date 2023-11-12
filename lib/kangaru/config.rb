@@ -1,5 +1,7 @@
 module Kangaru
   class Config
+    using Patches::Symboliser
+
     attr_reader :configurators
 
     def initialize
@@ -11,9 +13,9 @@ module Kangaru
     end
 
     def import!(path)
-      return unless File.exist?(path)
-
-      @external = Configurators::ExternalConfigurator.from_yaml_file(path)
+      read_external_config(path).each do |key, config|
+        configurators[key]&.merge!(**config)
+      end
     end
 
     # Returns the configurator instance with the given class name.
@@ -35,6 +37,12 @@ module Kangaru
 
         [configurator_class.key, configurator]
       end
+    end
+
+    def read_external_config(path)
+      return {} unless File.exist?(path)
+
+      YAML.load_file(path)&.symbolise || {}
     end
   end
 end
