@@ -11,7 +11,7 @@ module Kangaru
     end
 
     def import!(path)
-      return unless path && File.exist?(path)
+      return unless File.exist?(path)
 
       @external = Configurators::ExternalConfigurator.from_yaml_file(path)
     end

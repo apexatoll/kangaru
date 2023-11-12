@@ -104,7 +104,15 @@ RSpec.describe Kangaru::Config do
   describe "#import!" do
     subject(:import!) { config.import!(path) }
 
-    shared_examples :does_not_import_external_config do
+    let(:path) { "/some/path/config.yml" }
+
+    before do
+      allow(File).to receive(:exist?).with(path).and_return(exists?)
+    end
+
+    context "and file does not exist" do
+      let(:exists?) { false }
+
       it "returns nil" do
         expect(import!).to be_nil
       end
@@ -118,16 +126,18 @@ RSpec.describe Kangaru::Config do
       end
     end
 
-    shared_examples :imports_external_config do
+    context "and file exists" do
+      let(:exists?) { true }
+
+      let(:external) do
+        instance_double(Kangaru::Configurators::ExternalConfigurator)
+      end
+
       before do
         allow(Kangaru::Configurators::ExternalConfigurator)
           .to receive(:from_yaml_file)
           .with(path)
           .and_return(external)
-      end
-
-      let(:external) do
-        instance_double(Kangaru::Configurators::ExternalConfigurator)
       end
 
       it "does not raise any errors" do
@@ -146,32 +156,6 @@ RSpec.describe Kangaru::Config do
         expect { import! }
           .to change { config.external }
           .to(external)
-      end
-    end
-
-    context "when path is nil" do
-      let(:path) { nil }
-
-      include_examples :does_not_import_external_config
-    end
-
-    context "when path is present" do
-      let(:path) { "/some/path/config.yml" }
-
-      before do
-        allow(File).to receive(:exist?).with(path).and_return(exists?)
-      end
-
-      context "and no file exists at specified path" do
-        let(:exists?) { false }
-
-        include_examples :does_not_import_external_config
-      end
-
-      context "and file exists at specified path" do
-        let(:exists?) { true }
-
-        include_examples :imports_external_config
       end
     end
   end
