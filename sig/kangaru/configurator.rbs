@@ -3,6 +3,9 @@ module Kangaru
     include Concerns::AttributesConcern
     extend  Concerns::AttributesConcern::ClassMethods
 
+    include Concerns::Validatable
+    extend  Concerns::Validatable::ClassMethods
+
     def self.key: -> Symbol
 
     def self.name: -> String
