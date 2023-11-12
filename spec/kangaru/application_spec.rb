@@ -256,7 +256,7 @@ RSpec.describe Kangaru::Application do
 
     context "when config has not already been applied" do
       before do
-        application.config.application.config_path = config_path
+        application.config_path = config_path
         application.config.database.adaptor = adaptor
       end
 

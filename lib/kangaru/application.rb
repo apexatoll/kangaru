@@ -4,6 +4,8 @@ module Kangaru
 
     attr_reader :paths, :namespace, :database
 
+    attr_accessor :config_path
+
     def initialize(source:, namespace:)
       @paths = Paths.new(source:)
       @namespace = namespace
@@ -55,10 +57,6 @@ module Kangaru
     def_delegators :paths, :view_path
 
     private
-
-    def config_path
-      config.application.config_path
-    end
 
     # Returns true if nil as this is represents all envs.
     def current_env?(env)
