@@ -34,9 +34,7 @@ module Kangaru
     def apply_config!
       raise "config already applied" if configured?
 
-      unless config.application.config_path.nil?
-        config.import!(config.application.config_path)
-      end
+      config.import!(config_path) unless config_path.nil?
 
       @database = setup_database!
       @configured = true
@@ -57,6 +55,10 @@ module Kangaru
     def_delegators :paths, :view_path
 
     private
+
+    def config_path
+      config.application.config_path
+    end
 
     # Returns true if nil as this is represents all envs.
     def current_env?(env)
