@@ -6,7 +6,7 @@ module Kangaru
 
     def serialise: -> Hash[Symbol, Hash[Symbol, untyped]]
 
-    def import!: (String?) -> void
+    def import!: (String) -> void
 
     def for: (String) -> untyped
 

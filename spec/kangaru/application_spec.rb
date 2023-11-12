@@ -232,6 +232,13 @@ RSpec.describe Kangaru::Application do
       end
     end
 
+    shared_examples :does_not_import_external_config do
+      it "does not import external config" do
+        apply_config!
+        expect(application.config).not_to have_received(:import!)
+      end
+    end
+
     shared_examples :imports_external_config do
       it "imports external config" do
         apply_config!
@@ -249,23 +256,48 @@ RSpec.describe Kangaru::Application do
 
     context "when config has not already been applied" do
       before do
+        application.config.application.config_path = config_path
         application.config.database.adaptor = adaptor
       end
 
-      context "and database adaptor is not set" do
-        let(:adaptor) { nil }
+      context "and config path is not set" do
+        let(:config_path) { nil }
 
-        include_examples :configures_application
-        include_examples :does_not_set_up_database
-        include_examples :imports_external_config
+        context "and database adaptor is not set" do
+          let(:adaptor) { nil }
+
+          include_examples :configures_application
+          include_examples :does_not_set_up_database
+          include_examples :does_not_import_external_config
+        end
+
+        context "and database adaptor is set" do
+          let(:adaptor) { :sqlite }
+
+          include_examples :configures_application
+          include_examples :sets_up_database
+          include_examples :does_not_import_external_config
+        end
       end
 
-      context "and database adaptor is set" do
-        let(:adaptor) { :sqlite }
+      context "and config path is set" do
+        let(:config_path) { "/foo/bar/config.yml" }
 
-        include_examples :configures_application
-        include_examples :sets_up_database
-        include_examples :imports_external_config
+        context "and database adaptor is not set" do
+          let(:adaptor) { nil }
+
+          include_examples :configures_application
+          include_examples :does_not_set_up_database
+          include_examples :imports_external_config
+        end
+
+        context "and database adaptor is set" do
+          let(:adaptor) { :sqlite }
+
+          include_examples :configures_application
+          include_examples :sets_up_database
+          include_examples :imports_external_config
+        end
       end
     end
   end
