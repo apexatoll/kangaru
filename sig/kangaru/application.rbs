@@ -28,6 +28,8 @@ module Kangaru
 
     @configured: bool
 
+    def config_path: -> String
+
     def current_env?: (Symbol?) -> bool
 
     attr_reader autoloader: Zeitwerk::Loader
