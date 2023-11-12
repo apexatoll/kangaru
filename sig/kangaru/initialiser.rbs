@@ -1,9 +1,5 @@
 module Kangaru
   module Initialiser
-    module InjectedMethods
-      include Kangaru::_ApplicationMethods
-    end
-
     def self.extended: (Module) -> void
   end
 end

@@ -21,9 +21,4 @@ module Kangaru
 
     def test?: -> bool
   end
-
-  # Included in target applications that extend Kangaru::Initialiser.
-  interface _ApplicationMethods
-    include InjectedMethods::_InjectedMethods
-  end
 end
