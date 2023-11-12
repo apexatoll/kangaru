@@ -281,47 +281,4 @@ RSpec.describe Kangaru::Config do
       end
     end
   end
-
-  describe "#for" do
-    subject(:configurator) { config.for(configurator_name) }
-
-    let(:configurator_name) { "Kangaru::Configurators::FoobarConfigurator" }
-
-    context "when configurator with given name is not set" do
-      include_context :stub_configurator_classes, with: []
-
-      it "does not raise any errors" do
-        expect { configurator }.not_to raise_error
-      end
-
-      it "returns nil" do
-        expect(configurator).to be_nil
-      end
-    end
-
-    context "when configurator with given name is set" do
-      include_context :stub_configurator_classes, with: [:FoobarConfigurator]
-
-      let(:foobar_configurator) do
-        instance_double(
-          Kangaru::Configurators::FoobarConfigurator,
-          class: Kangaru::Configurators::FoobarConfigurator
-        )
-      end
-
-      before do
-        allow(Kangaru::Configurators::FoobarConfigurator)
-          .to receive(:new)
-          .and_return(foobar_configurator)
-      end
-
-      it "does not raise any errors" do
-        expect { configurator }.not_to raise_error
-      end
-
-      it "returns the expected configurator" do
-        expect(configurator).to eq(foobar_configurator)
-      end
-    end
-  end
 end

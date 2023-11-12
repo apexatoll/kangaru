@@ -10,8 +10,6 @@ module Kangaru
 
     def import!: (String) -> void
 
-    def for: (String) -> untyped
-
     # Native Configurators
     attr_reader database: Configurators::DatabaseConfigurator
     attr_reader request:  Configurators::RequestConfigurator
