@@ -3,16 +3,9 @@ module Kangaru
     module Configurable
       extend Concern
 
-      using Patches::Constantise
       using Patches::Inflections
 
       class_methods do
-        def configurator_name
-          (name || raise("class name not set"))
-            .gsub(/^(.*?)::/, "\\1::Configurators::")
-            .concat("Configurator")
-        end
-
         def configurator_key
           (name || raise("class name not set"))
             .gsub(/^.*::/, "")

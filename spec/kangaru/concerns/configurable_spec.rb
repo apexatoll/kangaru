@@ -9,68 +9,6 @@ RSpec.describe Kangaru::Concerns::Configurable do
 
   before { allow(configurable_class).to receive(:name).and_return(name) }
 
-  describe ".configurator_name" do
-    subject(:configurator_name) { configurable_class.configurator_name }
-
-    shared_examples :returns_configurator_name do
-      context "when class name is not set" do
-        let(:name) { nil }
-
-        it "raises an error" do
-          expect { configurator_name }.to raise_error("class name not set")
-        end
-      end
-
-      context "when class name is not nested" do
-        let(:name) { "#{base}::SomeClass" }
-
-        it "does not raise any errors" do
-          expect { configurator_name }.not_to raise_error
-        end
-
-        it "returns a string" do
-          expect(configurator_name).to be_a(String)
-        end
-
-        it "returns the expected configurator class name" do
-          expect(configurator_name).to eq(
-            "#{base}::Configurators::SomeClassConfigurator"
-          )
-        end
-      end
-
-      context "when class name is nested" do
-        let(:name) { "#{base}::SomeNamespace::SomeClass" }
-
-        it "does not raise any errors" do
-          expect { configurator_name }.not_to raise_error
-        end
-
-        it "returns a string" do
-          expect(configurator_name).to be_a(String)
-        end
-
-        it "returns the expected configurator class name" do
-          expect(configurator_name).to eq(
-            "#{base}::Configurators::SomeNamespace::SomeClassConfigurator"
-          )
-        end
-      end
-    end
-
-    describe "within Kangaru" do
-      let(:base) { "Kangaru" }
-
-      include_examples :returns_configurator_name
-    end
-
-    describe "within target gem" do
-      let(:base) { "SomeGem" }
-
-      include_examples :returns_configurator_name
-    end
-  end
-
   describe ".configurator_key" do
     subject(:configurator_key) { configurable_class.configurator_key }
 
