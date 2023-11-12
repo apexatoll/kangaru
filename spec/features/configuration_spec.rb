@@ -1,11 +1,5 @@
 RSpec.describe "configuration" do
-  subject(:application_config) do
-    Kangaru.application!.config.test.serialise
-  end
-
-  let(:configurator_class) do
-    Class.new(Kangaru::Configurator) { attr_accessor :value }
-  end
+  subject(:application_config) { SomeGem.config.test.serialise }
 
   let(:main_file) do
     <<~RUBY
@@ -19,10 +13,23 @@ RSpec.describe "configuration" do
     RUBY
   end
 
-  before do
-    stub_const "Kangaru::Configurators::TestConfigurator", configurator_class
+  let(:configurator_class) do
+    <<~RUBY
+      module SomeGem
+        module Configurators
+          class TestConfigurator < Kangaru::Configurator
+            attr_accessor :value
+          end
+        end
+      end
+    RUBY
+  end
 
+  before do
     gem.main_file.write(main_file)
+
+    gem.path("configurators", ext: nil).mkdir
+    gem.path("configurators", "test_configurator").write(configurator_class)
   end
 
   describe "setting config" do
@@ -122,17 +129,17 @@ RSpec.describe "configuration" do
 
     before { gem.load! }
 
-    context "when config is applied once" do
-      it "does not raise any errors" do
-        expect { apply_config! }.not_to raise_error
-      end
-    end
-
     context "when config is applied more than once" do
       before { SomeGem.apply_config! }
 
       it "raise an error" do
         expect { apply_config! }.to raise_error("config already applied")
+      end
+    end
+
+    context "when config is applied once" do
+      it "does not raise any errors" do
+        expect { apply_config! }.not_to raise_error
       end
     end
   end
