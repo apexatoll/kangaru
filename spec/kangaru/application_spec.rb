@@ -183,7 +183,7 @@ RSpec.describe Kangaru::Application do
     before do
       allow(Kangaru::Database).to receive(:new).and_return(database)
 
-      allow(application.config).to receive(:import_external_config!)
+      allow(application.config).to receive(:import!)
     end
 
     shared_examples :configures_application do
@@ -235,10 +235,7 @@ RSpec.describe Kangaru::Application do
     shared_examples :imports_external_config do
       it "imports external config" do
         apply_config!
-
-        expect(application.config)
-          .to have_received(:import_external_config!)
-          .once
+        expect(application.config).to have_received(:import!).once
       end
     end
 

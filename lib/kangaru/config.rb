@@ -10,7 +10,7 @@ module Kangaru
       configurators.transform_values(&:serialise)
     end
 
-    def import_external_config!
+    def import!
       return unless external_config_exists?
 
       @external = Configurators::ExternalConfigurator

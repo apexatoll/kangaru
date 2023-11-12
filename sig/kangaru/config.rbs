@@ -6,7 +6,7 @@ module Kangaru
 
     def serialise: -> Hash[Symbol, Hash[Symbol, untyped]]
 
-    def import_external_config!: -> void
+    def import!: -> void
 
     def for: (String) -> untyped
 
