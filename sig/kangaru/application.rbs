@@ -9,6 +9,8 @@ module Kangaru
     attr_reader namespace: Module
     attr_reader database: Database?
 
+    attr_accessor config_path: String
+
     attr_reader config: Config
     attr_reader router: Router
 
@@ -31,8 +33,6 @@ module Kangaru
     private
 
     @configured: bool
-
-    def config_path: -> String
 
     def current_env?: (Symbol?) -> bool
 
