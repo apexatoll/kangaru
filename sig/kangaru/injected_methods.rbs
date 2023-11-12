@@ -1,19 +1,15 @@
 module Kangaru
   module InjectedMethods
-    interface _InjectedMethods
-      def run!: (*String) -> void
+    def run!: (*String) -> void
 
-      def config: -> Config
+    def config: -> Config
 
-      def configure: (?Symbol?) { (Config) -> void } -> void
+    def configure: (?Symbol?) { (Config) -> void } -> void
 
-      def apply_config!: -> void
+    def apply_config!: -> void
 
-      def import_config_from!: (String) -> void
+    def import_config_from!: (String) -> void
 
-      def database: -> Database?
-    end
-
-    include _InjectedMethods
+    def database: -> Database?
   end
 end
