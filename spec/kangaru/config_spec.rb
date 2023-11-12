@@ -101,8 +101,8 @@ RSpec.describe Kangaru::Config do
     end
   end
 
-  describe "#import_external_config!" do
-    subject(:import_external_config!) { config.import_external_config! }
+  describe "#import!" do
+    subject(:import!) { config.import! }
 
     before do
       allow(Kangaru::Configurators::ApplicationConfigurator)
@@ -119,15 +119,15 @@ RSpec.describe Kangaru::Config do
 
     shared_examples :does_not_import_external_config do
       it "returns nil" do
-        expect(import_external_config!).to be_nil
+        expect(import!).to be_nil
       end
 
       it "does not raise any errors" do
-        expect { import_external_config! }.not_to raise_error
+        expect { import! }.not_to raise_error
       end
 
       it "does not update the external configuration" do
-        expect { import_external_config! }.not_to change { config.external }
+        expect { import! }.not_to change { config.external }
       end
     end
 
@@ -144,11 +144,11 @@ RSpec.describe Kangaru::Config do
       end
 
       it "does not raise any errors" do
-        expect { import_external_config! }.not_to raise_error
+        expect { import! }.not_to raise_error
       end
 
       it "reads the yaml file and builds an external configurator" do
-        import_external_config!
+        import!
 
         expect(Kangaru::Configurators::ExternalConfigurator)
           .to have_received(:from_yaml_file)
@@ -156,7 +156,7 @@ RSpec.describe Kangaru::Config do
       end
 
       it "updates the external config instance to the imported instance" do
-        expect { import_external_config! }
+        expect { import! }
           .to change { config.external }
           .to(external)
       end
