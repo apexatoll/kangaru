@@ -1,6 +1,7 @@
 module Kangaru
   class Configurator
     include Concerns::AttributesConcern
+    include Concerns::Validatable
 
     using Patches::Inflections
 
