@@ -1,7 +1,0 @@
-module Kangaru
-  module Configurators
-    class ApplicationConfigurator < Configurator
-      attr_accessor config_path: String
-    end
-  end
-end

@@ -11,10 +11,9 @@ module Kangaru
     def for: (String) -> untyped
 
     # Configurators
-    attr_reader application: Configurators::ApplicationConfigurator
-    attr_reader database:    Configurators::DatabaseConfigurator
-    attr_reader external:    Configurators::ExternalConfigurator
-    attr_reader request:     Configurators::RequestConfigurator
+    attr_reader database: Configurators::DatabaseConfigurator
+    attr_reader external: Configurators::ExternalConfigurator
+    attr_reader request:  Configurators::RequestConfigurator
 
     private
 
