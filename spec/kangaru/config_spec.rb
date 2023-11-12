@@ -281,4 +281,105 @@ RSpec.describe Kangaru::Config do
       end
     end
   end
+
+  describe "validations" do
+    let(:foo_configurator_class) do
+      Class.new(Kangaru::Configurator) do
+        attr_accessor :foo
+
+        validates :foo, required: true
+      end
+    end
+
+    let(:bar_configurator_class) do
+      Class.new(Kangaru::Configurator) do
+        attr_accessor :bar
+
+        validates :bar, required: true
+      end
+    end
+
+    let(:foo_configurator) do
+      Kangaru::Configurators::FooConfigurator.new(foo:)
+    end
+
+    let(:bar_configurator) do
+      Kangaru::Configurators::BarConfigurator.new(bar:)
+    end
+
+    before do
+      stub_configurator_class(
+        :FooConfigurator, foo_configurator_class
+      )
+
+      stub_configurator_class(
+        :BarConfigurator, bar_configurator_class
+      )
+
+      allow(Kangaru::Configurators::FooConfigurator)
+        .to receive_messages(new: foo_configurator)
+
+      allow(Kangaru::Configurators::BarConfigurator)
+        .to receive_messages(new: bar_configurator)
+    end
+
+    shared_examples :invalid do |options|
+      let(:full_messages) { config.errors.map(&:full_message) }
+
+      it "is not valid" do
+        expect(config).not_to be_valid
+      end
+
+      it "sets errors" do
+        config.validate
+        expect(config.errors).not_to be_empty
+      end
+
+      it "sets error objects" do
+        config.validate
+        expect(config.errors).to all be_a(Kangaru::Validation::Error)
+      end
+
+      it "sets the expected errors" do
+        config.validate
+        expect(full_messages).to match_array(options[:errors])
+      end
+    end
+
+    shared_examples :valid do
+      it "is valid" do
+        expect(config).to be_valid
+      end
+
+      it "does not set any errors" do
+        expect(config.errors).to be_empty
+      end
+    end
+
+    context "when no configurators are valid" do
+      let(:foo) { nil }
+      let(:bar) { nil }
+
+      include_examples :invalid, errors: [
+        "Foo can't be blank",
+        "Bar can't be blank"
+      ]
+    end
+
+    context "when some configurators are valid" do
+      let(:foo) { :foo }
+      let(:bar) { nil }
+
+      include_examples :invalid, errors: [
+        "Bar can't be blank"
+      ]
+    end
+
+    context "when all configurators are valid" do
+      let(:foo) { :foo }
+      let(:bar) { :bar }
+
+      include_examples :valid
+    end
+  end
 end
