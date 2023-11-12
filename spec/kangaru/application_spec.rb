@@ -186,6 +186,62 @@ RSpec.describe Kangaru::Application do
       allow(application.config).to receive(:import_external_config!)
     end
 
+    shared_examples :configures_application do
+      it "marks the application as configured" do
+        expect { apply_config! }
+          .to change { application.configured? }
+          .from(false)
+          .to(true)
+      end
+    end
+
+    shared_examples :does_not_set_up_database do
+      it "does not create a database" do
+        apply_config!
+        expect(Kangaru::Database).not_to have_received(:new)
+      end
+
+      it "does not set the application database instance" do
+        expect { apply_config! }
+          .not_to change { application.database }
+          .from(nil)
+      end
+    end
+
+    shared_examples :sets_up_database do
+      it "creates a database" do
+        apply_config!
+        expect(Kangaru::Database).to have_received(:new).once
+      end
+
+      it "sets up the database" do
+        apply_config!
+        expect(database).to have_received(:setup!).once
+      end
+
+      it "migrates the database" do
+        apply_config!
+        expect(database).to have_received(:migrate!).once
+      end
+
+      it "sets the application database instance" do
+        expect { apply_config! }
+          .to change { application.database }
+          .from(nil)
+          .to(database)
+      end
+    end
+
+    shared_examples :imports_external_config do
+      it "imports external config" do
+        apply_config!
+
+        expect(application.config)
+          .to have_received(:import_external_config!)
+          .once
+      end
+    end
+
     context "when config has already been applied" do
       before { application.instance_variable_set(:@configured, true) }
 
@@ -195,85 +251,24 @@ RSpec.describe Kangaru::Application do
     end
 
     context "when config has not already been applied" do
-      context "and no configuration is set" do
-        it "does not raise any errors" do
-          expect { apply_config! }.not_to raise_error
-        end
-
-        it "does not create a database" do
-          apply_config!
-          expect(Kangaru::Database).not_to have_received(:new)
-        end
-
-        it "does not set the application database instance" do
-          expect { apply_config! }
-            .not_to change { application.database }
-            .from(nil)
-        end
-
-        it "runs the external config import" do
-          apply_config!
-
-          expect(application.config)
-            .to have_received(:import_external_config!)
-            .once
-        end
-
-        it "marks the application as configured" do
-          expect { apply_config! }
-            .to change { application.configured? }
-            .from(false)
-            .to(true)
-        end
+      before do
+        application.config.database.adaptor = adaptor
       end
 
-      context "and configuration sets a database adaptor" do
-        before do
-          application.config.database.adaptor = adaptor
-        end
+      context "and database adaptor is not set" do
+        let(:adaptor) { nil }
 
+        include_examples :configures_application
+        include_examples :does_not_set_up_database
+        include_examples :imports_external_config
+      end
+
+      context "and database adaptor is set" do
         let(:adaptor) { :sqlite }
 
-        it "does not raise any errors" do
-          expect { apply_config! }.not_to raise_error
-        end
-
-        it "creates a database" do
-          apply_config!
-          expect(Kangaru::Database).to have_received(:new).once
-        end
-
-        it "sets up the database" do
-          apply_config!
-          expect(database).to have_received(:setup!).once
-        end
-
-        it "migrates the database" do
-          apply_config!
-          expect(database).to have_received(:migrate!).once
-        end
-
-        it "sets the application database instance" do
-          expect { apply_config! }
-            .to change { application.database }
-            .from(nil)
-            .to(database)
-        end
-
-        it "runs the external config import" do
-          apply_config!
-
-          expect(application.config)
-            .to have_received(:import_external_config!)
-            .once
-        end
-
-        it "marks the application as configured" do
-          expect { apply_config! }
-            .to change { application.configured? }
-            .from(false)
-            .to(true)
-        end
+        include_examples :configures_application
+        include_examples :sets_up_database
+        include_examples :imports_external_config
       end
     end
   end
