@@ -53,94 +53,6 @@ RSpec.describe Kangaru::Config do
     end
   end
 
-  describe "#serialise" do
-    subject(:hash) { config.serialise }
-
-    context "when no configurator classes are defined" do
-      include_context :stub_configurator_classes, with: []
-
-      it "returns an empty hash" do
-        expect(hash).to be_empty
-      end
-    end
-
-    context "when configurator classes are defined" do
-      include_context :stub_configurator_classes,
-                      with: %i[FooConfigurator BarConfigurator]
-
-      let(:foo) do
-        instance_double(
-          Kangaru::Configurators::FooConfigurator,
-          serialise: foo_hash
-        )
-      end
-
-      let(:bar) do
-        instance_double(
-          Kangaru::Configurators::BarConfigurator,
-          serialise: bar_hash
-        )
-      end
-
-      let(:foo_hash) { { foo: "foo" } }
-      let(:bar_hash) { { bar: "bar" } }
-
-      before do
-        allow(Kangaru::Configurators::FooConfigurator)
-          .to receive(:new)
-          .and_return(foo)
-
-        allow(Kangaru::Configurators::BarConfigurator)
-          .to receive(:new)
-          .and_return(bar)
-      end
-
-      it "returns the expected serialised hash" do
-        expect(hash).to eq(foo: { foo: "foo" }, bar: { bar: "bar" })
-      end
-    end
-  end
-
-  describe "#[]" do
-    subject(:configurator) { config[configurator_key] }
-
-    include_context :stub_configurator_classes, with: %i[FoobarConfigurator]
-
-    let(:foobar_configurator) do
-      instance_double(Kangaru::Configurators::FoobarConfigurator)
-    end
-
-    before do
-      allow(Kangaru::Configurators::FoobarConfigurator)
-        .to receive(:new)
-        .and_return(foobar_configurator)
-    end
-
-    context "when configurator with given key does not exist" do
-      let(:configurator_key) { :invalid }
-
-      it "does not raise any errors" do
-        expect { configurator }.not_to raise_error
-      end
-
-      it "returns nil" do
-        expect(configurator).to be_nil
-      end
-    end
-
-    context "when configurator with given key exists" do
-      let(:configurator_key) { :foobar }
-
-      it "does not raise any errors" do
-        expect { configurator }.not_to raise_error
-      end
-
-      it "returns the configurator instance" do
-        expect(configurator).to eq(foobar_configurator)
-      end
-    end
-  end
-
   describe "#import!" do
     subject(:import!) { config.import!(path) }
 
@@ -278,6 +190,94 @@ RSpec.describe Kangaru::Config do
           include_examples :imports_config, example: { attribute: "value" },
                                             another: { attribute: "value" }
         end
+      end
+    end
+  end
+
+  describe "#serialise" do
+    subject(:hash) { config.serialise }
+
+    context "when no configurator classes are defined" do
+      include_context :stub_configurator_classes, with: []
+
+      it "returns an empty hash" do
+        expect(hash).to be_empty
+      end
+    end
+
+    context "when configurator classes are defined" do
+      include_context :stub_configurator_classes,
+                      with: %i[FooConfigurator BarConfigurator]
+
+      let(:foo) do
+        instance_double(
+          Kangaru::Configurators::FooConfigurator,
+          serialise: foo_hash
+        )
+      end
+
+      let(:bar) do
+        instance_double(
+          Kangaru::Configurators::BarConfigurator,
+          serialise: bar_hash
+        )
+      end
+
+      let(:foo_hash) { { foo: "foo" } }
+      let(:bar_hash) { { bar: "bar" } }
+
+      before do
+        allow(Kangaru::Configurators::FooConfigurator)
+          .to receive(:new)
+          .and_return(foo)
+
+        allow(Kangaru::Configurators::BarConfigurator)
+          .to receive(:new)
+          .and_return(bar)
+      end
+
+      it "returns the expected serialised hash" do
+        expect(hash).to eq(foo: { foo: "foo" }, bar: { bar: "bar" })
+      end
+    end
+  end
+
+  describe "#[]" do
+    subject(:configurator) { config[configurator_key] }
+
+    include_context :stub_configurator_classes, with: %i[FoobarConfigurator]
+
+    let(:foobar_configurator) do
+      instance_double(Kangaru::Configurators::FoobarConfigurator)
+    end
+
+    before do
+      allow(Kangaru::Configurators::FoobarConfigurator)
+        .to receive(:new)
+        .and_return(foobar_configurator)
+    end
+
+    context "when configurator with given key does not exist" do
+      let(:configurator_key) { :invalid }
+
+      it "does not raise any errors" do
+        expect { configurator }.not_to raise_error
+      end
+
+      it "returns nil" do
+        expect(configurator).to be_nil
+      end
+    end
+
+    context "when configurator with given key exists" do
+      let(:configurator_key) { :foobar }
+
+      it "does not raise any errors" do
+        expect { configurator }.not_to raise_error
+      end
+
+      it "returns the configurator instance" do
+        expect(configurator).to eq(foobar_configurator)
       end
     end
   end

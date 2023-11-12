@@ -4,11 +4,11 @@ module Kangaru
 
     def initialize: -> void
 
+    def import!: (String) -> void
+
     def serialise: -> Hash[Symbol, Hash[Symbol, untyped]]
 
     def []: (Symbol) -> Configurator?
-
-    def import!: (String) -> void
 
     # Native Configurators
     attr_reader database: Configurators::DatabaseConfigurator

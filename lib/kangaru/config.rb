@@ -8,18 +8,18 @@ module Kangaru
       @configurators = set_configurators!
     end
 
+    def import!(path)
+      read_external_config(path).each do |key, config|
+        configurators[key]&.merge!(**config)
+      end
+    end
+
     def serialise
       configurators.transform_values(&:serialise)
     end
 
     def [](key)
       configurators[key.to_sym]
-    end
-
-    def import!(path)
-      read_external_config(path).each do |key, config|
-        configurators[key]&.merge!(**config)
-      end
     end
 
     private
