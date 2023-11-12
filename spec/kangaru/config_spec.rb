@@ -1,66 +1,54 @@
 RSpec.describe Kangaru::Config do
   subject(:config) { described_class.new }
 
-  shared_context :no_configurators_defined do
+  def stub_configurator_class(name, configurator_class)
+    class_name = "Kangaru::Configurators::#{name}"
+
+    allow(configurator_class).to receive(:name).and_return(class_name)
+
+    stub_const class_name, configurator_class
+  end
+
+  shared_context :stub_configurator_classes do |options|
+    let(:classes) { options[:with] }
+
     before do
-      allow(Kangaru::Configurators).to receive(:classes).and_return([])
+      allow(Kangaru::Configurators).to receive(:constants).and_return(classes)
+
+      classes.each do |name|
+        stub_configurator_class(name, Class.new(Kangaru::Configurator))
+      end
     end
   end
 
-  shared_context :foobar_configurator_defined do
-    before do
-      allow(Kangaru::Configurators)
-        .to receive(:classes)
-        .and_return([foobar_configurator_class])
+  describe "#initialise" do
+    context "when no configurator classes are defined" do
+      include_context :stub_configurator_classes, with: []
 
-      allow(foobar_configurator_class)
-        .to receive(:new)
-        .and_return(foobar_configurator)
-
-      allow(foobar_configurator)
-        .to receive(:serialise)
-        .and_return(foobar_configurator_hash)
-    end
-
-    after { described_class.undef_method(:foobar) }
-
-    let(:foobar_configurator_class) do
-      Class.new(Kangaru::Configurator) do
-        def self.name = "FoobarConfigurator"
-        def self.key  = :foobar
+      it "does not set any configurators" do
+        expect(config.configurators).to be_empty
       end
     end
 
-    let(:foobar_configurator) { foobar_configurator_class.new }
+    context "when configurator classes are defined" do
+      include_context :stub_configurator_classes,
+                      with: %i[FooConfigurator BarConfigurator]
 
-    let(:foobar_configurator_hash) { { hello: "world" } }
-  end
+      let(:foo) { instance_double(Kangaru::Configurators::FooConfigurator) }
+      let(:bar) { instance_double(Kangaru::Configurators::BarConfigurator) }
 
-  describe "#initialize" do
-    context "when no configurators defined" do
-      include_context :no_configurators_defined
+      before do
+        allow(Kangaru::Configurators::FooConfigurator)
+          .to receive(:new)
+          .and_return(foo)
 
-      it "does not set any accessors" do
-        expect { config }.not_to change { described_class.instance_methods }
-      end
-    end
-
-    context "when configurators defined" do
-      include_context :foobar_configurator_defined
-
-      it "sets a reader" do
-        expect { config }
-          .to change { described_class.instance_methods }
-          .to(include(:foobar))
+        allow(Kangaru::Configurators::BarConfigurator)
+          .to receive(:new)
+          .and_return(bar)
       end
 
-      it "instantiates a configurator" do
-        config
-        expect(foobar_configurator_class).to have_received(:new).once
-      end
-
-      it "sets the configurators instance variable" do
-        expect(config.configurators).to eq(foobar: foobar_configurator)
+      it "sets the configurators" do
+        expect(config).to have_attributes(foo:, bar:)
       end
     end
   end
@@ -68,19 +56,47 @@ RSpec.describe Kangaru::Config do
   describe "#serialise" do
     subject(:hash) { config.serialise }
 
-    context "when no configurators defined" do
-      include_context :no_configurators_defined
+    context "when no configurator classes are defined" do
+      include_context :stub_configurator_classes, with: []
 
       it "returns an empty hash" do
         expect(hash).to be_empty
       end
     end
 
-    context "when configurators set" do
-      include_context :foobar_configurator_defined
+    context "when configurator classes are defined" do
+      include_context :stub_configurator_classes,
+                      with: %i[FooConfigurator BarConfigurator]
 
-      it "returns the expected hash" do
-        expect(hash).to eq(foobar: { hello: "world" })
+      let(:foo) do
+        instance_double(
+          Kangaru::Configurators::FooConfigurator,
+          serialise: foo_hash
+        )
+      end
+
+      let(:bar) do
+        instance_double(
+          Kangaru::Configurators::BarConfigurator,
+          serialise: bar_hash
+        )
+      end
+
+      let(:foo_hash) { { foo: "foo" } }
+      let(:bar_hash) { { bar: "bar" } }
+
+      before do
+        allow(Kangaru::Configurators::FooConfigurator)
+          .to receive(:new)
+          .and_return(foo)
+
+        allow(Kangaru::Configurators::BarConfigurator)
+          .to receive(:new)
+          .and_return(bar)
+      end
+
+      it "returns the expected serialised hash" do
+        expect(hash).to eq(foo: { foo: "foo" }, bar: { bar: "bar" })
       end
     end
   end
@@ -176,10 +192,10 @@ RSpec.describe Kangaru::Config do
   describe "#for" do
     subject(:configurator) { config.for(configurator_name) }
 
-    context "when configurator with given name is not set" do
-      include_context :no_configurators_defined
+    let(:configurator_name) { "Kangaru::Configurators::FoobarConfigurator" }
 
-      let(:configurator_name) { "AnotherConfigurator" }
+    context "when configurator with given name is not set" do
+      include_context :stub_configurator_classes, with: []
 
       it "does not raise any errors" do
         expect { configurator }.not_to raise_error
@@ -191,9 +207,20 @@ RSpec.describe Kangaru::Config do
     end
 
     context "when configurator with given name is set" do
-      include_context :foobar_configurator_defined
+      include_context :stub_configurator_classes, with: [:FoobarConfigurator]
 
-      let(:configurator_name) { "FoobarConfigurator" }
+      let(:foobar_configurator) do
+        instance_double(
+          Kangaru::Configurators::FoobarConfigurator,
+          class: Kangaru::Configurators::FoobarConfigurator
+        )
+      end
+
+      before do
+        allow(Kangaru::Configurators::FoobarConfigurator)
+          .to receive(:new)
+          .and_return(foobar_configurator)
+      end
 
       it "does not raise any errors" do
         expect { configurator }.not_to raise_error
