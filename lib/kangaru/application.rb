@@ -24,11 +24,8 @@ module Kangaru
       @router ||= Router.new(namespace:)
     end
 
-    # If called with no env, the config will be applied regardless of current
-    # env. If multiple configure calls matching the current env are made, the
-    # most recent calls will overwrite older changes.
-    def configure(env = nil, &block)
-      block.call(config) if current_env?(env)
+    def configure(&block)
+      block.call(config)
     end
 
     def configured?
@@ -61,13 +58,6 @@ module Kangaru
     def_delegators :paths, :view_path
 
     private
-
-    # Returns true if nil as this is represents all envs.
-    def current_env?(env)
-      return true if env.nil?
-
-      Kangaru.env?(env)
-    end
 
     def autoloader
       @autoloader ||= Zeitwerk::Loader.new.tap do |loader|

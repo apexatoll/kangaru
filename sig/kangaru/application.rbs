@@ -16,7 +16,7 @@ module Kangaru
 
     def initialize: (source: String, namespace: Module) -> void
 
-    def configure: (?Symbol?) { (Config) -> void } -> void
+    def configure: { (Config) -> void } -> void
 
     def configured?: -> bool
 
@@ -33,8 +33,6 @@ module Kangaru
     private
 
     @configured: bool
-
-    def current_env?: (Symbol?) -> bool
 
     attr_reader autoloader: Zeitwerk::Loader
 

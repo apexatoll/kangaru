@@ -86,7 +86,7 @@ RSpec.describe Kangaru::Interface, :stub_application do
         configure
 
         expect(application).to(
-          have_received(:configure).with(env).once do |&with_block|
+          have_received(:configure).once do |&with_block|
             expect(with_block).to eq(block)
           end
         )
