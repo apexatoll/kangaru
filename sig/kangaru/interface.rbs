@@ -1,5 +1,5 @@
 module Kangaru
-  module InjectedMethods
+  module Interface
     def run!: (*String) -> void
 
     def config: -> Config
