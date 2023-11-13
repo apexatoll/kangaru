@@ -130,8 +130,8 @@ RSpec.describe Kangaru::Interface, :stub_application do
     end
   end
 
-  describe "#import_config_from!" do
-    subject(:import_config_from!) { target.import_config_from!(path) }
+  describe "#config_path" do
+    subject(:config_path) { target.config_path(path) }
 
     let(:path) { "/foo/bar/config.yml" }
 
