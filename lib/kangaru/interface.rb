@@ -9,7 +9,7 @@ module Kangaru
     end
 
     def configure(env = nil, &)
-      return if env && !Kangaru.env?(env)
+      return unless env_applies?(env)
 
       Kangaru.application!.configure(&)
     end
@@ -24,6 +24,14 @@ module Kangaru
 
     def database
       Kangaru.application!.database
+    end
+
+    private
+
+    def env_applies?(env)
+      return true if env.nil?
+
+      Kangaru.env?(env)
     end
   end
 end
