@@ -9,6 +9,8 @@ module Kangaru
     end
 
     def configure(env = nil, &)
+      return if env && !Kangaru.env?(env)
+
       Kangaru.application!.configure(env, &)
     end
 
