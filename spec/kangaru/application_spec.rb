@@ -71,106 +71,40 @@ RSpec.describe Kangaru::Application do
   end
 
   describe "#configure" do
-    subject(:configure) { application.configure(env, &configure_block) }
+    subject(:configure) { application.configure(&configure_block) }
 
-    let(:current_env) { :env }
+    context "when no configuration is set" do
+      let(:configure_block) { proc {} }
 
-    before do
-      allow(Kangaru).to receive(:env).and_return(current_env)
-    end
-
-    shared_examples :skips_config do
-      context "and no configuration is set" do
-        let(:configure_block) { proc {} }
-
-        it "does not raise any errors" do
-          expect { configure }.not_to raise_error
-        end
-
-        it "does not change the config values" do
-          expect { configure }.not_to change { application.config.serialise }
-        end
+      it "does not raise any errors" do
+        expect { configure }.not_to raise_error
       end
 
-      context "and configuration sets a database adaptor" do
-        let(:configure_block) do
-          ->(config) { config.database.adaptor = adaptor }
-        end
-
-        let(:adaptor) { :sqlite }
-
-        it "does not raise any errors" do
-          expect { configure }.not_to raise_error
-        end
-
-        it "does not change the config values" do
-          expect { configure }.not_to change { application.config.serialise }
-        end
-
-        it "does not set the specified config value" do
-          expect { configure }
-            .not_to change { application.config.database.adaptor }
-            .from(nil)
-        end
+      it "does not change the config values" do
+        expect { configure }.not_to change { application.config.serialise }
       end
     end
 
-    shared_examples :sets_config do
-      context "when no configuration is set" do
-        let(:configure_block) { proc {} }
-
-        it "does not raise any errors" do
-          expect { configure }.not_to raise_error
-        end
-
-        it "does not change the config values" do
-          expect { configure }.not_to change { application.config.serialise }
-        end
+    context "when configuration sets a database adaptor" do
+      let(:configure_block) do
+        ->(config) { config.database.adaptor = adaptor }
       end
 
-      context "when configuration sets a database adaptor" do
-        let(:configure_block) do
-          ->(config) { config.database.adaptor = adaptor }
-        end
+      let(:adaptor) { :sqlite }
 
-        let(:adaptor) { :sqlite }
-
-        it "does not raise any errors" do
-          expect { configure }.not_to raise_error
-        end
-
-        it "changes the config values" do
-          expect { configure }.to change { application.config.serialise }
-        end
-
-        it "sets the expected config value" do
-          expect { configure }
-            .to change { application.config.database.adaptor }
-            .from(nil)
-            .to(adaptor)
-        end
-      end
-    end
-
-    context "when no env is specified" do
-      let(:env) { nil }
-
-      include_examples :sets_config
-    end
-
-    context "and env is specified" do
-      let(:env) { :some_env }
-
-      context "and not running app in specified env" do
-        let(:current_env) { :another_env }
-
-        include_examples :skips_config
+      it "does not raise any errors" do
+        expect { configure }.not_to raise_error
       end
 
-      context "and running app in specified env" do
-        let(:current_env) { env }
+      it "changes the config values" do
+        expect { configure }.to change { application.config.serialise }
+      end
 
-        include_examples :sets_config
+      it "sets the expected config value" do
+        expect { configure }
+          .to change { application.config.database.adaptor }
+          .from(nil)
+          .to(adaptor)
       end
     end
   end

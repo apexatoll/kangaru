@@ -11,7 +11,7 @@ module Kangaru
     def configure(env = nil, &)
       return if env && !Kangaru.env?(env)
 
-      Kangaru.application!.configure(env, &)
+      Kangaru.application!.configure(&)
     end
 
     def import_config_from!(path)
