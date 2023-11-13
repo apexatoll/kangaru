@@ -12,7 +12,7 @@ RSpec.describe "importing external config" do
       module SomeGem
         extend Kangaru::Initialiser
 
-        import_config_from! "#{config_path}"
+        config_path "#{config_path}"
 
         apply_config!
       end

@@ -8,7 +8,7 @@ module Kangaru
 
     def apply_config!: -> void
 
-    def import_config_from!: (String) -> void
+    def config_path: (String) -> void
 
     def database: -> Database?
 
