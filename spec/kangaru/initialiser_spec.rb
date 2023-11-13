@@ -58,7 +58,7 @@ RSpec.describe Kangaru::Initialiser do
 
         expect(Namespace)
           .to have_received(:extend)
-          .with(Kangaru::InjectedMethods)
+          .with(Kangaru::Interface)
           .once
       end
     end

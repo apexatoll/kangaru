@@ -6,7 +6,7 @@ module Kangaru
       Kangaru.application = Application.new(source:, namespace:)
       Kangaru.eager_load(Initialisers)
 
-      namespace.extend InjectedMethods
+      namespace.extend Interface
     end
   end
 end

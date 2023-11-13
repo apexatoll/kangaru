@@ -1,5 +1,5 @@
 module Kangaru
-  module InjectedMethods
+  module Interface
     def run!(*argv)
       Kangaru.application!.run!(*argv)
     end
