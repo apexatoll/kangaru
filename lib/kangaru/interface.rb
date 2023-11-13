@@ -14,7 +14,9 @@ module Kangaru
       Kangaru.application!.configure(&)
     end
 
-    def config_path(path)
+    def config_path(path, env: nil)
+      return unless env_applies?(env)
+
       Kangaru.application!.config_path = path
     end
 
