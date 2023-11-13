@@ -8,7 +8,7 @@ module Kangaru
       Kangaru.application!.config
     end
 
-    def configure(env = nil, &)
+    def configure(env: nil, &)
       return unless env_applies?(env)
 
       Kangaru.application!.configure(&)

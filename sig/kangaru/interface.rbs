@@ -4,7 +4,7 @@ module Kangaru
 
     def config: -> Config
 
-    def configure: (?Symbol?) { (Config) -> void } -> void
+    def configure: (?env: Symbol?) { (Config) -> void } -> void
 
     def apply_config!: -> void
 

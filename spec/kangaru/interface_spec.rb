@@ -56,7 +56,7 @@ RSpec.describe Kangaru::Interface, :stub_application do
   end
 
   describe "#configure" do
-    subject(:configure) { target.configure(env, &block) }
+    subject(:configure) { target.configure(env:, &block) }
 
     let(:block) { ->(_config) { :config } }
 
