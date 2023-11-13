@@ -12,7 +12,7 @@ RSpec.describe "importing external config" do
       module SomeGem
         extend Kangaru::Initialiser
 
-        config_path "#{config_path}"
+        config_path "#{config_path}" #{env && ", env: :#{env}"}
 
         apply_config!
       end
@@ -30,6 +30,8 @@ RSpec.describe "importing external config" do
       end
     RUBY
   end
+
+  let(:env) { nil }
 
   shared_examples :does_not_import_config do
     it "does not raise any errors" do
@@ -62,37 +64,47 @@ RSpec.describe "importing external config" do
   context "when application config path is defined" do
     let(:config_path) { gem.path("config", ext: :yml) }
 
-    context "and config file does not exist" do
+    context "and not running from the specified env" do
+      let(:env) { :another_env }
+
       include_examples :does_not_import_config
     end
 
-    context "and config file exists" do
-      before { config_path.write(config_file) }
+    context "and running from the specified env" do
+      let(:env) { Kangaru.env }
 
-      context "and file is empty" do
-        let(:config_file) { nil }
-
+      context "and config file does not exist" do
         include_examples :does_not_import_config
       end
 
-      context "and file is not empty" do
-        let(:config_file) do
-          <<~YAML
-            #{key}:
-              some_setting: "foobar"
-          YAML
-        end
+      context "and config file exists" do
+        before { config_path.write(config_file) }
 
-        context "and config settings do not correspond to a configurator" do
-          let(:key) { "invalid" }
+        context "and file is empty" do
+          let(:config_file) { nil }
 
           include_examples :does_not_import_config
         end
 
-        context "and config settings correspond to a configurator" do
-          let(:key) { "custom" }
+        context "and file is not empty" do
+          let(:config_file) do
+            <<~YAML
+              #{key}:
+                some_setting: "foobar"
+            YAML
+          end
 
-          include_examples :imports_config, some_setting: "foobar"
+          context "and config settings do not correspond to a configurator" do
+            let(:key) { "invalid" }
+
+            include_examples :does_not_import_config
+          end
+
+          context "and config settings correspond to a configurator" do
+            let(:key) { "custom" }
+
+            include_examples :imports_config, some_setting: "foobar"
+          end
         end
       end
     end

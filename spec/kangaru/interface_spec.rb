@@ -131,13 +131,73 @@ RSpec.describe Kangaru::Interface, :stub_application do
   end
 
   describe "#config_path" do
-    subject(:config_path) { target.config_path(path) }
+    subject(:config_path) { target.config_path(path, env:) }
 
     let(:path) { "/foo/bar/config.yml" }
 
-    include_examples :delegates_to_application,
-                     via: :config_path=,
-                     args: "/foo/bar/config.yml"
+    let(:current_env) { :some_env }
+
+    before do
+      allow(Kangaru).to receive(:env).and_return(current_env)
+    end
+
+    shared_examples :does_not_set_config_path do
+      it "does not raise any errors" do
+        expect { config_path }.not_to raise_error
+      end
+
+      it "does not set the config path" do
+        config_path
+        expect(application).not_to have_received(:config_path=)
+      end
+    end
+
+    shared_examples :sets_config_path do
+      it "does not raise any errors" do
+        expect { config_path }.not_to raise_error
+      end
+
+      it "sets the config path" do
+        config_path
+        expect(application).to have_received(:config_path=).with(path)
+      end
+    end
+
+    context "when application not initialised" do
+      let(:env) { nil }
+
+      include_context :application_not_initialised
+
+      it "raises an error" do
+        expect { config_path }.to raise_error("application not set")
+      end
+    end
+
+    context "when application initialised" do
+      include_context :application_initialised
+
+      context "and no env is specified" do
+        let(:env) { nil }
+
+        include_examples :sets_config_path
+      end
+
+      context "and env is specified" do
+        let(:env) { :some_env }
+
+        context "and not running app in specified env" do
+          let(:current_env) { :another_env }
+
+          include_examples :does_not_set_config_path
+        end
+
+        context "and running app in specified env" do
+          let(:current_env) { env }
+
+          include_examples :sets_config_path
+        end
+      end
+    end
   end
 
   describe "#apply_config!" do
