@@ -58,21 +58,26 @@ RSpec.describe Kangaru::Interface, :stub_application do
   describe "#configure" do
     subject(:configure) { target.configure(env, &block) }
 
-    let(:env) { :some_env }
-
     let(:block) { ->(_config) { :config } }
 
-    context "when application not initialised" do
-      include_context :application_not_initialised
+    let(:current_env) { :some_env }
 
-      it "raises an error" do
-        expect { configure }.to raise_error("application not set")
+    before do
+      allow(Kangaru).to receive(:env).and_return(current_env)
+    end
+
+    shared_examples :skips_config do
+      it "does not raise any errors" do
+        expect { configure }.not_to raise_error
+      end
+
+      it "does not delegate to the application" do
+        configure
+        expect(application).not_to have_received(:configure)
       end
     end
 
-    context "when application initialised" do
-      include_context :application_initialised
-
+    shared_examples :applies_config do
       it "does not raise any errors" do
         expect { configure }.not_to raise_error
       end
@@ -85,6 +90,42 @@ RSpec.describe Kangaru::Interface, :stub_application do
             expect(with_block).to eq(block)
           end
         )
+      end
+    end
+
+    context "when application not initialised" do
+      let(:env) { nil }
+
+      include_context :application_not_initialised
+
+      it "raises an error" do
+        expect { configure }.to raise_error("application not set")
+      end
+    end
+
+    context "when application initialised" do
+      include_context :application_initialised
+
+      context "and no env is specified" do
+        let(:env) { nil }
+
+        include_examples :applies_config
+      end
+
+      context "and env is specified" do
+        let(:env) { :some_env }
+
+        context "and not running app in specified env" do
+          let(:current_env) { :another_env }
+
+          include_examples :skips_config
+        end
+
+        context "and running app in specified env" do
+          let(:current_env) { env }
+
+          include_examples :applies_config
+        end
       end
     end
   end
