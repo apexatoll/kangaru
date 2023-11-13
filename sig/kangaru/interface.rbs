@@ -11,5 +11,9 @@ module Kangaru
     def import_config_from!: (String) -> void
 
     def database: -> Database?
+
+    private
+
+    def env_applies?: (Symbol?) -> bool
   end
 end
