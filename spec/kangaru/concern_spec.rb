@@ -1,4 +1,4 @@
-RSpec.describe Kangaru::Concerns::Concern do
+RSpec.describe Kangaru::Concern do
   subject(:model_class) do
     Class.new { include Concern }
   end
@@ -14,7 +14,7 @@ RSpec.describe Kangaru::Concerns::Concern do
 
     let(:concern) do
       Module.new do
-        extend Kangaru::Concerns::Concern
+        extend Kangaru::Concern
 
         included do
           some_static_method
@@ -48,7 +48,7 @@ RSpec.describe Kangaru::Concerns::Concern do
   describe ".class_methods" do
     let(:concern) do
       Module.new do
-        extend Kangaru::Concerns::Concern
+        extend Kangaru::Concern
 
         class_methods do
           attr_reader :some_ivar
