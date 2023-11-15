@@ -1,5 +1,5 @@
 module Kangaru
-  module AttributesConcern
+  module Attributable
     extend Concern
 
     class_methods do

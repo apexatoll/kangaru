@@ -1,7 +1,7 @@
 module Kangaru
   class Configurator
-    include AttributesConcern
-    extend  AttributesConcern::ClassMethods
+    include Attributable
+    extend  Attributable::ClassMethods
 
     include Validatable
     extend  Validatable::ClassMethods

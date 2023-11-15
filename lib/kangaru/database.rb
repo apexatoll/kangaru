@@ -2,7 +2,7 @@ module Kangaru
   class Database
     extend Forwardable
 
-    include AttributesConcern
+    include Attributable
 
     PLUGINS = %i[
       enum
