@@ -2,7 +2,7 @@ module Kangaru
   module Patches
     module Inflections : String
       class ::String
-        def to_class_name: -> String
+        def to_class_name: (?suffix: String? | Symbol?) -> String
 
         def to_constant_name: -> String
 

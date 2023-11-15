@@ -24,23 +24,40 @@ RSpec.describe Kangaru::Patches::Inflections do
     end
 
     describe "#to_class_name" do
-      subject(:class_name) { string.to_class_name }
+      subject(:class_name) { string.to_class_name(suffix:) }
 
       let(:inflector_class) { Kangaru::Inflectors::ClassInflector }
 
-      let(:inflector) { instance_double(inflector_class, inflect: "output") }
+      let(:inflector) { instance_double(inflector_class, inflect: "SomeClass") }
 
       before do
         allow(inflector_class).to receive(:new).and_return(inflector)
       end
 
-      it "instantiates a Class inflector" do
-        class_name
-        expect(inflector_class).to have_received(:new).with(string).once
+      context "when no suffix is specified" do
+        let(:suffix) { nil }
+
+        it "instantiates a Class inflector" do
+          class_name
+          expect(inflector_class).to have_received(:new).with(string).once
+        end
+
+        it "inflects and returns the output" do
+          expect(class_name).to eq(inflector.inflect)
+        end
       end
 
-      it "inflects and returns the output" do
-        expect(class_name).to eq(inflector.inflect)
+      context "when suffix is specified" do
+        let(:suffix) { "foobar" }
+
+        it "instantiates a Class inflector" do
+          class_name
+          expect(inflector_class).to have_received(:new).with(string).once
+        end
+
+        it "inflects and returns the output with the suffix" do
+          expect(class_name).to eq("#{inflector.inflect}Foobar")
+        end
       end
     end
 

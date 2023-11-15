@@ -2,8 +2,10 @@ module Kangaru
   module Patches
     module Inflections
       refine String do
-        def to_class_name
-          Inflectors::ClassInflector.inflect(self)
+        def to_class_name(suffix: nil)
+          class_name = Inflectors::ClassInflector.inflect(self)
+
+          [class_name, suffix.to_s.capitalize].compact.join
         end
 
         def to_constant_name
