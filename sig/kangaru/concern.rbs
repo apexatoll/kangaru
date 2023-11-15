@@ -1,0 +1,13 @@
+module Kangaru
+  module Concern : Module
+    @included: untyped
+
+    def append_features: (untyped) -> void
+
+    def class_methods: { [self: singleton(Class)] -> void } -> void
+
+    def included: (?untyped?) ?{ -> void } -> void
+
+    def evaluate_concern_blocks!: (untyped) -> void
+  end
+end
