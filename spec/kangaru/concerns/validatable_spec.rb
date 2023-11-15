@@ -1,8 +1,8 @@
-RSpec.describe Kangaru::Concerns::Validatable do
+RSpec.describe Kangaru::Validatable do
   subject(:validatable) { validatable_class.new }
 
   let(:validatable_class) do
-    Class.new { include Kangaru::Concerns::Validatable }
+    Class.new { include Kangaru::Validatable }
   end
 
   describe ".validates" do

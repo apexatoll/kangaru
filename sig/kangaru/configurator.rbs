@@ -1,10 +1,10 @@
 module Kangaru
   class Configurator
-    include Concerns::AttributesConcern
-    extend  Concerns::AttributesConcern::ClassMethods
+    include AttributesConcern
+    extend  AttributesConcern::ClassMethods
 
-    include Concerns::Validatable
-    extend  Concerns::Validatable::ClassMethods
+    include Validatable
+    extend  Validatable::ClassMethods
 
     def self.key: -> Symbol
 

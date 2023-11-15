@@ -1,6 +1,6 @@
 module Kangaru
   class Request
-    include Concerns::Configurable
+    include Configurable
 
     DEFAULT_CONTROLLER: String
 

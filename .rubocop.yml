@@ -65,6 +65,7 @@ RSpec/ExpectChange:
 RSpec/FilePath:
   Exclude:
     - spec/kangaru/components/**/*.rb
+    - spec/kangaru/concerns/**/*.rb
 RSpec/LetSetup:
   Enabled: false
 RSpec/MultipleMemoizedHelpers:

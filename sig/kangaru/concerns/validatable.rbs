@@ -1,28 +1,26 @@
 module Kangaru
-  module Concerns
-    module Validatable
-      type validations = Hash[Symbol, Hash[Symbol, untyped]]
+  module Validatable
+    type validations = Hash[Symbol, Hash[Symbol, untyped]]
 
-      extend Concern
-      extend ClassMethods
+    extend Concern
+    extend ClassMethods
 
+    attr_reader validation_rules: validations
+
+    module ClassMethods
       attr_reader validation_rules: validations
 
-      module ClassMethods
-        attr_reader validation_rules: validations
-
-        def validates: (Symbol, **untyped) -> void
-      end
-
-      attr_reader errors: Array[Validation::Error]
-
-      def validate: -> void
-
-      def valid?: -> bool
-
-      private
-
-      def validator_for: (Symbol) -> Validation::AttributeValidator
+      def validates: (Symbol, **untyped) -> void
     end
+
+    attr_reader errors: Array[Validation::Error]
+
+    def validate: -> void
+
+    def valid?: -> bool
+
+    private
+
+    def validator_for: (Symbol) -> Validation::AttributeValidator
   end
 end
