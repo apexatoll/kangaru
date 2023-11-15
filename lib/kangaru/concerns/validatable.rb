@@ -1,46 +1,44 @@
 module Kangaru
-  module Concerns
-    module Validatable
-      extend Concern
+  module Validatable
+    extend Concern
 
-      class_methods do
-        def validation_rules
-          @validation_rules ||= {}
-        end
-
-        def validates(attribute, **validations)
-          validation_rules[attribute] ||= {}
-          validation_rules[attribute].merge!(**validations)
-        end
+    class_methods do
+      def validation_rules
+        @validation_rules ||= {}
       end
 
-      def errors
-        @errors ||= []
+      def validates(attribute, **validations)
+        validation_rules[attribute] ||= {}
+        validation_rules[attribute].merge!(**validations)
       end
+    end
 
-      def validate
-        self.class.validation_rules.each do |attribute, validations|
-          validator = validator_for(attribute)
+    def errors
+      @errors ||= []
+    end
 
-          validations.each do |validator_name, params|
-            params = {} if params == true
+    def validate
+      self.class.validation_rules.each do |attribute, validations|
+        validator = validator_for(attribute)
 
-            validator.validate(validator_name, **params)
-          end
+        validations.each do |validator_name, params|
+          params = {} if params == true
+
+          validator.validate(validator_name, **params)
         end
       end
+    end
 
-      def valid?
-        validate
+    def valid?
+      validate
 
-        errors.empty?
-      end
+      errors.empty?
+    end
 
-      private
+    private
 
-      def validator_for(attribute)
-        Validation::AttributeValidator.new(model: self, attribute:)
-      end
+    def validator_for(attribute)
+      Validation::AttributeValidator.new(model: self, attribute:)
     end
   end
 end

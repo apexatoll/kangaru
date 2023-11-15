@@ -1,15 +1,13 @@
 module Kangaru
-  module Concerns
-    module Configurable
-      extend Concern
-      extend ClassMethods
+  module Configurable
+    extend Concern
+    extend ClassMethods
 
-      module ClassMethods
-        def configurator_key: -> Symbol
-      end
-
-      def name: -> String
-      def config: -> untyped
+    module ClassMethods
+      def configurator_key: -> Symbol
     end
+
+    def name: -> String
+    def config: -> untyped
   end
 end

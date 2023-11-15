@@ -8,8 +8,8 @@ module Kangaru
   end
 
   class Model < Sequel::Model
-    include Concerns::Validatable
-    extend  Concerns::Validatable::ClassMethods
+    include Validatable
+    extend  Validatable::ClassMethods
 
     def self.enum: (Symbol, **Integer) -> void
   end

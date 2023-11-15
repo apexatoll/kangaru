@@ -1,8 +1,8 @@
-RSpec.describe Kangaru::Concerns::Configurable do
+RSpec.describe Kangaru::Configurable do
   subject(:configurable) { configurable_class.new }
 
   let(:configurable_class) do
-    Class.new { include Kangaru::Concerns::Configurable }
+    Class.new { include Kangaru::Configurable }
   end
 
   let(:name) { "Kangaru::SomeNamespace::Example" }

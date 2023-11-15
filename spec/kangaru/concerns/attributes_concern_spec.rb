@@ -1,16 +1,16 @@
-RSpec.describe Kangaru::Concerns::AttributesConcern do
+RSpec.describe Kangaru::AttributesConcern do
   subject(:model) { model_class.new(**attributes) }
 
   shared_context :no_attributes_defined do
     let(:model_class) do
-      Class.new { include Kangaru::Concerns::AttributesConcern }
+      Class.new { include Kangaru::AttributesConcern }
     end
   end
 
   shared_context :attributes_defined do
     let(:model_class) do
       Class.new do
-        include Kangaru::Concerns::AttributesConcern
+        include Kangaru::AttributesConcern
 
         attr_accessor :foo, :bar, :baz
       end

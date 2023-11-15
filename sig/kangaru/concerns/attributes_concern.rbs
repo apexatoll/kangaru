@@ -1,27 +1,25 @@
 module Kangaru
-  module Concerns
-    module AttributesConcern
-      extend Concern
+  module AttributesConcern
+    extend Concern
 
-      module ClassMethods
-        def attributes: -> Array[Symbol]
+    module ClassMethods
+      def attributes: -> Array[Symbol]
 
-        def defaults: -> Hash[Symbol, untyped]
+      def defaults: -> Hash[Symbol, untyped]
 
-        def set_default: (**untyped) -> void
+      def set_default: (**untyped) -> void
 
-        @defaults: Hash[Symbol, untyped]
-      end
-
-      extend ClassMethods
-
-      attr_reader defaults: Hash[Symbol, untyped]
-
-      def instance_methods: -> Array[Symbol]
-
-      def initialize: (**untyped) -> void
-
-      def merge!: (**untyped) -> void
+      @defaults: Hash[Symbol, untyped]
     end
+
+    extend ClassMethods
+
+    attr_reader defaults: Hash[Symbol, untyped]
+
+    def instance_methods: -> Array[Symbol]
+
+    def initialize: (**untyped) -> void
+
+    def merge!: (**untyped) -> void
   end
 end

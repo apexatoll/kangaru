@@ -2,8 +2,8 @@ module Kangaru
   class Database
     extend Forwardable
 
-    include Concerns::AttributesConcern
-    extend  Concerns::AttributesConcern::ClassMethods
+    include AttributesConcern
+    extend  AttributesConcern::ClassMethods
 
     PLUGINS: Array[Symbol]
 

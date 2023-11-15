@@ -11,7 +11,8 @@ require "yaml"
 
 module Kangaru
   COLLAPSED_DIRS = [
-    "#{__dir__}/kangaru/components"
+    "#{__dir__}/kangaru/components",
+    "#{__dir__}/kangaru/concerns"
   ].freeze
 
   DEFAULT_ENV = :runtime
