@@ -17,7 +17,7 @@ module Kangaru
       private
 
       def validator_name(validator)
-        "#{validator.to_s.to_class_name}Validator"
+        validator.to_s.to_class_name(suffix: :validator)
       end
 
       def load_validator(validator:, params:)

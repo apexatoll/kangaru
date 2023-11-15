@@ -18,7 +18,7 @@ module Kangaru
     def controller
       return default_controller if path_parser.controller.nil?
 
-      path_parser.controller&.to_class_name&.concat(Controller::SUFFIX) || raise
+      path_parser.controller&.to_class_name(suffix: Controller::SUFFIX) || raise
     end
 
     def action
