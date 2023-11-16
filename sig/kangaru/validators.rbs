@@ -1,0 +1,11 @@
+module Kangaru
+  module Validators
+    def self.get: (String | Symbol) -> singleton(Validator)
+
+    private
+
+    def self.from_kangaru: (String | Symbol) -> singleton(Validator)?
+
+    def self.from_application: (String | Symbol) -> singleton(Validator)?
+  end
+end
