@@ -12,10 +12,7 @@ module Kangaru
 
       def validator_name: (Symbol) -> String
 
-      def load_validator: (
-        validator: Symbol,
-        params: Hash[Symbol, untyped]
-      ) -> Validator
+      def load_validator: (validator: Symbol, **untyped) -> Validator
     end
   end
 end

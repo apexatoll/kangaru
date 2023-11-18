@@ -1,7 +1,7 @@
 RSpec.describe Kangaru::Validator do
   subject(:validator) { described_class.new(**attributes) }
 
-  let(:attributes) { { model:, attribute:, params: } }
+  let(:attributes) { { model:, attribute:, **params } }
 
   let(:model) { ModelClass.new(attribute => value) }
 
