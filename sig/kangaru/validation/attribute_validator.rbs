@@ -15,7 +15,7 @@ module Kangaru
       def load_validator: (
         validator: Symbol,
         params: Hash[Symbol, untyped]
-      ) -> Validators::Validator
+      ) -> Validator
     end
   end
 end

@@ -1,0 +1,18 @@
+module Kangaru
+  class Validator
+    attr_reader model: untyped
+    attr_reader attribute: Symbol
+    attr_reader params: Hash[Symbol, untyped]
+    attr_reader value: untyped
+
+    def initialize: (
+      model: untyped,
+      attribute: Symbol,
+      params: Hash[Symbol, untyped]
+    ) -> void
+
+    def validate: -> void
+
+    def add_error!: (Symbol) -> void
+  end
+end

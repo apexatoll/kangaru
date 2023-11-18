@@ -37,7 +37,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
       let(:validator_instance) { instance_spy(validator_class) }
 
       let(:validator_class) do
-        Class.new(Kangaru::Validators::Validator)
+        Class.new(Kangaru::Validator)
       end
     end
 
