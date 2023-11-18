@@ -2,7 +2,7 @@ module Kangaru
   class Validator
     attr_reader :model, :attribute, :params, :value
 
-    def initialize(model:, attribute:, params:)
+    def initialize(model:, attribute:, **params)
       @model = model
       @attribute = attribute
       @params = params

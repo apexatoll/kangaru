@@ -55,7 +55,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
 
         expect(Kangaru::Validators::FoobarValidator)
           .to have_received(:new)
-          .with(model:, attribute:, params:)
+          .with(model:, attribute:, **params)
       end
 
       it "runs the validator" do

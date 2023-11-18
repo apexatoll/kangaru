@@ -5,11 +5,7 @@ module Kangaru
     attr_reader params: Hash[Symbol, untyped]
     attr_reader value: untyped
 
-    def initialize: (
-      model: untyped,
-      attribute: Symbol,
-      params: Hash[Symbol, untyped]
-    ) -> void
+    def initialize: (model: untyped, attribute: Symbol, **untyped) -> void
 
     def validate: -> void
 
