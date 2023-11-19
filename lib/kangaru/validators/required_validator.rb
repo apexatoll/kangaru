@@ -1,10 +1,12 @@
 module Kangaru
   module Validators
     class RequiredValidator < Validator
+      MESSAGE = "can't be blank".freeze
+
       def validate
         return unless value_missing?
 
-        add_error!(:blank)
+        add_error!(MESSAGE)
       end
 
       private

@@ -1,6 +1,8 @@
 module Kangaru
   module Validators
     class RequiredValidator < Validator
+      MESSAGE: String
+
       private
 
       def value_missing?: -> bool
