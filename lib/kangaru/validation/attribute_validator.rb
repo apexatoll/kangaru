@@ -16,16 +16,8 @@ module Kangaru
 
       private
 
-      def validator_name(validator)
-        validator.to_s.to_class_name(suffix: :validator)
-      end
-
       def load_validator(validator:, **params)
-        name = validator_name(validator)
-
-        raise "#{name} is not defined" unless Validators.const_defined?(name)
-
-        Validators.const_get(name).new(model:, attribute:, **params)
+        Validators.get(validator).new(model:, attribute:, **params)
       end
     end
   end
