@@ -1,6 +1,9 @@
 module Kangaru
   module Validation
     class AttributeValidator
+      type validations = Hash[Symbol, rule]
+      type rule = bool | Hash[Symbol, untyped]
+
       attr_reader model: untyped
       attr_reader attribute: Symbol
 
@@ -8,7 +11,7 @@ module Kangaru
 
       def validate: (Symbol, **validations) -> void
 
-      private
+      def validate_all: (**validations) -> void
 
       private
 
