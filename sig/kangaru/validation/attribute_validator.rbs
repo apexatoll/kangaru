@@ -6,11 +6,11 @@ module Kangaru
 
       def initialize: (model: untyped, attribute: Symbol) -> void
 
-      def validate: (Symbol, **untyped) -> void
+      def validate: (Symbol, **validations) -> void
 
       private
 
-      def validator_name: (Symbol) -> String
+      private
 
       def load_validator: (validator: Symbol, **untyped) -> Validator
     end
