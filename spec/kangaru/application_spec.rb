@@ -202,11 +202,11 @@ RSpec.describe Kangaru::Application do
         let(:config_valid?) { false }
 
         let(:config_errors) do
-          [Kangaru::Validation::Error.new(attribute:, type:)]
+          [Kangaru::Validation::Error.new(attribute:, message:)]
         end
 
         let(:attribute) { :some_attribute }
-        let(:type)      { :blank }
+        let(:message)   { "can't be blank" }
 
         it "raises an error" do
           expect { apply_config! }.to raise_error(

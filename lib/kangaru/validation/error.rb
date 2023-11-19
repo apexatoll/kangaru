@@ -3,15 +3,11 @@ module Kangaru
     class Error
       using Patches::Inflections
 
-      MESSAGES = {
-        blank: "can't be blank"
-      }.freeze
+      attr_reader :attribute, :message
 
-      attr_reader :attribute, :type
-
-      def initialize(attribute:, type:)
+      def initialize(attribute:, message:)
         @attribute = attribute
-        @type = type
+        @message = message
       end
 
       def full_message
@@ -22,10 +18,6 @@ module Kangaru
 
       def human_attribute
         attribute.to_s.to_humanised
-      end
-
-      def message
-        MESSAGES[type] || raise("invalid message type")
       end
     end
   end

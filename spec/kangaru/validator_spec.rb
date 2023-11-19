@@ -46,9 +46,9 @@ RSpec.describe Kangaru::Validator do
   end
 
   describe "#add_error!" do
-    subject(:add_error!) { validator.add_error!(type) }
+    subject(:add_error!) { validator.add_error!(message) }
 
-    let(:type) { :some_error }
+    let(:message) { "is invalid" }
 
     it "adds an object to the model errors" do
       expect { add_error! }.to change { model.errors.count }.by(1)
@@ -61,7 +61,7 @@ RSpec.describe Kangaru::Validator do
 
     it "sets the expected error attributes" do
       add_error!
-      expect(model.errors.last).to have_attributes(attribute:, type:)
+      expect(model.errors.last).to have_attributes(attribute:, message:)
     end
   end
 end

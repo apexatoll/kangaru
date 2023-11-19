@@ -13,8 +13,8 @@ module Kangaru
       raise NotImplementedError
     end
 
-    def add_error!(type)
-      model.errors << Validation::Error.new(attribute:, type:)
+    def add_error!(message)
+      model.errors << Validation::Error.new(attribute:, message:)
     end
   end
 end
