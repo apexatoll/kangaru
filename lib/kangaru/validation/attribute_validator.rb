@@ -10,10 +10,6 @@ module Kangaru
         @attribute = attribute
       end
 
-      def validate(validator, **params)
-        load_validator(validator:, **params).validate
-      end
-
       def validate_all(**validations)
         validations.each do |validator, params|
           params = {} if params == true
