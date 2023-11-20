@@ -18,15 +18,7 @@ module Kangaru
     end
 
     def validate
-      self.class.validation_rules.each do |attribute, validations|
-        validator = validator_for(attribute)
-
-        validations.each do |validator_name, params|
-          params = {} if params == true
-
-          validator.validate(validator_name, **params)
-        end
-      end
+      model_validator.validate!(**self.class.validation_rules)
     end
 
     def valid?
@@ -37,8 +29,8 @@ module Kangaru
 
     private
 
-    def validator_for(attribute)
-      Validation::AttributeValidator.new(model: self, attribute:)
+    def model_validator
+      @model_validator ||= Validation::ModelValidator.new(model: self)
     end
   end
 end

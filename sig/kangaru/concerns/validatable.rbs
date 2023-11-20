@@ -21,6 +21,6 @@ module Kangaru
 
     private
 
-    def validator_for: (Symbol) -> Validation::AttributeValidator
+    attr_reader model_validator: Validation::ModelValidator
   end
 end
