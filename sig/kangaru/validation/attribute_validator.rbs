@@ -11,7 +11,7 @@ module Kangaru
 
       def validate: (Symbol, **validations) -> void
 
-      def validate_all: (**validations) -> void
+      def validate_all: (**untyped) -> void
 
       private
 
