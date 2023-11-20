@@ -1,0 +1,19 @@
+module Kangaru
+  module Validation
+    class ModelValidator
+      type rules = Hash[Symbol, AttributeValidator::validations]
+
+      attr_reader model: untyped
+
+      def initialize: (model: untyped) -> void
+
+      def validate!: (**rules) -> void
+
+      private
+
+      def validate_attribute!: (Symbol, AttributeValidator::validations) -> void
+
+      def load_attribute_validator: (Symbol) -> AttributeValidator
+    end
+  end
+end
