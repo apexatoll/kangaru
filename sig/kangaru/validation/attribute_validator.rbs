@@ -9,7 +9,7 @@ module Kangaru
 
       def initialize: (model: untyped, attribute: Symbol) -> void
 
-      def validate_all: (**untyped) -> void
+      def validate!: (**untyped) -> void
 
       private
 

@@ -19,8 +19,8 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
 
   before { stub_const "SomeModel", model_class }
 
-  describe "#validate_all" do
-    let(:validate_all) { attribute_validator.validate_all(**validations) }
+  describe "#validate!" do
+    let(:validate!) { attribute_validator.validate!(**validations) }
 
     before do
       allow(Kangaru::Validators).to receive(:get).and_call_original
@@ -30,11 +30,11 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
       let(:validations) { {} }
 
       it "does not raise any errors" do
-        expect { validate_all }.not_to raise_error
+        expect { validate! }.not_to raise_error
       end
 
       it "does not query any validator classes" do
-        validate_all
+        validate!
         expect(Kangaru::Validators).not_to have_received(:get)
       end
     end
@@ -59,7 +59,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
         let(:validator) { :undefined }
 
         it "raises an error" do
-          expect { validate_all }.to raise_error(
+          expect { validate! }.to raise_error(
             "UndefinedValidator is not defined"
           )
         end
@@ -72,11 +72,11 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
           let(:params) { true }
 
           it "does not raise any errors" do
-            expect { validate_all }.not_to raise_error
+            expect { validate! }.not_to raise_error
           end
 
           it "queries the validators namespace for the class" do
-            validate_all
+            validate!
 
             expect(Kangaru::Validators)
               .to have_received(:get)
@@ -85,7 +85,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
           end
 
           it "instantiates a validator without params" do
-            validate_all
+            validate!
 
             expect(Kangaru::Validators::FooValidator)
               .to have_received(:new)
@@ -94,7 +94,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
           end
 
           it "runs the validator" do
-            validate_all
+            validate!
             expect(validator_instance).to have_received(:validate)
           end
         end
@@ -103,11 +103,11 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
           let(:params) { { foo: "foo", bar: "bar" } }
 
           it "does not raise any errors" do
-            expect { validate_all }.not_to raise_error
+            expect { validate! }.not_to raise_error
           end
 
           it "queries the validators namespace for the class" do
-            validate_all
+            validate!
 
             expect(Kangaru::Validators)
               .to have_received(:get)
@@ -116,7 +116,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
           end
 
           it "instantiates a validator with params" do
-            validate_all
+            validate!
 
             expect(Kangaru::Validators::FooValidator)
               .to have_received(:new)
@@ -125,7 +125,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
           end
 
           it "runs the validator" do
-            validate_all
+            validate!
             expect(validator_instance).to have_received(:validate)
           end
         end
@@ -159,11 +159,11 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
       end
 
       it "does not raise any errors" do
-        expect { validate_all }.not_to raise_error
+        expect { validate! }.not_to raise_error
       end
 
       it "queries the validators namespace for each class" do
-        validate_all
+        validate!
 
         validations.each_key do |validator_name|
           expect(Kangaru::Validators)
@@ -174,7 +174,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
       end
 
       it "instantiates the foo validator" do
-        validate_all
+        validate!
 
         expect(Kangaru::Validators::FooValidator)
           .to have_received(:new)
@@ -183,12 +183,12 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
       end
 
       it "runs the foo validator" do
-        validate_all
+        validate!
         expect(foo_validator_instance).to have_received(:validate)
       end
 
       it "instantiates the bar validator" do
-        validate_all
+        validate!
 
         expect(Kangaru::Validators::BarValidator)
           .to have_received(:new)
@@ -197,7 +197,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
       end
 
       it "runs the bar validator" do
-        validate_all
+        validate!
         expect(bar_validator_instance).to have_received(:validate)
       end
     end

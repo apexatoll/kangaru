@@ -16,7 +16,7 @@ module Kangaru
       private
 
       def validate_attribute!(attribute, validations)
-        load_attribute_validator(attribute).validate_all(**validations)
+        load_attribute_validator(attribute).validate!(**validations)
       end
 
       def load_attribute_validator(attribute)

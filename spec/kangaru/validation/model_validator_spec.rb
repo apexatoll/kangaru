@@ -77,7 +77,7 @@ RSpec.describe Kangaru::Validation::ModelValidator do
         validate!
 
         expect(foo_attribute_validator)
-          .to have_received(:validate_all)
+          .to have_received(:validate!)
           .with(**validations)
           .once
       end
@@ -122,7 +122,7 @@ RSpec.describe Kangaru::Validation::ModelValidator do
         validate!
 
         expect(foo_attribute_validator)
-          .to have_received(:validate_all)
+          .to have_received(:validate!)
           .with(**validations_one)
           .once
       end
@@ -140,7 +140,7 @@ RSpec.describe Kangaru::Validation::ModelValidator do
         validate!
 
         expect(bar_attribute_validator)
-          .to have_received(:validate_all)
+          .to have_received(:validate!)
           .with(**validations_two)
           .once
       end
