@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kangaru (0.2.1)
+    kangaru (0.2.2)
       colorize (~> 1.1)
       erb (~> 4.0)
       sequel (~> 5.72)
