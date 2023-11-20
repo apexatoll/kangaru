@@ -1,7 +1,7 @@
 RSpec.describe Kangaru::Validation::AttributeValidator do
   subject(:attribute_validator) { described_class.new(model:, attribute:) }
 
-  let(:model) { SomeModel.new(some_attribute: model_value) }
+  let(:model) { SomeModel.new }
 
   let(:attribute) { :some_attribute }
 
@@ -9,15 +9,31 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
     Class.new do
       attr_accessor :some_attribute
 
-      def initialize(some_attribute:)
+      def initialize(some_attribute: nil)
         @some_attribute = some_attribute
       end
     end
   end
 
-  let(:model_value) { :some_value }
+  let(:foo_validator_class)    { class_spy(Kangaru::Validator) }
+  let(:foo_validator_instance) { instance_spy(foo_validator_class) }
 
-  before { stub_const "SomeModel", model_class }
+  let(:bar_validator_class)    { class_spy(Kangaru::Validator) }
+  let(:bar_validator_instance) { instance_spy(bar_validator_class) }
+
+  before do
+    stub_const "SomeModel", model_class
+    stub_const "Kangaru::Validators::FooValidator", foo_validator_class
+    stub_const "Kangaru::Validators::BarValidator", bar_validator_class
+
+    allow(Kangaru::Validators::FooValidator)
+      .to receive(:new)
+      .and_return(foo_validator_instance)
+
+    allow(Kangaru::Validators::BarValidator)
+      .to receive(:new)
+      .and_return(bar_validator_instance)
+  end
 
   describe "#validate!" do
     let(:validate!) { attribute_validator.validate!(**validations) }
@@ -42,21 +58,9 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
     context "when one validation is specified" do
       let(:validations) { { validator => params } }
 
-      let(:params) { {} }
-
-      let(:validator_class)    { class_spy(Kangaru::Validator) }
-      let(:validator_instance) { instance_spy(validator_class) }
-
-      before do
-        stub_const "Kangaru::Validators::FooValidator", validator_class
-
-        allow(Kangaru::Validators::FooValidator)
-          .to receive(:new)
-          .and_return(validator_instance)
-      end
-
       context "and validator is not defined" do
         let(:validator) { :undefined }
+        let(:params) { {} }
 
         it "raises an error" do
           expect { validate! }.to raise_error(
@@ -95,7 +99,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
 
           it "runs the validator" do
             validate!
-            expect(validator_instance).to have_received(:validate)
+            expect(foo_validator_instance).to have_received(:validate)
           end
         end
 
@@ -126,7 +130,7 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
 
           it "runs the validator" do
             validate!
-            expect(validator_instance).to have_received(:validate)
+            expect(foo_validator_instance).to have_received(:validate)
           end
         end
       end
@@ -139,24 +143,6 @@ RSpec.describe Kangaru::Validation::AttributeValidator do
 
       let(:validator_one) { :foo }
       let(:validator_two) { :bar }
-
-      let(:foo_validator_class)    { class_spy(Kangaru::Validator) }
-      let(:bar_validator_class)    { class_spy(Kangaru::Validator) }
-      let(:foo_validator_instance) { instance_spy(foo_validator_class) }
-      let(:bar_validator_instance) { instance_spy(bar_validator_class) }
-
-      before do
-        stub_const "Kangaru::Validators::FooValidator", foo_validator_class
-        stub_const "Kangaru::Validators::BarValidator", bar_validator_class
-
-        allow(Kangaru::Validators::FooValidator)
-          .to receive(:new)
-          .and_return(foo_validator_instance)
-
-        allow(Kangaru::Validators::BarValidator)
-          .to receive(:new)
-          .and_return(bar_validator_instance)
-      end
 
       it "does not raise any errors" do
         expect { validate! }.not_to raise_error
