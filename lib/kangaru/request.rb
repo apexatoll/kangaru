@@ -2,6 +2,8 @@ module Kangaru
   class Request
     using Patches::Inflections
 
+    extend Forwardable
+
     include Configurable
 
     DEFAULT_CONTROLLER = "DefaultController".freeze
@@ -24,6 +26,8 @@ module Kangaru
     def action
       path_parser.action || DEFAULT_ACTION
     end
+
+    def_delegators :path_parser, :id
 
     private
 

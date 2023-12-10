@@ -9,12 +9,14 @@ RSpec.describe Kangaru::Request do
 
   let(:path_parser) do
     instance_spy(
-      Kangaru::PathParser, controller: path_controller, action: path_action
+      Kangaru::PathParser,
+      controller: path_controller, action: path_action, id: path_id
     )
   end
 
   let(:path_controller) { nil }
   let(:path_action) { nil }
+  let(:path_id) { nil }
 
   before do
     allow(Kangaru::PathParser).to receive(:new).and_return(path_parser)
@@ -104,6 +106,26 @@ RSpec.describe Kangaru::Request do
 
       it "returns the extracted action" do
         expect(action).to eq(path_action)
+      end
+    end
+  end
+
+  describe "#id" do
+    subject(:id) { request.id }
+
+    context "when no id is extracted from the path" do
+      let(:path_id) { nil }
+
+      it "returns nil" do
+        expect(id).to be_nil
+      end
+    end
+
+    context "when id is extracted from the path" do
+      let(:path_id) { 999 }
+
+      it "returns the extracted action" do
+        expect(id).to eq(path_id)
       end
     end
   end
