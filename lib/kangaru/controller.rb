@@ -27,6 +27,10 @@ module Kangaru
 
     def_delegators :request, :params
 
+    def target_id
+      request.id
+    end
+
     private
 
     def view_path(file)
