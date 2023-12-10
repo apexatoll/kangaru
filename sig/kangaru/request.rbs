@@ -1,5 +1,7 @@
 module Kangaru
   class Request
+    extend Forwardable
+
     include Configurable
 
     DEFAULT_CONTROLLER: String
@@ -14,6 +16,8 @@ module Kangaru
     def controller: -> String
 
     def action: -> Symbol
+
+    def id: -> Integer?
 
     private
 
