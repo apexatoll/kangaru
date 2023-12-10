@@ -13,6 +13,8 @@ module Kangaru
     def self.path: -> String
 
     def params: -> Hash[Symbol, untyped]
+
+    def target_id: -> Integer?
     
     private
 
