@@ -11,8 +11,6 @@ module Kangaru
 
     private
 
-    @controller_class: untyped
-
     def controller_class: -> untyped
 
     def validate_controller_defined!: -> void
