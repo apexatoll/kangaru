@@ -62,7 +62,7 @@ module Kangaru
 
           config.include RequestHelper, type: :request
 
-          config.around(type: :request) do |spec|
+          config.around(stub_output: true) do |spec|
             stub_output { spec.run }
           end
         end
