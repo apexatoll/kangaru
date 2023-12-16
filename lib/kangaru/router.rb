@@ -21,7 +21,7 @@ module Kangaru
     private
 
     def controller_class
-      @controller_class ||= request.controller.constantise(root: namespace)
+      request.controller.constantise(root: namespace)
     end
 
     def validate_controller_defined!
