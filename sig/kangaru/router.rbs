@@ -13,10 +13,6 @@ module Kangaru
 
     @controller_class: untyped
 
-    # Delegated to command
-    def controller_name: -> String
-    def action: -> Symbol
-
     def controller_class: -> untyped
 
     def validate_controller_defined!: -> void
